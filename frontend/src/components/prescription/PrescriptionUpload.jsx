@@ -1,0 +1,171 @@
+import React, { useState, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Button from '../common/Button';
+import { validatePrescriptionFile, formatFileSize } from '../../utils/fileValidation';
+
+const PrescriptionUpload = ({ onUpload, loading }) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [error, setError] = useState(null);
+
+  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    setError(null);
+
+    if (rejectedFiles.length > 0) {
+      setError('Invalid file. Please upload a JPG or PNG image.');
+      return;
+    }
+
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+
+      // Validate file
+      const validation = validatePrescriptionFile(file);
+      if (!validation.valid) {
+        setError(validation.error);
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewUrl(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'image/jpeg': ['.jpg', '.jpeg'],
+      'image/png': ['.png']
+    },
+    maxFiles: 1,
+    multiple: false,
+    disabled: loading
+  });
+
+  const handleSubmit = () => {
+    if (selectedFile && onUpload) {
+      onUpload(selectedFile);
+    }
+  };
+
+  const handleClear = () => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setError(null);
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Dropzone */}
+      {!selectedFile && (
+        <div
+          {...getRootProps()}
+          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+            isDragActive
+              ? 'border-primary-500 bg-primary-50'
+              : 'border-gray-300 hover:border-primary-400 bg-gray-50'
+          } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          <input {...getInputProps()} />
+
+          <div className="space-y-4">
+            <div className="flex justify-center">
+              <svg
+                className="w-16 h-16 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                />
+              </svg>
+            </div>
+
+            <div>
+              <p className="text-lg font-medium text-gray-900">
+                {isDragActive ? 'Drop prescription here' : 'Upload Prescription Image'}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Drag and drop, or click to browse
+              </p>
+            </div>
+
+            <div className="text-xs text-gray-500">
+              <p>Supported formats: JPG, PNG</p>
+              <p>Maximum size: 5MB</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-sm text-red-700">{error}</p>
+        </div>
+      )}
+
+      {/* File Preview */}
+      {selectedFile && previewUrl && (
+        <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-4">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="font-medium text-gray-900">{selectedFile.name}</p>
+              <p className="text-sm text-gray-500">
+                {formatFileSize(selectedFile.size)}
+              </p>
+            </div>
+            {!loading && (
+              <button
+                onClick={handleClear}
+                className="text-red-500 hover:text-red-700 text-sm font-medium"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+
+          {/* Image Preview */}
+          <div className="rounded-lg overflow-hidden border border-gray-200">
+            <img
+              src={previewUrl}
+              alt="Prescription preview"
+              className="w-full h-auto max-h-96 object-contain bg-gray-50"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            onClick={handleSubmit}
+            loading={loading}
+            disabled={loading}
+            className="w-full"
+            size="lg"
+          >
+            {loading ? 'Analyzing Prescription...' : 'Analyze Prescription'}
+          </Button>
+
+          {loading && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-700 text-center">
+                ⏱️ AI is analyzing your prescription. This may take 20-40 seconds...
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PrescriptionUpload;
