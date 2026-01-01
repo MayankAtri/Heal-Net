@@ -16,7 +16,7 @@ const Card = ({
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 transition-colors ${paddingStyles[padding]} ${className}`}>
+    <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${paddingStyles[padding]} ${className}`}>
       {(title || actions) && (
         <div className="flex items-center justify-between mb-4">
           <div>

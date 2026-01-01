@@ -66,10 +66,10 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
       {!selectedFile && (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+          className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
             isDragActive
-              ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-              : 'border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-700'
+              ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 shadow-xl scale-105'
+              : 'border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 bg-gradient-to-br from-gray-50 to-white dark:from-gray-700 dark:to-gray-800 hover:shadow-lg'
           } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <input {...getInputProps()} />
@@ -77,7 +77,7 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           <div className="space-y-4">
             <div className="flex justify-center">
               <svg
-                className="w-16 h-16 text-gray-400 dark:text-gray-500"
+                className="w-16 h-16 text-gray-400 dark:text-gray-500 transition-transform duration-300 hover:scale-110"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -156,7 +156,7 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           </Button>
 
           {loading && (
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 animate-pulse-slow shadow-lg">
               <p className="text-sm text-blue-700 dark:text-blue-200 text-center">
                 ⏱️ AI is analyzing your prescription. This may take 20-40 seconds...
               </p>

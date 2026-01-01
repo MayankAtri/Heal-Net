@@ -9,7 +9,7 @@ const MedicineCard = ({ medicine }) => {
   const showGenericName = medicine.genericName && medicine.name !== 'Not specified';
 
   return (
-    <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-5 hover:shadow-md transition-shadow">
+    <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 hover:border-primary-300 dark:hover:border-primary-600">
       <div className="space-y-3">
         {/* Medicine Name */}
         <div>

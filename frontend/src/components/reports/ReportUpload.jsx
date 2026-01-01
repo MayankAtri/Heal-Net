@@ -103,10 +103,10 @@ const ReportUpload = ({ onUpload, loading }) => {
         {!selectedFile ? (
           <div
             {...getRootProps()}
-            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+            className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
               isDragActive
-                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                : 'border-gray-300 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-600 bg-gray-50 dark:bg-gray-800'
+                ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 shadow-xl scale-105'
+                : 'border-gray-300 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-600 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 hover:shadow-lg'
             } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <input {...getInputProps()} />
@@ -181,7 +181,7 @@ const ReportUpload = ({ onUpload, loading }) => {
       )}
 
       {loading && (
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 animate-pulse-slow shadow-lg">
           <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
             <span className="font-semibold">Analyzing your medical report...</span>
             <br />
