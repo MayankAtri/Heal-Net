@@ -4,7 +4,7 @@ const MedicineRecommendation = ({ medicine, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-5 hover:shadow-md transition-shadow">
+    <div className="bg-gradient-to-br from-white to-green-50 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 hover:border-green-300 dark:hover:border-green-600">
       <div className="space-y-3">
         {/* Medicine Header */}
         <div className="flex items-start justify-between">
