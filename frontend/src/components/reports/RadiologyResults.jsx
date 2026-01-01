@@ -15,7 +15,7 @@ const RadiologyResults = ({ data }) => {
 
       {/* Findings */}
       {data.findings && data.findings.length > 0 && (
-        <Card title="Findings">
+        <Card title="Findings" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <ul className="space-y-2">
             {data.findings.map((finding, index) => (
               <li key={index} className="flex items-start space-x-2">

@@ -68,8 +68,8 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           {...getRootProps()}
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
             isDragActive
-              ? 'border-primary-500 bg-primary-50'
-              : 'border-gray-300 hover:border-primary-400 bg-gray-50'
+              ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+              : 'border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-700'
           } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <input {...getInputProps()} />
@@ -77,7 +77,7 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           <div className="space-y-4">
             <div className="flex justify-center">
               <svg
-                className="w-16 h-16 text-gray-400"
+                className="w-16 h-16 text-gray-400 dark:text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -92,15 +92,15 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
             </div>
 
             <div>
-              <p className="text-lg font-medium text-gray-900">
+              <p className="text-lg font-medium text-gray-900 dark:text-white">
                 {isDragActive ? 'Drop prescription here' : 'Upload Prescription Image'}
               </p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Drag and drop, or click to browse
               </p>
             </div>
 
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               <p>Supported formats: JPG, PNG</p>
               <p>Maximum size: 5MB</p>
             </div>
@@ -110,8 +110,8 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-700">{error}</p>
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4">
+          <p className="text-sm text-red-700 dark:text-red-200">{error}</p>
         </div>
       )}
 
@@ -156,8 +156,8 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           </Button>
 
           {loading && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-700 text-center">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+              <p className="text-sm text-blue-700 dark:text-blue-200 text-center">
                 ⏱️ AI is analyzing your prescription. This may take 20-40 seconds...
               </p>
             </div>

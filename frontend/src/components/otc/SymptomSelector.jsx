@@ -20,7 +20,7 @@ const SymptomSelector = ({ selectedSymptoms, onSymptomToggle, disabled }) => {
               disabled={disabled}
               className={`relative p-4 rounded-lg border-2 text-center transition-all ${
                 selected
-                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 shadow-md ring-2 ring-primary-300 dark:ring-primary-700'
+                  ? 'border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-500/20 shadow-md ring-2 ring-primary-200 dark:ring-primary-500/50'
                   : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-sm'
               } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >

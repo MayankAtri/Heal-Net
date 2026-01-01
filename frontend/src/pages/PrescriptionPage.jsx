@@ -45,7 +45,7 @@ const PrescriptionPage = () => {
 
       {/* Main Content */}
       {!result ? (
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <PrescriptionUpload onUpload={handleUpload} loading={loading} />
         </Card>
       ) : (
