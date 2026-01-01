@@ -45,7 +45,7 @@ const MedicalReportsPage = () => {
 
       {/* Main Content */}
       {!result ? (
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <ReportUpload onUpload={handleUpload} loading={loading} />
         </Card>
       ) : (

@@ -22,16 +22,19 @@ export const ANALYSIS_DEPTHS = [
   {
     value: 'simple',
     label: 'Simple',
+    icon: '🔍',
     description: 'Patient-friendly summary with key findings'
   },
   {
     value: 'detailed',
     label: 'Detailed',
+    icon: '🔬',
     description: 'Comprehensive clinical analysis with all values'
   },
   {
     value: 'educational',
     label: 'Educational',
+    icon: '📚',
     description: 'Learn what tests mean and how your body works'
   }
 ];

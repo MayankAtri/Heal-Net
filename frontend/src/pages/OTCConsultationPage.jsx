@@ -117,7 +117,7 @@ const OTCConsultationPage = () => {
       {/* Main Content */}
       {!result ? (
         <form onSubmit={handleSubmit}>
-          <Card>
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <div className="space-y-8">
               {/* Symptom Selector */}
               <SymptomSelector
@@ -128,7 +128,7 @@ const OTCConsultationPage = () => {
 
               {/* Severity List - Show for predefined symptoms */}
               {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') && (
-                <div className="pt-6 border-t border-gray-200">
+                <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                   <SymptomSeverityList
                     selectedSymptoms={selectedSymptoms}
                     severities={severities}

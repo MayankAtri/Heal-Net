@@ -20,7 +20,7 @@ const PathologyResults = ({ data }) => {
 
       {/* Macroscopic Description */}
       {data.macroscopicDescription && (
-        <Card title="Macroscopic Description">
+        <Card title="Macroscopic Description" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <div className="prose prose-sm max-w-none">
             <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{data.macroscopicDescription}</p>
           </div>
@@ -29,7 +29,7 @@ const PathologyResults = ({ data }) => {
 
       {/* Microscopic Description */}
       {data.microscopicDescription && (
-        <Card title="Microscopic Description">
+        <Card title="Microscopic Description" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <div className="prose prose-sm max-w-none">
             <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{data.microscopicDescription}</p>
           </div>

@@ -80,7 +80,7 @@ const ReportUpload = ({ onUpload, loading }) => {
               disabled={loading}
               className={`p-4 rounded-lg border-2 text-left transition-all ${
                 analysisDepth === depth.value
-                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 shadow-md'
+                  ? 'border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-500/20 shadow-md ring-2 ring-primary-200 dark:ring-primary-500/50'
                   : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-300 dark:hover:border-primary-600'
               } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
@@ -181,8 +181,8 @@ const ReportUpload = ({ onUpload, loading }) => {
       )}
 
       {loading && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-800 text-center">
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+          <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
             <span className="font-semibold">Analyzing your medical report...</span>
             <br />
             This may take 20-40 seconds depending on the analysis depth.
