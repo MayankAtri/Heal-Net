@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useOTC } from '../hooks/useOTC';
 import SymptomSelector from '../components/otc/SymptomSelector';
 import SymptomSeverityList from '../components/otc/SymptomSeverityList';
@@ -176,13 +177,37 @@ const OTCConsultationPage = () => {
               )}
 
               {loading && (
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
-                  <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
-                    <span className="font-semibold">Analyzing your symptoms...</span>
-                    <br />
-                    This may take 15-30 seconds while our AI prepares personalized recommendations.
-                  </p>
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 shadow-lg overflow-hidden relative"
+                >
+                  <motion.div
+                    animate={{
+                      opacity: [0.5, 1, 0.5],
+                      scale: [1, 1.02, 1]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <p className="text-sm text-blue-800 dark:text-blue-200 text-center relative z-10">
+                      <span className="font-semibold">Analyzing your symptoms...</span>
+                      <br />
+                      This may take 15-30 seconds while our AI prepares personalized recommendations.
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/30 dark:via-blue-500/20 to-transparent"
+                    animate={{
+                      x: ['-100%', '200%']
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                </motion.div>
               )}
             </div>
           </Card>

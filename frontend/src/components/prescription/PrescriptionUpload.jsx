@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { motion } from 'framer-motion';
 import Button from '../common/Button';
 import { validatePrescriptionFile, formatFileSize } from '../../utils/fileValidation';
 
@@ -156,11 +157,35 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           </Button>
 
           {loading && (
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 animate-pulse-slow shadow-lg">
-              <p className="text-sm text-blue-700 dark:text-blue-200 text-center">
-                ⏱️ AI is analyzing your prescription. This may take 20-40 seconds...
-              </p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 shadow-lg overflow-hidden relative"
+            >
+              <motion.div
+                animate={{
+                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.02, 1]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <p className="text-sm text-blue-700 dark:text-blue-200 text-center font-medium">
+                  ⏱️ AI is analyzing your prescription. This may take 20-40 seconds...
+                </p>
+              </motion.div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/30 dark:via-blue-500/20 to-transparent"
+                animate={{
+                  x: ['-100%', '200%']
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </motion.div>
           )}
         </div>
       )}
