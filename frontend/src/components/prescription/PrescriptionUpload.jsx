@@ -117,18 +117,18 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
 
       {/* File Preview */}
       {selectedFile && previewUrl && (
-        <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-4">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="font-medium text-gray-900">{selectedFile.name}</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-medium text-gray-900 dark:text-white">{selectedFile.name}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {formatFileSize(selectedFile.size)}
               </p>
             </div>
             {!loading && (
               <button
                 onClick={handleClear}
-                className="text-red-500 hover:text-red-700 text-sm font-medium"
+                className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm font-medium"
               >
                 Remove
               </button>
@@ -136,11 +136,11 @@ const PrescriptionUpload = ({ onUpload, loading }) => {
           </div>
 
           {/* Image Preview */}
-          <div className="rounded-lg overflow-hidden border border-gray-200">
+          <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
             <img
               src={previewUrl}
               alt="Prescription preview"
-              className="w-full h-auto max-h-96 object-contain bg-gray-50"
+              className="w-full h-auto max-h-96 object-contain bg-gray-50 dark:bg-gray-900"
             />
           </div>
 

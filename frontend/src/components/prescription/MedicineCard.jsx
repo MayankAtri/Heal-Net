@@ -9,13 +9,13 @@ const MedicineCard = ({ medicine }) => {
   const showGenericName = medicine.genericName && medicine.name !== 'Not specified';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-5 hover:shadow-md transition-shadow">
       <div className="space-y-3">
         {/* Medicine Name */}
         <div>
-          <h3 className="text-lg font-bold text-gray-900">{displayName}</h3>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{displayName}</h3>
           {showGenericName && (
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
               Generic: {medicine.genericName}
             </p>
           )}
@@ -26,8 +26,8 @@ const MedicineCard = ({ medicine }) => {
           <div className="flex items-center space-x-2">
             <span className="text-2xl">💊</span>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-medium">Dosage</p>
-              <p className="text-base font-semibold text-primary-600">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Dosage</p>
+              <p className="text-base font-semibold text-primary-600 dark:text-primary-400">
                 {medicine.dosage}
               </p>
             </div>
@@ -39,8 +39,8 @@ const MedicineCard = ({ medicine }) => {
           <div className="flex items-center space-x-2">
             <span className="text-2xl">⏰</span>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-medium">Frequency</p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Frequency</p>
+              <p className="text-base font-medium text-gray-900 dark:text-white">
                 {medicine.frequency}
               </p>
             </div>
@@ -52,8 +52,8 @@ const MedicineCard = ({ medicine }) => {
           <div className="flex items-center space-x-2">
             <span className="text-2xl">📅</span>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-medium">Duration</p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Duration</p>
+              <p className="text-base font-medium text-gray-900 dark:text-white">
                 {medicine.duration}
               </p>
             </div>
