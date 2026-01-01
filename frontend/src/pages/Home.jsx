@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Card from '../components/common/Card';
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const features = [
     {
       title: 'Prescription Analysis',
@@ -46,39 +49,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="space-y-20 overflow-hidden">
-      {/* Hero Section with Floating Shapes */}
+    <div className="space-y-20">
+      {/* Hero Section */}
       <div className="relative py-20 px-6">
-        {/* Animated Background Shapes */}
-        <div className="absolute inset-0 overflow-hidden -z-10">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              rotate: [0, -90, 0],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.3, 0.2]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full blur-3xl"
-          />
-        </div>
-
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-5xl mx-auto">
           <motion.div

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { motion } from 'framer-motion';
 import Button from '../common/Button';
 import { validateReportFile } from '../../utils/fileValidation';
 import { ANALYSIS_DEPTHS } from '../../utils/constants';
@@ -181,13 +182,37 @@ const ReportUpload = ({ onUpload, loading }) => {
       )}
 
       {loading && (
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 animate-pulse-slow shadow-lg">
-          <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
-            <span className="font-semibold">Analyzing your medical report...</span>
-            <br />
-            This may take 20-40 seconds depending on the analysis depth.
-          </p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: -10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 shadow-lg overflow-hidden relative"
+        >
+          <motion.div
+            animate={{
+              opacity: [0.5, 1, 0.5],
+              scale: [1, 1.02, 1]
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <p className="text-sm text-blue-800 dark:text-blue-200 text-center relative z-10">
+              <span className="font-semibold">Analyzing your medical report...</span>
+              <br />
+              This may take 20-40 seconds depending on the analysis depth.
+            </p>
+          </motion.div>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/30 dark:via-blue-500/20 to-transparent"
+            animate={{
+              x: ['-100%', '200%']
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        </motion.div>
       )}
     </div>
   );
