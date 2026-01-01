@@ -40,14 +40,14 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Medical Report Analysis</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Medical Report Analysis</h2>
           <div className="flex items-center space-x-3 mt-2">
             <Badge variant="primary">{getReportTypeDisplay(reportType)}</Badge>
             <Badge variant="secondary">
               {analysisDepth === 'simple' ? '🔍 Simple' : analysisDepth === 'detailed' ? '🔬 Detailed' : '📚 Educational'}
             </Badge>
             {createdAt && (
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 {formatDate(createdAt)}
               </span>
             )}
@@ -60,8 +60,8 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
 
       {/* Summary */}
       {summary && (
-        <Card title="Summary" className="bg-blue-50 border-blue-200">
-          <p className="text-gray-800 whitespace-pre-line">{summary}</p>
+        <Card title="Summary" className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
+          <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{summary}</p>
         </Card>
       )}
 
@@ -80,7 +80,7 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
 
       {/* Possible Conditions */}
       {possibleConditions && possibleConditions.length > 0 && (
-        <Card title="Possible Conditions" className="bg-purple-50 border-purple-200">
+        <Card title="Possible Conditions" className="bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {possibleConditions.map((condition, index) => (
               <ConditionCard key={index} condition={condition} />
@@ -91,18 +91,18 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
 
       {/* Warnings */}
       {warnings && warnings.length > 0 && (
-        <Card className="bg-yellow-50 border-yellow-300">
+        <Card className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-300 dark:border-yellow-700">
           <div className="flex items-start space-x-3">
             <span className="text-3xl">⚠️</span>
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-yellow-900 mb-3">
+              <h3 className="text-lg font-bold text-yellow-900 dark:text-yellow-200 mb-3">
                 Important Warnings
               </h3>
               <ul className="space-y-2">
                 {warnings.map((warning, index) => (
                   <li key={index} className="flex items-start space-x-2">
-                    <span className="text-yellow-600 mt-1">•</span>
-                    <span className="text-yellow-900">{warning}</span>
+                    <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
+                    <span className="text-yellow-900 dark:text-yellow-100">{warning}</span>
                   </li>
                 ))}
               </ul>
@@ -113,12 +113,12 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
 
       {/* Recommendations */}
       {recommendations && recommendations.length > 0 && (
-        <Card title="Medical Recommendations" className="bg-green-50 border-green-200">
+        <Card title="Medical Recommendations" className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700">
           <ul className="space-y-3">
             {recommendations.map((recommendation, index) => (
               <li key={index} className="flex items-start space-x-3">
                 <span className="text-2xl">✓</span>
-                <span className="text-gray-800 flex-1">{recommendation}</span>
+                <span className="text-gray-800 dark:text-gray-200 flex-1">{recommendation}</span>
               </li>
             ))}
           </ul>
@@ -126,14 +126,14 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
       )}
 
       {/* Medical Disclaimer */}
-      <Card className="bg-gray-50 border-gray-300">
+      <Card className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600">
         <div className="flex items-start space-x-3">
           <span className="text-2xl">ℹ️</span>
           <div className="flex-1">
-            <h3 className="text-sm font-bold text-gray-900 mb-2">
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2">
               Medical Disclaimer
             </h3>
-            <p className="text-xs text-gray-700 leading-relaxed">
+            <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
               This analysis is AI-generated and for informational purposes only. It is not a
               substitute for professional medical advice, diagnosis, or treatment. Always consult
               your healthcare provider for interpretation of medical test results and appropriate

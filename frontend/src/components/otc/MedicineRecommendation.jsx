@@ -4,7 +4,7 @@ const MedicineRecommendation = ({ medicine, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-5 hover:shadow-md transition-shadow">
       <div className="space-y-3">
         {/* Medicine Header */}
         <div className="flex items-start justify-between">
@@ -13,10 +13,10 @@ const MedicineRecommendation = ({ medicine, index }) => {
               <span className="flex-shrink-0 w-8 h-8 rounded-full bg-medical text-white flex items-center justify-center text-sm font-bold">
                 {index + 1}
               </span>
-              <h3 className="text-lg font-bold text-gray-900">{medicine.name}</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">{medicine.name}</h3>
             </div>
             {medicine.activeIngredient && (
-              <p className="text-sm text-gray-600 mt-2 ml-10">
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 ml-10">
                 Active: {medicine.activeIngredient}
               </p>
             )}
@@ -29,8 +29,8 @@ const MedicineRecommendation = ({ medicine, index }) => {
             <div className="flex items-center space-x-2">
               <span className="text-xl">💊</span>
               <div>
-                <p className="text-xs text-gray-500 uppercase font-medium">Dosage</p>
-                <p className="text-sm font-semibold text-gray-900">{medicine.dosage}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Dosage</p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">{medicine.dosage}</p>
               </div>
             </div>
           )}
@@ -39,8 +39,8 @@ const MedicineRecommendation = ({ medicine, index }) => {
             <div className="flex items-center space-x-2">
               <span className="text-xl">⏰</span>
               <div>
-                <p className="text-xs text-gray-500 uppercase font-medium">Frequency</p>
-                <p className="text-sm font-medium text-gray-900">{medicine.frequency}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Frequency</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">{medicine.frequency}</p>
               </div>
             </div>
           )}
@@ -49,8 +49,8 @@ const MedicineRecommendation = ({ medicine, index }) => {
             <div className="flex items-center space-x-2">
               <span className="text-xl">📅</span>
               <div>
-                <p className="text-xs text-gray-500 uppercase font-medium">Duration</p>
-                <p className="text-sm font-medium text-gray-900">{medicine.duration}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Duration</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">{medicine.duration}</p>
               </div>
             </div>
           )}
@@ -58,9 +58,9 @@ const MedicineRecommendation = ({ medicine, index }) => {
 
         {/* Usage Instructions */}
         {medicine.instructions && (
-          <div className="ml-10 bg-blue-50 border border-blue-200 rounded-lg p-3">
-            <p className="text-xs font-bold text-blue-900 uppercase mb-1">Instructions</p>
-            <p className="text-sm text-blue-900">{medicine.instructions}</p>
+          <div className="ml-10 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
+            <p className="text-xs font-bold text-blue-900 dark:text-blue-200 uppercase mb-1">Instructions</p>
+            <p className="text-sm text-blue-900 dark:text-blue-100">{medicine.instructions}</p>
           </div>
         )}
 
@@ -69,7 +69,7 @@ const MedicineRecommendation = ({ medicine, index }) => {
           <div className="ml-10">
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex items-center space-x-2 text-sm font-semibold text-gray-700 hover:text-primary-600 transition-colors"
+              className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
             >
               <span>{isExpanded ? '▼' : '▶'}</span>
               <span>View Warnings & Side Effects</span>
@@ -79,13 +79,13 @@ const MedicineRecommendation = ({ medicine, index }) => {
               <div className="mt-3 space-y-3">
                 {/* Warnings */}
                 {medicine.warnings && medicine.warnings.length > 0 && (
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                    <p className="text-xs font-bold text-yellow-900 uppercase mb-2">
+                  <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-3">
+                    <p className="text-xs font-bold text-yellow-900 dark:text-yellow-200 uppercase mb-2">
                       ⚠️ Warnings
                     </p>
                     <ul className="space-y-1">
                       {medicine.warnings.map((warning, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-sm text-yellow-900">
+                        <li key={idx} className="flex items-start space-x-2 text-sm text-yellow-900 dark:text-yellow-100">
                           <span className="mt-1">•</span>
                           <span>{warning}</span>
                         </li>
@@ -96,13 +96,13 @@ const MedicineRecommendation = ({ medicine, index }) => {
 
                 {/* Side Effects */}
                 {medicine.sideEffects && medicine.sideEffects.length > 0 && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                    <p className="text-xs font-bold text-red-900 uppercase mb-2">
+                  <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3">
+                    <p className="text-xs font-bold text-red-900 dark:text-red-200 uppercase mb-2">
                       Possible Side Effects
                     </p>
                     <ul className="space-y-1">
                       {medicine.sideEffects.map((effect, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-sm text-red-900">
+                        <li key={idx} className="flex items-start space-x-2 text-sm text-red-900 dark:text-red-100">
                           <span className="mt-1">•</span>
                           <span>{effect}</span>
                         </li>
