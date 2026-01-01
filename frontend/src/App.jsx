@@ -14,7 +14,13 @@ function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    // Force immediate scroll to top
+    window.scrollTo(0, 0);
+
+    // Also reset scroll restoration behavior
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
   }, [location.pathname]);
 
   return null;
@@ -40,6 +46,13 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  useEffect(() => {
+    // Disable browser's automatic scroll restoration on page load
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   return (
     <DarkModeProvider>
       <BrowserRouter>
