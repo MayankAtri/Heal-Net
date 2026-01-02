@@ -7,9 +7,10 @@ const path = require('path');
  * Process uploaded prescription image through the complete pipeline:
  * Upload → Gemini Vision AI (OCR + Analysis) → Database → Cleanup
  * @param {Object} file - Multer file object
+ * @param {String} userId - User ID (optional, null for guest users)
  * @returns {Promise<Object>} Processed prescription data
  */
-const processUploadedPrescription = async (file) => {
+const processUploadedPrescription = async (file, userId = null) => {
   let prescription = null;
   const filePath = file.path;
 
@@ -18,6 +19,7 @@ const processUploadedPrescription = async (file) => {
 
     // Step 1: Create prescription record with 'processing' status
     prescription = await Prescription.create({
+      userId, // Attach user ID if logged in, null for guests
       originalText: '',
       simplifiedAnalysis: {
         medicines: [],

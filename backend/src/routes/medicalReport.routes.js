@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../config/upload');
 const validateFile = require('../middleware/validateFile');
+const { optionalAuth } = require('../middleware/auth');
 const {
   uploadAndAnalyze,
   getReport,
@@ -18,6 +19,7 @@ const {
 // Upload and analyze medical report
 router.post(
   '/analyze',
+  optionalAuth,              // Optional auth - attaches user if logged in
   upload.single('report'),  // Field name must be 'report'
   validateFile,              // Validate file type and size
   uploadAndAnalyze           // Process and analyze

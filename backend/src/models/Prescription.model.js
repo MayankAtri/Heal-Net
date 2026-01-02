@@ -27,6 +27,14 @@ const prescriptionSchema = new mongoose.Schema({
   imageUrl: String,
   originalFilename: String,
 
+  // User Reference (optional for guest users)
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+    index: true
+  },
+
   // Metadata
   processingStatus: {
     type: String,

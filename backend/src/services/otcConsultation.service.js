@@ -5,9 +5,10 @@ const OTCConsultation = require('../models/OTCConsultation.model');
  * Process OTC consultation request
  * @param {string} symptomType - Predefined symptom type or 'custom'
  * @param {string} customSymptoms - Custom symptom description (if symptomType is 'custom')
+ * @param {String} userId - User ID (optional, null for guest users)
  * @returns {Promise<Object>} Processed consultation data
  */
-const processConsultation = async (symptomType, customSymptoms = '') => {
+const processConsultation = async (symptomType, customSymptoms = '', userId = null) => {
   let consultation = null;
 
   try {
@@ -15,6 +16,7 @@ const processConsultation = async (symptomType, customSymptoms = '') => {
 
     // Step 1: Create consultation record with 'processing' status
     consultation = await OTCConsultation.create({
+      userId, // Attach user ID if logged in, null for guests
       symptomType: symptomType,
       customSymptoms: customSymptoms,
       suggestions: {
