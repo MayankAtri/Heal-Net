@@ -12,14 +12,23 @@ const generateAccessToken = (payload) => {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
 
-  return jwt.sign(
+  const expiresIn = process.env.JWT_ACCESS_EXPIRY || '15m';
+  console.log('Generating access token with expiresIn:', expiresIn);
+
+  const token = jwt.sign(
     payload,
     secret,
     {
-      expiresIn: process.env.JWT_ACCESS_EXPIRY || '15m',
+      expiresIn: expiresIn,
       issuer: 'healnet-api'
     }
   );
+
+  // Decode to verify
+  const decoded = jwt.decode(token);
+  console.log('Token generated - iat:', decoded.iat, 'exp:', decoded.exp, 'diff:', decoded.exp - decoded.iat);
+
+  return token;
 };
 
 /**
