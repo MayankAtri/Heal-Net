@@ -23,14 +23,23 @@ app.use(helmet());
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
+  'https://heal-net-three.vercel.app',
   process.env.FRONTEND_URL // Add your production frontend URL in Render env vars
-];
+].filter(Boolean); // Remove undefined/null values
 
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
+
+    // Check if origin matches (with or without trailing slash)
+    const originWithoutSlash = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+    const isAllowed = allowedOrigins.some(allowed => {
+      const allowedWithoutSlash = allowed?.endsWith('/') ? allowed.slice(0, -1) : allowed;
+      return allowedWithoutSlash === originWithoutSlash;
+    });
+
+    if (!isAllowed) {
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
