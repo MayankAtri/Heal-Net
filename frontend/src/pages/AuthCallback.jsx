@@ -13,6 +13,8 @@ export default function AuthCallback() {
     const handleCallback = async () => {
       const success = searchParams.get('success');
       const error = searchParams.get('error');
+      const accessToken = searchParams.get('accessToken');
+      const refreshToken = searchParams.get('refreshToken');
 
       if (error) {
         // Redirect to login with error
@@ -20,10 +22,30 @@ export default function AuthCallback() {
         return;
       }
 
-      if (success === 'true') {
-        // Google OAuth was successful, refresh auth state
-        await checkAuth();
-        navigate('/', { replace: true });
+      if (success === 'true' && accessToken && refreshToken) {
+        // Store tokens in cookies via backend
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
+        try {
+          // Make a request to set cookies with the tokens
+          await fetch(`${API_URL}/auth/set-cookies`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ accessToken, refreshToken })
+          });
+
+          // Refresh auth state
+          await checkAuth();
+
+          // Clean URL and redirect home
+          navigate('/', { replace: true });
+        } catch (err) {
+          console.error('Failed to set cookies:', err);
+          navigate('/login?error=auth_failed', { replace: true });
+        }
       } else {
         // No success parameter, redirect to login
         navigate('/login', { replace: true });

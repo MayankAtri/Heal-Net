@@ -99,4 +99,11 @@ router.get(
   authController.googleCallback
 );
 
+/**
+ * @route   POST /api/auth/set-cookies
+ * @desc    Set auth cookies from tokens (for cross-domain OAuth)
+ * @access  Public
+ */
+router.post('/set-cookies', authController.setCookies);
+
 module.exports = router;
