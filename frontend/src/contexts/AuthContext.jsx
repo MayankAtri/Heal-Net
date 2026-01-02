@@ -24,19 +24,40 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      // Get token from localStorage
+      const token = localStorage.getItem('accessToken');
+
+      if (!token) {
+        setUser(null);
+        setAccessToken(null);
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(`${API_URL}/auth/me`, {
-        credentials: 'include' // Include cookies
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
+        setAccessToken(token);
       } else {
+        // Token invalid, clear it
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         setUser(null);
+        setAccessToken(null);
       }
     } catch (error) {
       console.error('Auth check failed:', error);
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setUser(null);
+      setAccessToken(null);
     } finally {
       setLoading(false);
     }
