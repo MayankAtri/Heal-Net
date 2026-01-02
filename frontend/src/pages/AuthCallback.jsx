@@ -23,19 +23,10 @@ export default function AuthCallback() {
       }
 
       if (success === 'true' && accessToken && refreshToken) {
-        // Store tokens in cookies via backend
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-
         try {
-          // Make a request to set cookies with the tokens
-          await fetch(`${API_URL}/auth/set-cookies`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({ accessToken, refreshToken })
-          });
+          // Store tokens in localStorage (cross-domain cookie alternative)
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
           // Refresh auth state
           await checkAuth();
@@ -43,7 +34,7 @@ export default function AuthCallback() {
           // Clean URL and redirect home
           navigate('/', { replace: true });
         } catch (err) {
-          console.error('Failed to set cookies:', err);
+          console.error('Failed to store tokens:', err);
           navigate('/login?error=auth_failed', { replace: true });
         }
       } else {
