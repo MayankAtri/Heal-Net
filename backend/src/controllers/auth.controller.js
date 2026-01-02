@@ -293,6 +293,7 @@ const googleCallback = async (req, res) => {
     const user = req.user;
 
     if (!user) {
+      console.log('Google callback: No user found');
       return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
     }
 
@@ -301,6 +302,10 @@ const googleCallback = async (req, res) => {
 
     // Set cookies
     setAuthCookies(res, result.tokens);
+
+    console.log('Google callback: Cookies set, redirecting to frontend');
+    console.log('Environment:', process.env.NODE_ENV);
+    console.log('Frontend URL:', process.env.FRONTEND_URL);
 
     // Redirect to frontend with success
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?success=true`);
