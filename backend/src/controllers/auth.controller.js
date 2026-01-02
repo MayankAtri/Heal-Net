@@ -307,11 +307,48 @@ const googleCallback = async (req, res) => {
     console.log('Environment:', process.env.NODE_ENV);
     console.log('Frontend URL:', process.env.FRONTEND_URL);
 
-    // Redirect to frontend with success
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?success=true`);
+    // Pass tokens in URL for cross-domain cookie issues
+    // Frontend will receive these and make a request to set cookies properly
+    const redirectUrl = new URL(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback`);
+    redirectUrl.searchParams.set('success', 'true');
+    redirectUrl.searchParams.set('accessToken', result.tokens.accessToken);
+    redirectUrl.searchParams.set('refreshToken', result.tokens.refreshToken);
+
+    res.redirect(redirectUrl.toString());
   } catch (error) {
     console.error('Google callback error:', error);
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
+  }
+};
+
+/**
+ * Set cookies from tokens (for cross-domain OAuth)
+ * POST /api/auth/set-cookies
+ */
+const setCookies = async (req, res) => {
+  try {
+    const { accessToken, refreshToken } = req.body;
+
+    if (!accessToken || !refreshToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing tokens'
+      });
+    }
+
+    // Set cookies
+    setAuthCookies(res, { accessToken, refreshToken });
+
+    res.status(200).json({
+      success: true,
+      message: 'Cookies set successfully'
+    });
+  } catch (error) {
+    console.error('Set cookies error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to set cookies'
+    });
   }
 };
 
@@ -378,6 +415,7 @@ module.exports = {
   updateProfile,
   changePassword,
   googleCallback,
+  setCookies,
   validateRegister,
   validateLogin,
   validateProfileUpdate,
