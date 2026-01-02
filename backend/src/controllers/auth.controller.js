@@ -13,7 +13,7 @@ const setAuthCookies = (res, tokens) => {
   res.cookie('accessToken', tokens.accessToken, {
     httpOnly: true,
     secure: isProduction, // HTTPS only in production
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin cookies
     maxAge: 15 * 60 * 1000 // 15 minutes
   });
 
@@ -21,7 +21,7 @@ const setAuthCookies = (res, tokens) => {
   res.cookie('refreshToken', tokens.refreshToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin cookies
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 };
