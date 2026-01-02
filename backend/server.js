@@ -13,6 +13,9 @@ const errorHandler = require('./src/middleware/errorHandler');
 // Initialize Express app
 const app = express();
 
+// Trust proxy - Required for Render and rate limiting
+app.set('trust proxy', 1);
+
 // Connect to MongoDB
 connectDB();
 
