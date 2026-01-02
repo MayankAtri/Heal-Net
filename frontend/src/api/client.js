@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
   timeout: 60000, // 60s timeout for long AI processing
+  withCredentials: true, // Send cookies with requests
   headers: {
     'Content-Type': 'application/json',
   }

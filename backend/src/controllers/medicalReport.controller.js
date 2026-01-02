@@ -32,8 +32,11 @@ const uploadAndAnalyze = asyncHandler(async (req, res) => {
     });
   }
 
+  // Get userId from optionalAuth middleware
+  const userId = req.userId || null;
+
   // Process the report
-  const result = await processUploadedReport(req.file, analysisDepth);
+  const result = await processUploadedReport(req.file, analysisDepth, userId);
 
   res.status(201).json({
     success: true,

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { optionalAuth } = require('../middleware/auth');
 const {
   getOTCSuggestions,
   getConsultation,
@@ -14,7 +15,7 @@ const {
 
 // POST /api/otc/consult
 // Get OTC medicine suggestions for symptoms
-router.post('/consult', getOTCSuggestions);
+router.post('/consult', optionalAuth, getOTCSuggestions);
 
 // GET /api/otc/stats/overview
 // Get statistics (must be before /:id to avoid route conflicts)

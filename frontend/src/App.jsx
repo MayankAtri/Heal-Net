@@ -2,12 +2,18 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { DarkModeProvider } from './contexts/DarkModeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/layout/Layout';
 import PageTransition from './components/common/PageTransition';
 import Home from './pages/Home';
 import PrescriptionPage from './pages/PrescriptionPage';
 import MedicalReportsPage from './pages/MedicalReportsPage';
 import OTCConsultationPage from './pages/OTCConsultationPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
+import Profile from './pages/Profile';
+import History from './pages/History';
 import NotFound from './pages/NotFound';
 
 function ScrollToTop() {
@@ -38,6 +44,11 @@ function AnimatedRoutes() {
           <Route path="/prescription" element={<PageTransition><PrescriptionPage /></PageTransition>} />
           <Route path="/reports" element={<PageTransition><MedicalReportsPage /></PageTransition>} />
           <Route path="/otc" element={<PageTransition><OTCConsultationPage /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+          <Route path="/auth/callback" element={<PageTransition><AuthCallback /></PageTransition>} />
+          <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+          <Route path="/history" element={<PageTransition><History /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
@@ -55,11 +66,13 @@ function App() {
 
   return (
     <DarkModeProvider>
-      <BrowserRouter>
-        <Layout>
-          <AnimatedRoutes />
-        </Layout>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Layout>
+            <AnimatedRoutes />
+          </Layout>
+        </BrowserRouter>
+      </AuthProvider>
     </DarkModeProvider>
   );
 }

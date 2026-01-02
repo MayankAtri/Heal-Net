@@ -8,10 +8,11 @@ const {
 /**
  * @route   POST /api/prescriptions/analyze
  * @desc    Upload and analyze prescription image
- * @access  Public
+ * @access  Public (optionally authenticated)
  */
 const uploadAndAnalyze = asyncHandler(async (req, res) => {
-  const result = await processUploadedPrescription(req.file);
+  const userId = req.userId || null; // From optionalAuth middleware
+  const result = await processUploadedPrescription(req.file, userId);
 
   res.status(200).json({
     success: true,

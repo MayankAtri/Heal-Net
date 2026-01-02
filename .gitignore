@@ -86,8 +86,8 @@ data/
 # Output of 'npm pack'
 *.tgz
 
-# dotenv environment variable files
-.env*
+# dotenv environment variable files (but allow .env.example)
+# .env files are listed specifically above
 
 # Vite
 .vite/

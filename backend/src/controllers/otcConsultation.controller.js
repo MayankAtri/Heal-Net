@@ -56,8 +56,11 @@ const getOTCSuggestions = asyncHandler(async (req, res) => {
     });
   }
 
+  // Get userId from optionalAuth middleware
+  const userId = req.userId || null;
+
   // Process consultation
-  const result = await processConsultation(symptomType, customSymptoms || '');
+  const result = await processConsultation(symptomType, customSymptoms || '', userId);
 
   res.status(201).json({
     success: true,

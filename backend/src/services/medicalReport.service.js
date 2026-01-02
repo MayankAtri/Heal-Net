@@ -8,9 +8,10 @@ const path = require('path');
  * Upload → Type Detection → Gemini Vision Analysis → Database → Cleanup
  * @param {Object} file - Multer file object
  * @param {string} analysisDepth - Depth of analysis (simple, detailed, educational)
+ * @param {String} userId - User ID (optional, null for guest users)
  * @returns {Promise<Object>} Processed medical report data
  */
-const processUploadedReport = async (file, analysisDepth = 'simple') => {
+const processUploadedReport = async (file, analysisDepth = 'simple', userId = null) => {
   let report = null;
   const filePath = file.path;
 
@@ -19,6 +20,7 @@ const processUploadedReport = async (file, analysisDepth = 'simple') => {
 
     // Step 1: Create report record with 'processing' status
     report = await MedicalReport.create({
+      userId, // Attach user ID if logged in, null for guests
       reportType: 'other',  // Will be updated after detection
       analysisDepth: analysisDepth,
       analysis: {
