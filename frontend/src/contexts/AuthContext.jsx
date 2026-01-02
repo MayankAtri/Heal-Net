@@ -80,6 +80,12 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || 'Registration failed');
       }
 
+      // Store tokens in localStorage
+      localStorage.setItem('accessToken', data.accessToken);
+      if (data.refreshToken) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+      }
+
       setUser(data.user);
       setAccessToken(data.accessToken);
       return { success: true, user: data.user };
@@ -105,6 +111,12 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || 'Login failed');
       }
 
+      // Store tokens in localStorage
+      localStorage.setItem('accessToken', data.accessToken);
+      if (data.refreshToken) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+      }
+
       setUser(data.user);
       setAccessToken(data.accessToken);
       return { success: true, user: data.user };
@@ -122,6 +134,9 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
+      // Clear tokens from localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setUser(null);
       setAccessToken(null);
     }
