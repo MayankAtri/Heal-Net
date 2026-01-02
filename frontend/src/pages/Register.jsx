@@ -64,7 +64,7 @@ export default function Register() {
 
   return (
     <div className={`min-h-[calc(100vh-200px)] flex items-center justify-center py-12 ${
-      darkMode ? 'bg-gray-900' : 'bg-white'
+      darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 to-indigo-100'
     } -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8`}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
