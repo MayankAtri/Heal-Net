@@ -8,7 +8,7 @@ const PathologyResults = ({ data }) => {
     <div className="space-y-6">
       {/* Specimen Information */}
       {data.specimenType && (
-        <Card title="Specimen Information" className="bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700">
+        <Card title="Specimen Information" className="bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-700">
           <div className="space-y-2">
             <div>
               <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Specimen Type:</span>

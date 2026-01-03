@@ -14,7 +14,7 @@ const ConditionCard = ({ condition }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-600">
+    <div className="bg-gradient-to-br from-white to-teal-50 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-600">
       <div className="space-y-3">
         {/* Condition Name & Likelihood */}
         <div className="flex items-start justify-between">

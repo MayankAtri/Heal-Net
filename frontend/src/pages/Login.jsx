@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { useDarkMode } from '../contexts/DarkModeContext';
+import GlassCard from '../components/ui/GlassCard';
+import AppleButton from '../components/ui/AppleButton';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -52,120 +54,108 @@ export default function Login() {
   };
 
   return (
-    <div className={`min-h-[calc(100vh-200px)] flex items-center justify-center py-12 ${
-      darkMode ? 'bg-gray-900' : 'bg-white'
-    } -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8`}>
+    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8 -mt-20"
+        className="max-w-md w-full space-y-6 -mt-20"
       >
-        <div>
-          <h2 className={`mt-6 text-center text-3xl font-extrabold ${
-            darkMode ? 'text-white' : 'text-gray-900'
-          }`}>
+        <div className="text-center">
+          <motion.div
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="inline-block mb-4"
+          >
+            <div className="w-16 h-16 bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-3xl flex items-center justify-center shadow-lg shadow-blue-500/30 mx-auto">
+              <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+          </motion.div>
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
             Sign in to your account
           </h2>
-          <p className={`mt-2 text-center text-sm ${
-            darkMode ? 'text-gray-400' : 'text-gray-600'
-          }`}>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Or{' '}
             <Link
               to="/register"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-[#007AFF] dark:text-blue-400 hover:underline"
             >
               create a new account
             </Link>
           </p>
         </div>
 
-        <div className={`${
-          darkMode ? 'bg-gray-800' : 'bg-white'
-        } py-8 px-4 shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-lg sm:px-10 ${
-          darkMode
-            ? 'shadow-blue-500/20 hover:shadow-blue-500/40 ring-1 ring-blue-500/10 hover:ring-blue-500/20'
-            : 'shadow-blue-200/30 hover:shadow-blue-300/60 ring-1 ring-blue-200/20 hover:ring-blue-300/40'
-        }`}>
+        <GlassCard padding="lg" hover={false}>
           {error && (
-            <div className="mb-4 bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-              <span className="block sm:inline">{error}</span>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 bg-red-50/70 dark:bg-red-900/30 backdrop-blur-xl border border-red-200/50 dark:border-red-700/50 text-red-700 dark:text-red-200 px-4 py-3 rounded-2xl"
+            >
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <span className="block sm:inline font-medium">{error}</span>
+              </div>
+            </motion.div>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
-                className={`block text-sm font-medium ${
-                  darkMode ? 'text-gray-300' : 'text-gray-700'
-                }`}
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 Email address
               </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`appearance-none block w-full px-3 py-2 border ${
-                    darkMode
-                      ? 'bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:bg-gray-700'
-                      : 'border-gray-300 text-gray-900 hover:border-gray-400 focus:border-blue-500 hover:bg-blue-50/30'
-                  } rounded-md shadow-sm hover:shadow-md focus:shadow-lg transition-all duration-200 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
-                    darkMode
-                      ? 'focus:ring-blue-400 focus:shadow-blue-400/30'
-                      : 'focus:ring-blue-500 focus:shadow-blue-300/50 focus:bg-blue-50/50'
-                  }`}
-                  placeholder="you@example.com"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="appearance-none block w-full px-4 py-3 bg-white/50 dark:bg-gray-700/50 backdrop-blur-xl border border-gray-200/50 dark:border-gray-600/50 text-gray-900 dark:text-white rounded-2xl shadow-sm hover:bg-white/70 dark:hover:bg-gray-700/70 focus:bg-white/80 dark:focus:bg-gray-700/80 focus:border-[#007AFF]/50 dark:focus:border-blue-400/50 transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 dark:focus:ring-blue-400/20 text-sm"
+                placeholder="you@example.com"
+              />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className={`block text-sm font-medium ${
-                  darkMode ? 'text-gray-300' : 'text-gray-700'
-                }`}
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 Password
               </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`appearance-none block w-full px-3 py-2 border ${
-                    darkMode
-                      ? 'bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:bg-gray-700'
-                      : 'border-gray-300 text-gray-900 hover:border-gray-400 focus:border-blue-500 hover:bg-blue-50/30'
-                  } rounded-md shadow-sm hover:shadow-md focus:shadow-lg transition-all duration-200 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
-                    darkMode
-                      ? 'focus:ring-blue-400 focus:shadow-blue-400/30'
-                      : 'focus:ring-blue-500 focus:shadow-blue-300/50 focus:bg-blue-50/50'
-                  }`}
-                  placeholder="••••••••"
-                />
-              </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="appearance-none block w-full px-4 py-3 bg-white/50 dark:bg-gray-700/50 backdrop-blur-xl border border-gray-200/50 dark:border-gray-600/50 text-gray-900 dark:text-white rounded-2xl shadow-sm hover:bg-white/70 dark:hover:bg-gray-700/70 focus:bg-white/80 dark:focus:bg-gray-700/80 focus:border-[#007AFF]/50 dark:focus:border-blue-400/50 transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 dark:focus:ring-blue-400/20 text-sm"
+                placeholder="••••••••"
+              />
             </div>
 
-            <div>
-              <button
+            <div className="pt-2">
+              <AppleButton
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md hover:shadow-xl hover:shadow-blue-400/50 active:shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                loading={loading}
+                variant="primary"
+                size="md"
+                fullWidth
               >
                 {loading ? 'Signing in...' : 'Sign in'}
-              </button>
+              </AppleButton>
             </div>
           </form>
 
@@ -223,14 +213,12 @@ export default function Login() {
           <div className="mt-6 text-center">
             <Link
               to="/"
-              className={`text-sm font-medium ${
-                darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'
-              }`}
+              className="text-sm font-medium text-[#007AFF] dark:text-blue-400 hover:underline"
             >
               Continue as guest
             </Link>
           </div>
-        </div>
+        </GlassCard>
       </motion.div>
     </div>
   );

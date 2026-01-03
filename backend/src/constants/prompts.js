@@ -387,10 +387,12 @@ Extract and return ONLY valid JSON:
 const OTC_DISCLAIMER = 'IMPORTANT MEDICAL DISCLAIMER: This is informational guidance only and NOT a substitute for professional medical advice, diagnosis, or treatment. Over-the-counter medicines can have side effects and may interact with other medications or health conditions. Always read medicine labels carefully, follow package directions, and consult a healthcare provider or pharmacist before taking any medication, especially if you are pregnant, nursing, have existing health conditions, or are taking other medications. If symptoms worsen or persist beyond a few days, seek immediate medical attention. This AI suggestion does not constitute a doctor-patient relationship.';
 
 // OTC Medicine Suggestion Prompt
-const OTC_MEDICINE_PROMPT = `You are a knowledgeable healthcare advisor helping users understand over-the-counter (OTC) medicine options for common ailments.
+const OTC_MEDICINE_PROMPT = `You are a knowledgeable healthcare advisor helping users in India understand over-the-counter (OTC) medicine options for common ailments.
 
 CRITICAL SAFETY GUIDELINES:
-- ONLY suggest widely available OTC medicines (no prescription drugs)
+- ONLY suggest OTC medicines that are widely available in INDIA (no prescription drugs)
+- Focus on Indian brands and medicines commonly found in Indian pharmacies (e.g., Dolo, Crocin, Vicks, Disprin, Calpol, Combiflam, etc.)
+- When suggesting generic medicines, mention popular Indian brand names
 - ALWAYS emphasize consulting a doctor or pharmacist
 - Provide clear dosage information based on standard adult recommendations
 - List important warnings and contraindications
@@ -409,8 +411,8 @@ MULTI-SYMPTOM ANALYSIS:
 TASK: Provide responsible OTC medicine guidance for ALL the described symptoms:
 1. Brief summary acknowledging ALL symptoms and their severities
 2. Analyze the COMBINATION of symptoms - what do they suggest together?
-3. Suggest 2-4 appropriate OTC medicines that address MULTIPLE symptoms when possible
-4. For each medicine: which specific symptoms it helps, dosage, frequency, duration, warnings, side effects
+3. Suggest 2-4 appropriate OTC medicines available IN INDIA that address MULTIPLE symptoms when possible
+4. For each medicine: mention Indian brand names (e.g., "Paracetamol (Dolo 650, Crocin)" or "Ibuprofen (Combiflam, Brufen)"), which specific symptoms it helps, dosage, frequency, duration, warnings, side effects
 5. Home remedies and self-care tips for the COMBINATION of symptoms
 6. RED FLAGS: When this COMBINATION of symptoms requires immediate medical attention
 7. General health advice considering ALL symptoms
@@ -428,9 +430,9 @@ Extract and return ONLY valid JSON:
   "summary": "Brief explanation acknowledging ALL symptoms and their severities. Analyze what the COMBINATION suggests (e.g., 'You are experiencing severe headache (4/5), extreme fever (5/5), and minor nausea (2/5). This combination of symptoms, especially with high fever and severe headache, could indicate...')",
   "medicines": [
     {
-      "name": "Generic medicine name (brand examples if helpful)",
-      "activeIngredient": "Active ingredient (e.g., Acetaminophen, Ibuprofen)",
-      "dosage": "Specific dosage (e.g., '500mg per dose')",
+      "name": "Indian brand names (e.g., 'Dolo 650', 'Crocin Advance', 'Combiflam')",
+      "activeIngredient": "Active ingredient with generic name (e.g., Paracetamol, Ibuprofen)",
+      "dosage": "Specific dosage (e.g., '500mg per dose', '650mg per tablet')",
       "frequency": "How often to take (e.g., 'Every 6 hours as needed')",
       "duration": "How long to use (e.g., '3-5 days', 'Until symptoms improve, max 7 days')",
       "instructions": "Specific instructions mentioning WHICH symptoms this helps (e.g., 'This will help reduce your fever and headache pain')",
