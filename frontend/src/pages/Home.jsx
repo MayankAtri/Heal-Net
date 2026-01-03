@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Card from '../components/common/Card';
+import GlassCard from '../components/ui/GlassCard';
+import AppleButton from '../components/ui/AppleButton';
 
 const Home = () => {
   const features = [
@@ -46,18 +47,116 @@ const Home = () => {
   ];
 
   return (
-    <div className="space-y-20">
-      {/* Hero Section */}
-      <div className="relative py-20 px-6">
-        {/* Hero Content */}
-        <div className="relative z-10 text-center max-w-5xl mx-auto">
+    <div className="relative min-h-screen">
+      {/* Animated Background Gradients */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950"></div>
+
+        {/* Animated gradient blobs */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 dark:from-blue-600/20 dark:to-cyan-600/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/30 to-teal-400/30 dark:from-emerald-600/20 dark:to-teal-600/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            x: [0, 30, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute bottom-0 left-1/3 w-96 h-96 bg-gradient-to-br from-teal-400/30 to-green-400/30 dark:from-teal-600/20 dark:to-green-600/20 rounded-full blur-3xl"
+        />
+
+        {/* Floating decorative elements */}
+        <motion.div
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 5, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/4 left-1/4 w-20 h-20 opacity-10 dark:opacity-5"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" className="text-blue-600">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+          </svg>
+        </motion.div>
+        <motion.div
+          animate={{
+            y: [0, 20, 0],
+            rotate: [0, -5, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 right-1/4 w-16 h-16 opacity-10 dark:opacity-5"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" className="text-teal-600">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </motion.div>
+        <motion.div
+          animate={{
+            y: [0, -15, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute bottom-1/4 left-1/3 w-24 h-24 opacity-10 dark:opacity-5"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" className="text-emerald-600">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </motion.div>
+      </div>
+
+      <div className="relative z-10 space-y-12 pb-16">
+        {/* Hero Section */}
+        <div className="relative pt-8 pb-16 md:pt-12 md:pb-20 px-6">
+          {/* Hero Content */}
+          <div className="relative text-center max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="inline-block mb-6"
           >
-            <span className="px-6 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-500/30 dark:to-purple-500/30 border border-blue-500/30 dark:border-purple-500/30 rounded-full text-sm font-semibold text-blue-700 dark:text-blue-300 backdrop-blur-sm">
+            <span className="px-6 py-2 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 dark:from-blue-500/30 dark:to-emerald-500/30 border border-blue-500/30 dark:border-emerald-500/30 rounded-full text-sm font-semibold text-blue-700 dark:text-emerald-300 backdrop-blur-sm">
               🚀 AI-Powered Medical Intelligence
             </span>
           </motion.div>
@@ -66,11 +165,11 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-6xl md:text-7xl font-extrabold mb-6 leading-tight"
+            className="text-5xl md:text-7xl font-extrabold mb-5 leading-tight"
           >
             <span className="text-gray-900 dark:text-white">Your Personal</span>
             <br />
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
               Medical AI Assistant
             </span>
           </motion.h1>
@@ -79,7 +178,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
             Instantly understand prescriptions, analyze medical reports, and get expert guidance on common health concerns—all powered by cutting-edge AI.
           </motion.p>
@@ -91,14 +190,14 @@ const Home = () => {
             className="flex flex-wrap gap-4 justify-center mb-8"
           >
             <Link to="/prescription">
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-2xl shadow-2xl hover:shadow-blue-500/50 transform hover:scale-105 transition-all duration-300">
+              <AppleButton variant="primary" size="lg">
                 Try Prescription Analysis →
-              </button>
+              </AppleButton>
             </Link>
             <a href="#features">
-              <button className="px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-white font-bold rounded-2xl border-2 border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-400 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+              <AppleButton variant="secondary" size="lg">
                 Learn More
-              </button>
+              </AppleButton>
             </a>
           </motion.div>
 
@@ -123,7 +222,7 @@ const Home = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-6 px-6"
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 px-6"
       >
         {stats.map((stat, index) => (
           <motion.div
@@ -132,13 +231,14 @@ const Home = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 text-center shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
           >
-            <div className="text-4xl mb-2">{stat.icon}</div>
-            <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-1">
-              {stat.number}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
+            <GlassCard padding="md" className="text-center hover:scale-105">
+              <div className="text-4xl mb-3">{stat.icon}</div>
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent mb-2">
+                {stat.number}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
+            </GlassCard>
           </motion.div>
         ))}
       </motion.div>
@@ -150,14 +250,14 @@ const Home = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="text-5xl font-extrabold mb-4">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-extrabold mb-3">
+            <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
               Our Services
             </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Choose from our AI-powered tools designed to help you understand your health better
           </p>
         </motion.div>
@@ -168,37 +268,37 @@ const Home = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.8 }}
-          className="mb-6"
+          className="mb-4"
         >
           <Link to={features[0].path} className="block group">
-            <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${features[0].gradient} p-[3px] shadow-2xl ${features[0].borderGlow} transition-all duration-500 hover:scale-[1.02]`}>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-12 h-full">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  <div className="text-8xl md:text-9xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+            <GlassCard padding="lg" className="hover:scale-[1.01] hover:shadow-3xl group">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="p-6 rounded-3xl bg-gradient-to-br from-[#007AFF]/10 to-blue-500/10 border-2 border-[#007AFF]/20 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                  <div className="text-6xl md:text-7xl">
                     {features[0].icon}
                   </div>
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-4xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                      {features[0].title}
-                    </h3>
-                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                      {features[0].description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-lg group-hover:gap-4 transition-all duration-300">
-                      Get Started
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-3xl font-extrabold mb-3 bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent">
+                    {features[0].title}
+                  </h3>
+                  <p className="text-base text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                    {features[0].description}
+                  </p>
+                  <div className="inline-flex items-center gap-2 text-[#007AFF] dark:text-blue-400 font-bold group-hover:gap-4 transition-all duration-300">
+                    Get Started
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
                   </div>
                 </div>
               </div>
-            </div>
+            </GlassCard>
           </Link>
         </motion.div>
 
         {/* Two Smaller Cards Side by Side */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4">
           {features.slice(1).map((feature, index) => (
             <motion.div
               key={index}
@@ -208,27 +308,29 @@ const Home = () => {
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               <Link to={feature.path} className="block group h-full">
-                <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${feature.gradient} p-[3px] shadow-2xl ${feature.borderGlow} transition-all duration-500 hover:scale-[1.03] h-full`}>
-                  <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 h-full flex flex-col">
-                    <div className="text-7xl mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                      {feature.icon}
+                <GlassCard padding="lg" className="hover:scale-[1.02] h-full">
+                  <div className="flex items-start gap-4">
+                    <div className="p-5 rounded-3xl bg-gradient-to-br from-[#007AFF]/10 to-blue-500/10 border-2 border-[#007AFF]/20 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
+                      <div className="text-5xl">
+                        {feature.icon}
+                      </div>
                     </div>
-                    <h3 className="text-3xl font-extrabold mb-4 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 mb-6 flex-1 leading-relaxed">
-                      {feature.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 font-bold group-hover:gap-4 transition-all duration-300">
-                      <span className={`bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent`}>
+                    <div className="flex-1 flex flex-col">
+                      <h3 className="text-2xl font-extrabold mb-3 bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 flex-1 leading-relaxed">
+                        {feature.description}
+                      </p>
+                      <div className="inline-flex items-center gap-2 text-[#007AFF] dark:text-blue-400 font-bold text-sm group-hover:gap-4 transition-all duration-300">
                         Explore Now
-                      </span>
-                      <svg className={`w-5 h-5 text-${index === 0 ? 'green' : 'purple'}-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </GlassCard>
               </Link>
             </motion.div>
           ))}
@@ -243,12 +345,12 @@ const Home = () => {
         transition={{ duration: 0.8 }}
         className="px-6"
       >
-        <h2 className="text-4xl font-extrabold text-center mb-12">
-          <span className="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-extrabold text-center mb-8">
+          <span className="bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent">
             Why Choose HealNet?
           </span>
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
@@ -256,11 +358,12 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
-              <div className="text-5xl mb-4">{benefit.icon}</div>
-              <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{benefit.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">{benefit.description}</p>
+              <GlassCard padding="md" className="hover:scale-105 h-full">
+                <div className="text-5xl mb-4">{benefit.icon}</div>
+                <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{benefit.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{benefit.description}</p>
+              </GlassCard>
             </motion.div>
           ))}
         </div>
@@ -272,20 +375,21 @@ const Home = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-800 dark:via-blue-900/20 dark:to-purple-900/20 rounded-3xl shadow-2xl p-12 mx-6 border border-gray-200 dark:border-gray-700"
+        className="mx-6"
       >
-        <h2 className="text-5xl font-extrabold text-center mb-4">
-          <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+        <GlassCard padding="lg" hover={false}>
+        <h2 className="text-3xl font-extrabold text-center mb-3">
+          <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
             How It Works
           </span>
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 text-lg mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-gray-600 dark:text-gray-300 text-base mb-8 max-w-2xl mx-auto">
           Get accurate medical insights in three simple steps
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8 relative">
+        <div className="grid md:grid-cols-3 gap-6 relative">
           {/* Connecting Line (hidden on mobile) */}
-          <div className="hidden md:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 transform translate-y-1/2 -z-0 rounded-full"></div>
+          <div className="hidden md:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500 transform translate-y-1/2 -z-0 rounded-full"></div>
 
           {[
             {
@@ -306,7 +410,7 @@ const Home = () => {
               step: '3',
               title: 'Get Insights',
               description: 'Receive clear, actionable insights and recommendations instantly',
-              gradient: 'from-purple-500 to-pink-600',
+              gradient: 'from-teal-500 to-emerald-600',
               icon: '✨'
             }
           ].map((item, index) => (
@@ -318,7 +422,7 @@ const Home = () => {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative text-center group"
             >
-              <div className={`bg-gradient-to-br ${item.gradient} text-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 text-3xl font-extrabold shadow-2xl group-hover:shadow-purple-500/50 group-hover:scale-110 transition-all duration-500 relative z-10`}>
+              <div className={`bg-gradient-to-br ${item.gradient} text-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 text-3xl font-extrabold shadow-2xl group-hover:shadow-teal-500/50 group-hover:scale-110 transition-all duration-500 relative z-10`}>
                 {item.step}
               </div>
               <div className="text-5xl mb-4">{item.icon}</div>
@@ -327,6 +431,7 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
+        </GlassCard>
       </motion.div>
 
       {/* CTA Section */}
@@ -335,7 +440,7 @@ const Home = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-12 mx-6 text-center text-white"
+        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 rounded-3xl shadow-2xl p-12 mx-6 text-center text-white"
       >
         {/* Animated background effect */}
         <div className="absolute inset-0 bg-grid-white/10 bg-[size:20px_20px]"></div>
@@ -355,18 +460,19 @@ const Home = () => {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/prescription">
-              <button className="px-8 py-4 bg-white text-purple-600 font-bold rounded-2xl shadow-2xl hover:shadow-white/50 transform hover:scale-105 transition-all duration-300">
+              <AppleButton variant="secondary" size="lg">
                 Try Prescription Analysis
-              </button>
+              </AppleButton>
             </Link>
             <Link to="/reports">
-              <button className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-2xl hover:bg-white/10 transform hover:scale-105 transition-all duration-300">
+              <AppleButton variant="glass" size="lg" className="border-white/30 text-white dark:text-white hover:bg-white/20">
                 Analyze Medical Reports
-              </button>
+              </AppleButton>
             </Link>
           </div>
         </div>
       </motion.div>
+      </div>
     </div>
   );
 };

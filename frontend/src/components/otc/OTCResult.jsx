@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Card from '../common/Card';
+import GlassCard from '../ui/GlassCard';
 import Button from '../common/Button';
 import MedicineRecommendation from './MedicineRecommendation';
 import Badge from '../common/Badge';
@@ -77,12 +77,27 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {summary && (
         <motion.div variants={itemVariants}>
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
-            <Card title="Summary" className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-              <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{summary}</p>
-            </Card>
+            <GlassCard padding="lg" className="bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-900/10 dark:to-cyan-900/10 border-blue-200/50 dark:border-blue-700/50">
+              <div className="flex items-start space-x-3">
+                <motion.span
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="text-3xl"
+                >
+                  📋
+                </motion.span>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-3">
+                    Summary
+                  </h3>
+                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">{summary}</p>
+                </div>
+              </div>
+            </GlassCard>
           </motion.div>
         </motion.div>
       )}
@@ -91,10 +106,23 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {medicines.length > 0 && (
         <motion.div variants={itemVariants}>
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
-            <Card title="💊 Recommended OTC Medicines" className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700">
+            <GlassCard padding="lg" className="bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/10 dark:to-teal-900/10 border-emerald-200/50 dark:border-emerald-700/50">
+              <div className="flex items-start space-x-3 mb-4">
+                <motion.span
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5, type: "spring", delay: 0.1 }}
+                  className="text-3xl"
+                >
+                  💊
+                </motion.span>
+                <h3 className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+                  Recommended OTC Medicines
+                </h3>
+              </div>
               <div className="space-y-4">
                 {medicines.map((medicine, index) => (
                   <motion.div
@@ -107,7 +135,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                   </motion.div>
                 ))}
               </div>
-            </Card>
+            </GlassCard>
           </motion.div>
         </motion.div>
       )}
@@ -116,10 +144,23 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {homeRemedies.length > 0 && (
         <motion.div variants={itemVariants}>
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
-            <Card title="🏠 Home Remedies" className="bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700">
+            <GlassCard padding="lg" className="bg-gradient-to-br from-teal-50/50 to-emerald-50/50 dark:from-teal-900/10 dark:to-emerald-900/10 border-teal-200/50 dark:border-teal-700/50">
+              <div className="flex items-start space-x-3 mb-4">
+                <motion.span
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5, type: "spring", delay: 0.2 }}
+                  className="text-3xl"
+                >
+                  🏠
+                </motion.span>
+                <h3 className="text-lg font-bold bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                  Home Remedies
+                </h3>
+              </div>
               <ul className="space-y-3">
                 {homeRemedies.map((remedy, index) => (
                   <motion.li
@@ -127,14 +168,21 @@ const OTCResult = ({ result, onConsultAnother }) => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ x: 4 }}
                     className="flex items-start space-x-3"
                   >
-                    <span className="text-xl mt-1">🌿</span>
+                    <motion.span
+                      whileHover={{ rotate: 360, scale: 1.2 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-xl mt-1"
+                    >
+                      🌿
+                    </motion.span>
                     <span className="text-gray-800 dark:text-gray-200 flex-1">{remedy}</span>
                   </motion.li>
                 ))}
               </ul>
-            </Card>
+            </GlassCard>
           </motion.div>
         </motion.div>
       )}
@@ -143,12 +191,27 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {generalAdvice && (
         <motion.div variants={itemVariants}>
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
-            <Card title="💡 General Advice" className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700">
-              <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{generalAdvice}</p>
-            </Card>
+            <GlassCard padding="lg" className="bg-gradient-to-br from-amber-50/50 to-yellow-50/50 dark:from-amber-900/10 dark:to-yellow-900/10 border-amber-200/50 dark:border-amber-700/50">
+              <div className="flex items-start space-x-3">
+                <motion.span
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5, type: "spring", delay: 0.3 }}
+                  className="text-3xl"
+                >
+                  💡
+                </motion.span>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold bg-gradient-to-r from-amber-600 to-yellow-600 dark:from-amber-400 dark:to-yellow-400 bg-clip-text text-transparent mb-3">
+                    General Advice
+                  </h3>
+                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">{generalAdvice}</p>
+                </div>
+              </div>
+            </GlassCard>
           </motion.div>
         </motion.div>
       )}
@@ -157,14 +220,21 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {whenToSeeDoctor.length > 0 && (
         <motion.div variants={itemVariants}>
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
-            <Card className="bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-700">
+            <GlassCard padding="lg" className="bg-gradient-to-br from-red-50/50 to-rose-50/50 dark:from-red-900/10 dark:to-rose-900/10 border-red-300/50 dark:border-red-700/50">
               <div className="flex items-start space-x-3">
-                <span className="text-3xl">🚨</span>
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 0.5, repeat: 3, delay: 0.4 }}
+                  className="text-3xl"
+                >
+                  🚨
+                </motion.span>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-red-900 dark:text-red-200 mb-3">
+                  <h3 className="text-lg font-bold bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-400 dark:to-rose-400 bg-clip-text text-transparent mb-3">
                     Seek Medical Attention If:
                   </h3>
                   <ul className="space-y-2">
@@ -174,6 +244,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.1 }}
+                        whileHover={{ x: 4 }}
                         className="flex items-start space-x-2"
                       >
                         <span className="text-red-600 dark:text-red-400 mt-1 font-bold">•</span>
@@ -183,7 +254,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                   </ul>
                 </div>
               </div>
-            </Card>
+            </GlassCard>
           </motion.div>
         </motion.div>
       )}
@@ -191,14 +262,21 @@ const OTCResult = ({ result, onConsultAnother }) => {
       {/* Medical Disclaimer */}
       <motion.div variants={itemVariants}>
         <motion.div
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
+          whileHover={{ scale: 1.01, y: -2 }}
+          transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
         >
-          <Card className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+          <GlassCard padding="lg" className="bg-gradient-to-br from-gray-50/50 to-slate-50/50 dark:from-gray-800/50 dark:to-slate-800/50 border-gray-300/50 dark:border-gray-600/50">
             <div className="flex items-start space-x-3">
-              <span className="text-2xl">ℹ️</span>
+              <motion.span
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.5, type: "spring", delay: 0.5 }}
+                className="text-2xl"
+              >
+                ℹ️
+              </motion.span>
               <div className="flex-1">
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-sm font-bold bg-gradient-to-r from-gray-700 to-slate-700 dark:from-gray-300 dark:to-slate-300 bg-clip-text text-transparent mb-2">
                   Important Disclaimer
                 </h3>
                 <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -210,7 +288,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                 </p>
               </div>
             </div>
-          </Card>
+          </GlassCard>
         </motion.div>
       </motion.div>
     </motion.div>

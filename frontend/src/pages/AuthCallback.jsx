@@ -8,43 +8,58 @@ export default function AuthCallback() {
   const [searchParams] = useSearchParams();
   const { checkAuth } = useAuth();
   const { darkMode } = useDarkMode();
+  const [isProcessing, setIsProcessing] = React.useState(false);
 
   useEffect(() => {
     const handleCallback = async () => {
+      // Prevent multiple executions
+      if (isProcessing) {
+        console.log('Already processing, skipping...');
+        return;
+      }
+
+      setIsProcessing(true);
+      console.log('=== Auth Callback Debug ===');
+      console.log('All search params:', Object.fromEntries(searchParams.entries()));
+
       const success = searchParams.get('success');
       const error = searchParams.get('error');
-      const accessToken = searchParams.get('accessToken');
-      const refreshToken = searchParams.get('refreshToken');
+
+      console.log('Parsed values:', { success, error });
 
       if (error) {
-        // Redirect to login with error
+        console.error('Auth callback error:', error);
         navigate('/login?error=' + error, { replace: true });
         return;
       }
 
-      if (success === 'true' && accessToken && refreshToken) {
+      if (success === 'true') {
         try {
-          // Store tokens in localStorage (cross-domain cookie alternative)
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
+          console.log('Google auth successful, checking authentication...');
 
-          // Refresh auth state
+          // Wait a moment for cookies to be properly set
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          // Cookies are already set by the backend, just check auth
           await checkAuth();
 
-          // Clean URL and redirect home
+          console.log('Auth successful, redirecting to home...');
+
+          // Small delay before redirect to ensure state is updated
+          await new Promise(resolve => setTimeout(resolve, 200));
           navigate('/', { replace: true });
         } catch (err) {
-          console.error('Failed to store tokens:', err);
+          console.error('Failed to verify authentication:', err);
           navigate('/login?error=auth_failed', { replace: true });
         }
       } else {
-        // No success parameter, redirect to login
+        console.warn('No success parameter, redirecting to login');
         navigate('/login', { replace: true });
       }
     };
 
     handleCallback();
-  }, [searchParams, navigate, checkAuth]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={`min-h-screen flex items-center justify-center ${

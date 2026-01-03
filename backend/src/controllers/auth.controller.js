@@ -307,14 +307,10 @@ const googleCallback = async (req, res) => {
     console.log('Environment:', process.env.NODE_ENV);
     console.log('Frontend URL:', process.env.FRONTEND_URL);
 
-    // Pass tokens in URL for cross-domain cookie issues
-    // Frontend will receive these and make a request to set cookies properly
-    const redirectUrl = new URL(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback`);
-    redirectUrl.searchParams.set('success', 'true');
-    redirectUrl.searchParams.set('accessToken', result.tokens.accessToken);
-    redirectUrl.searchParams.set('refreshToken', result.tokens.refreshToken);
+    // Cookies are already set, just redirect with success flag
+    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?success=true`;
 
-    res.redirect(redirectUrl.toString());
+    res.redirect(redirectUrl);
   } catch (error) {
     console.error('Google callback error:', error);
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);

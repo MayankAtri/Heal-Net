@@ -27,30 +27,26 @@ export const AuthProvider = ({ children }) => {
       // Get token from localStorage
       const token = localStorage.getItem('accessToken');
 
-      if (!token) {
-        setUser(null);
-        setAccessToken(null);
-        setLoading(false);
-        return;
-      }
+      // Try with Authorization header if we have a token in localStorage
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
       const response = await fetch(`${API_URL}/auth/me`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        credentials: 'include'
+        headers,
+        credentials: 'include' // This will send cookies if they exist
       });
 
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
         setAccessToken(token);
+        console.log('Auth check successful, user:', data.user);
       } else {
         // Token invalid, clear it
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         setUser(null);
         setAccessToken(null);
+        console.log('Auth check failed, response not ok');
       }
     } catch (error) {
       console.error('Auth check failed:', error);

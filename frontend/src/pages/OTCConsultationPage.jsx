@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useOTC } from '../hooks/useOTC';
 import SymptomSelector from '../components/otc/SymptomSelector';
 import SymptomSeverityList from '../components/otc/SymptomSeverityList';
 import CustomSymptomForm from '../components/otc/CustomSymptomForm';
 import OTCResult from '../components/otc/OTCResult';
 import ErrorAlert from '../components/common/ErrorAlert';
-import Card from '../components/common/Card';
+import GlassCard from '../components/ui/GlassCard';
 import Button from '../components/common/Button';
 
 const OTCConsultationPage = () => {
@@ -94,31 +94,82 @@ const OTCConsultationPage = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
-          OTC Medicine Consultation
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Get AI-powered recommendations for over-the-counter medicines based on your symptoms,
-          along with home remedies and guidance on when to seek professional care.
-        </p>
+    <div className="relative min-h-screen">
+      {/* Animated Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950"></div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-600/10 dark:to-cyan-600/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-3xl"
+        />
       </div>
 
-      {/* Error Alert */}
-      {error && (
-        <ErrorAlert
-          message={error}
-          onDismiss={reset}
-          className="mb-6"
-        />
-      )}
+      <div className="relative z-10 max-w-5xl mx-auto">
+        {/* Page Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <h1 className="text-4xl font-bold mb-3">
+            <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+              OTC Medicine Consultation
+            </span>
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+            Get AI-powered recommendations for over-the-counter medicines based on your symptoms,
+            along with home remedies and guidance on when to seek professional care.
+          </p>
+        </motion.div>
 
-      {/* Main Content */}
-      {!result ? (
-        <form onSubmit={handleSubmit}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        {/* Error Alert */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ErrorAlert
+              message={error}
+              onDismiss={reset}
+              className="mb-6"
+            />
+          </motion.div>
+        )}
+
+        {/* Main Content */}
+        {!result ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <form onSubmit={handleSubmit}>
+              <GlassCard padding="lg">
             <div className="space-y-8">
               {/* Symptom Selector */}
               <SymptomSelector
@@ -128,26 +179,42 @@ const OTCConsultationPage = () => {
               />
 
               {/* Severity List - Show for predefined symptoms */}
-              {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') && (
-                <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-                  <SymptomSeverityList
-                    selectedSymptoms={selectedSymptoms}
-                    severities={severities}
-                    onSeverityChange={handleSeverityChange}
-                    disabled={loading}
-                  />
-                </div>
-              )}
+              <AnimatePresence mode="wait">
+                {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') && (
+                  <motion.div
+                    key="severity-list"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
+                  >
+                    <SymptomSeverityList
+                      selectedSymptoms={selectedSymptoms}
+                      severities={severities}
+                      onSeverityChange={handleSeverityChange}
+                      disabled={loading}
+                    />
+                  </motion.div>
+                )}
 
-              {/* Custom Symptom Form */}
-              {selectedSymptoms.includes('custom') && (
-                <div className="pt-6 border-t border-gray-200">
-                  <CustomSymptomForm
-                    onSymptomChange={handleCustomSymptomChange}
-                    disabled={loading}
-                  />
-                </div>
-              )}
+                {/* Custom Symptom Form */}
+                {selectedSymptoms.includes('custom') && (
+                  <motion.div
+                    key="custom-form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
+                  >
+                    <CustomSymptomForm
+                      onSymptomChange={handleCustomSymptomChange}
+                      disabled={loading}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Submit Button */}
               {selectedSymptoms.length > 0 && (
@@ -181,28 +248,44 @@ const OTCConsultationPage = () => {
                   initial={{ opacity: 0, scale: 0.9, y: -10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 shadow-lg overflow-hidden relative"
+                  className="bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/20 dark:to-emerald-900/20 border-2 border-blue-200 dark:border-emerald-700 rounded-2xl p-6 shadow-2xl overflow-hidden relative"
                 >
                   <motion.div
                     animate={{
                       opacity: [0.5, 1, 0.5],
-                      scale: [1, 1.02, 1]
+                      scale: [1, 1.01, 1]
                     }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative z-10"
                   >
-                    <p className="text-sm text-blue-800 dark:text-blue-200 text-center relative z-10">
-                      <span className="font-semibold">Analyzing your symptoms...</span>
-                      <br />
-                      This may take 15-30 seconds while our AI prepares personalized recommendations.
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                        className="w-8 h-8 border-3 border-blue-500 border-t-emerald-500 rounded-full"
+                      />
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-3xl"
+                      >
+                        💊
+                      </motion.div>
+                    </div>
+                    <p className="text-sm font-bold bg-gradient-to-r from-blue-700 to-emerald-700 dark:from-blue-300 dark:to-emerald-300 bg-clip-text text-transparent text-center">
+                      Analyzing your symptoms...
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-2">
+                      This may take 15-30 seconds while our AI prepares personalized recommendations
                     </p>
                   </motion.div>
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/30 dark:via-blue-500/20 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/30 dark:via-emerald-500/20 to-transparent"
                     animate={{
                       x: ['-100%', '200%']
                     }}
                     transition={{
-                      duration: 2,
+                      duration: 2.5,
                       repeat: Infinity,
                       ease: "linear"
                     }}
@@ -210,64 +293,81 @@ const OTCConsultationPage = () => {
                 </motion.div>
               )}
             </div>
-          </Card>
+          </GlassCard>
         </form>
-      ) : (
-        <OTCResult result={result} onConsultAnother={handleConsultAnother} />
-      )}
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <OTCResult result={result} onConsultAnother={handleConsultAnother} />
+          </motion.div>
+        )}
 
-      {/* Information Card */}
-      {!result && !loading && (
-        <Card className="mt-8 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">How it works</h3>
-            <ol className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-              <li className="flex items-start space-x-3">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center text-xs font-bold">
-                  1
-                </span>
-                <span>
-                  <strong>Select Symptoms:</strong> Choose one or more symptoms from common options, or describe custom symptoms in detail
-                </span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center text-xs font-bold">
-                  2
-                </span>
-                <span>
-                  <strong>Rate Severity:</strong> Rate the severity (1-5) for each selected symptom
-                </span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center text-xs font-bold">
-                  3
-                </span>
-                <span>
-                  <strong>Get Recommendations:</strong> AI analyzes all your symptoms and suggests appropriate OTC medicines, home remedies, and guidance
-                </span>
-              </li>
-            </ol>
+        {/* Information Card */}
+        {!result && !loading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-8"
+          >
+            <GlassCard padding="lg" className="bg-gradient-to-br from-blue-50/50 to-emerald-50/50 dark:from-blue-900/10 dark:to-emerald-900/10">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                  How it works
+                </h3>
+                <ol className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start space-x-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
+                      1
+                    </span>
+                    <span>
+                      <strong>Select Symptoms:</strong> Choose one or more symptoms from common options, or describe custom symptoms in detail
+                    </span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
+                      2
+                    </span>
+                    <span>
+                      <strong>Rate Severity:</strong> Rate the severity (1-5) for each selected symptom
+                    </span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
+                      3
+                    </span>
+                    <span>
+                      <strong>Get Recommendations:</strong> AI analyzes all your symptoms and suggests appropriate OTC medicines, home remedies, and guidance
+                    </span>
+                  </li>
+                </ol>
 
-            <div className="mt-6 pt-4 border-t border-blue-300 dark:border-blue-600">
-              <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-2">Remember:</h4>
-              <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                <li className="flex items-start space-x-2">
-                  <span className="text-medical dark:text-green-400">•</span>
-                  <span>This is not a replacement for professional medical advice</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-medical dark:text-green-400">•</span>
-                  <span>Always read medicine labels and follow dosage instructions</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-medical dark:text-green-400">•</span>
-                  <span>Consult a doctor if symptoms persist or worsen</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-      )}
+                <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Remember:</h4>
+                  <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li className="flex items-start space-x-2">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+                      <span>This is not a replacement for professional medical advice</span>
+                    </li>
+                    <li className="flex items-start space-x-2">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+                      <span>Always read medicine labels and follow dosage instructions</span>
+                    </li>
+                    <li className="flex items-start space-x-2">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+                      <span>Consult a doctor if symptoms persist or worsen</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </GlassCard>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
