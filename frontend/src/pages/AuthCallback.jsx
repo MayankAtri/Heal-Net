@@ -20,12 +20,18 @@ export default function AuthCallback() {
 
       setIsProcessing(true);
       console.log('=== Auth Callback Debug ===');
-      console.log('All search params:', Object.fromEntries(searchParams.entries()));
 
-      const success = searchParams.get('success');
+      // Check for tokens in URL hash (for Google OAuth)
+      const hash = window.location.hash.substring(1); // Remove the '#'
+      const hashParams = new URLSearchParams(hash);
+      const accessToken = hashParams.get('accessToken');
+      const refreshToken = hashParams.get('refreshToken');
+
+      // Check for error in query params
       const error = searchParams.get('error');
 
-      console.log('Parsed values:', { success, error });
+      console.log('Hash params:', { hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken });
+      console.log('Query params:', { error });
 
       if (error) {
         console.error('Auth callback error:', error);
@@ -33,14 +39,16 @@ export default function AuthCallback() {
         return;
       }
 
-      if (success === 'true') {
+      // If we have tokens in the hash (Google OAuth)
+      if (accessToken && refreshToken) {
         try {
-          console.log('Google auth successful, checking authentication...');
+          console.log('Google OAuth tokens received, storing in localStorage...');
 
-          // Wait a moment for cookies to be properly set
-          await new Promise(resolve => setTimeout(resolve, 100));
+          // Store tokens in localStorage
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
-          // Cookies are already set by the backend, just check auth
+          // Check auth to update context
           await checkAuth();
 
           console.log('Auth successful, redirecting to home...');
@@ -53,7 +61,7 @@ export default function AuthCallback() {
           navigate('/login?error=auth_failed', { replace: true });
         }
       } else {
-        console.warn('No success parameter, redirecting to login');
+        console.warn('No tokens found in URL, redirecting to login');
         navigate('/login', { replace: true });
       }
     };

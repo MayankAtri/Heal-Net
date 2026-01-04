@@ -22,7 +22,14 @@ export default function PrescriptionDetailPage() {
   const fetchPrescription = async () => {
     try {
       setLoading(true);
+      const token = localStorage.getItem('accessToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_URL}/prescriptions/${id}`, {
+        headers,
         credentials: 'include'
       });
 

@@ -27,6 +27,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   'https://heal-net-three.vercel.app',
+  'https://www.heal-net-three.vercel.app',
   process.env.FRONTEND_URL // Add your production frontend URL in Render env vars
 ].filter(Boolean); // Remove undefined/null values
 
@@ -42,7 +43,12 @@ app.use(cors({
       return allowedWithoutSlash === originWithoutSlash;
     });
 
-    if (!isAllowed) {
+    // Also allow any Vercel preview deployment URLs
+    const isVercelPreview = origin && origin.match(/^https:\/\/heal-net.*\.vercel\.app$/);
+
+    if (!isAllowed && !isVercelPreview) {
+      console.error('🚫 CORS Error - Origin not allowed:', origin);
+      console.error('📋 Allowed origins:', allowedOrigins);
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }

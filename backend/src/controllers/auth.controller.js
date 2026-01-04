@@ -307,8 +307,9 @@ const googleCallback = async (req, res) => {
     console.log('Environment:', process.env.NODE_ENV);
     console.log('Frontend URL:', process.env.FRONTEND_URL);
 
-    // Cookies are already set, just redirect with success flag
-    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?success=true`;
+    // Pass tokens in URL hash (more secure than query params for sensitive data)
+    // Frontend will extract and store them in localStorage
+    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback#accessToken=${encodeURIComponent(result.tokens.accessToken)}&refreshToken=${encodeURIComponent(result.tokens.refreshToken)}`;
 
     res.redirect(redirectUrl);
   } catch (error) {

@@ -36,7 +36,14 @@ export default function History() {
       if (filter !== 'all') params.append('type', filter);
       if (searchQuery) params.append('search', searchQuery);
 
+      const token = localStorage.getItem('accessToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_URL}/history?${params}`, {
+        headers,
         credentials: 'include'
       });
 
@@ -55,7 +62,14 @@ export default function History() {
 
   const fetchStats = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_URL}/history/stats`, {
+        headers,
         credentials: 'include'
       });
 
@@ -72,8 +86,15 @@ export default function History() {
     if (!confirm('Are you sure you want to delete this item?')) return;
 
     try {
+      const token = localStorage.getItem('accessToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_URL}/history/${itemType}/${itemId}`, {
         method: 'DELETE',
+        headers,
         credentials: 'include'
       });
 
