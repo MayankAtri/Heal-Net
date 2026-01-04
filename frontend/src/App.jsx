@@ -12,6 +12,7 @@ import MedicalReportsPage from './pages/MedicalReportsPage';
 import ReportDetailPage from './pages/ReportDetailPage';
 import OTCConsultationPage from './pages/OTCConsultationPage';
 import OTCDetailPage from './pages/OTCDetailPage';
+import DisposalPage from './pages/DisposalPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AuthCallback from './pages/AuthCallback';
@@ -50,6 +51,7 @@ function AnimatedRoutes() {
           <Route path="/reports/:id" element={<PageTransition><ReportDetailPage /></PageTransition>} />
           <Route path="/otc" element={<PageTransition><OTCConsultationPage /></PageTransition>} />
           <Route path="/otc/:id" element={<PageTransition><OTCDetailPage /></PageTransition>} />
+          <Route path="/disposal" element={<PageTransition><DisposalPage /></PageTransition>} />
           <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
           <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
           <Route path="/auth/callback" element={<PageTransition><AuthCallback /></PageTransition>} />

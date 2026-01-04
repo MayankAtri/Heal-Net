@@ -102,6 +102,7 @@ const Navbar = () => {
     { path: '/prescription', label: 'Prescription' },
     { path: '/reports', label: 'Medical Reports' },
     { path: '/otc', label: 'OTC Consultation' },
+    { path: '/disposal', label: 'Disposal Info' },
   ];
 
   return (
@@ -127,7 +128,7 @@ const Navbar = () => {
           <div
             className="hidden md:flex items-center ml-auto bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-full shadow-lg border border-white/20 dark:border-gray-800/20 px-2 py-2"
             style={{
-              maxWidth: isNavExpanded ? '800px' : '60px',
+              maxWidth: isNavExpanded ? '950px' : '60px',
               transition: 'max-width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
               overflow: isNavExpanded ? 'visible' : 'hidden'
             }}
@@ -156,7 +157,7 @@ const Navbar = () => {
 
             {/* Expanded Content */}
             <div
-              className="flex items-center gap-3"
+              className="flex items-center gap-2"
               style={{
                 opacity: isNavExpanded ? 1 : 0,
                 transition: 'opacity 0.4s ease-in-out 0.1s',
@@ -167,7 +168,7 @@ const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                  className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                     isActive(link.path)
                       ? 'bg-[#007AFF] text-white shadow-md shadow-blue-500/30'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-800/50'

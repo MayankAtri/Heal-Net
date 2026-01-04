@@ -29,6 +29,14 @@ const Home = () => {
       path: '/otc',
       gradient: 'from-purple-500 via-violet-600 to-purple-700',
       borderGlow: 'group-hover:shadow-purple-500/50'
+    },
+    {
+      title: 'Medicine Disposal',
+      description: 'Find nearby disposal locations and learn how to safely dispose of unused or expired medicines.',
+      icon: '♻️',
+      path: '/disposal',
+      gradient: 'from-teal-500 via-emerald-600 to-green-600',
+      borderGlow: 'group-hover:shadow-teal-500/50'
     }
   ];
 
@@ -262,44 +270,9 @@ const Home = () => {
           </p>
         </motion.div>
 
-        {/* Large Feature Card (First) */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.8 }}
-          className="mb-4"
-        >
-          <Link to={features[0].path} className="block group">
-            <GlassCard padding="lg" className="hover:scale-[1.01] hover:shadow-3xl group">
-              <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="p-6 rounded-3xl bg-gradient-to-br from-[#007AFF]/10 to-blue-500/10 border-2 border-[#007AFF]/20 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                  <div className="text-6xl md:text-7xl">
-                    {features[0].icon}
-                  </div>
-                </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-extrabold mb-3 bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent">
-                    {features[0].title}
-                  </h3>
-                  <p className="text-base text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                    {features[0].description}
-                  </p>
-                  <div className="inline-flex items-center gap-2 text-[#007AFF] dark:text-blue-400 font-bold group-hover:gap-4 transition-all duration-300">
-                    Get Started
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </GlassCard>
-          </Link>
-        </motion.div>
-
-        {/* Two Smaller Cards Side by Side */}
+        {/* All Feature Cards - Equal Size 2x2 Grid */}
         <div className="grid md:grid-cols-2 gap-4">
-          {features.slice(1).map((feature, index) => (
+          {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
@@ -308,22 +281,22 @@ const Home = () => {
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               <Link to={feature.path} className="block group h-full">
-                <GlassCard padding="lg" className="hover:scale-[1.02] h-full">
-                  <div className="flex items-start gap-4">
-                    <div className="p-5 rounded-3xl bg-gradient-to-br from-[#007AFF]/10 to-blue-500/10 border-2 border-[#007AFF]/20 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
-                      <div className="text-5xl">
+                <GlassCard padding="lg" className={`hover:scale-[1.02] h-full hover:shadow-2xl ${feature.borderGlow} transition-all duration-300`}>
+                  <div className="flex flex-col items-center text-center gap-4">
+                    <div className={`p-6 rounded-3xl bg-gradient-to-br ${feature.gradient} bg-opacity-10 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <div className="text-6xl">
                         {feature.icon}
                       </div>
                     </div>
                     <div className="flex-1 flex flex-col">
-                      <h3 className="text-2xl font-extrabold mb-3 bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent">
+                      <h3 className={`text-2xl font-extrabold mb-3 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent`}>
                         {feature.title}
                       </h3>
                       <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 flex-1 leading-relaxed">
                         {feature.description}
                       </p>
-                      <div className="inline-flex items-center gap-2 text-[#007AFF] dark:text-blue-400 font-bold text-sm group-hover:gap-4 transition-all duration-300">
-                        Explore Now
+                      <div className={`inline-flex items-center justify-center gap-2 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent font-bold text-sm group-hover:gap-4 transition-all duration-300`}>
+                        Get Started
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>

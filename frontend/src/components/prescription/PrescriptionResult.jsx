@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import Button from '../common/Button';
 import MedicineCard from './MedicineCard';
@@ -7,6 +8,7 @@ import { formatDate } from '../../utils/formatters';
 
 const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
   const { simplifiedAnalysis, createdAt } = result;
+  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -204,6 +206,57 @@ const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
         </motion.div>
       )}
 
+      {/* Medicine Disposal Info */}
+      <motion.div variants={itemVariants}>
+        <motion.div
+          whileHover={{ scale: 1.02, y: -4 }}
+          transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+        >
+          <GlassCard padding="lg" className="bg-gradient-to-br from-emerald-50/50 to-green-50/50 dark:from-emerald-900/10 dark:to-green-900/10 border-emerald-200/50 dark:border-emerald-700/50">
+            <div className="flex items-start space-x-3">
+              <motion.span
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.5, type: "spring", delay: 0.6 }}
+                className="text-3xl"
+              >
+                ♻️
+              </motion.span>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent mb-3">
+                  Medicine Disposal Information
+                </h3>
+                <p className="text-gray-800 dark:text-gray-200 mb-4">
+                  Proper disposal of unused or expired medications is crucial for environmental safety and preventing misuse.
+                  Never flush medicines down the toilet or throw them in regular trash.
+                </p>
+                <ul className="space-y-2 mb-4">
+                  <li className="flex items-start space-x-2">
+                    <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                    <span className="text-gray-800 dark:text-gray-200 text-sm">Take unused medicines to authorized pharmacy take-back programs</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                    <span className="text-gray-800 dark:text-gray-200 text-sm">Remove personal information from prescription labels before disposal</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                    <span className="text-gray-800 dark:text-gray-200 text-sm">Check with local pharmacies or hospitals for disposal locations near you</span>
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => navigate('/disposal')}
+                  variant="primary"
+                  className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700"
+                >
+                  Find Disposal Locations Near You →
+                </Button>
+              </div>
+            </div>
+          </GlassCard>
+        </motion.div>
+      </motion.div>
+
       {/* Medical Disclaimer */}
       <motion.div variants={itemVariants}>
         <motion.div
@@ -215,7 +268,7 @@ const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
               <motion.span
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
-                transition={{ duration: 0.5, type: "spring", delay: 0.5 }}
+                transition={{ duration: 0.5, type: "spring", delay: 0.7 }}
                 className="text-2xl"
               >
                 ℹ️
