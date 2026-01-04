@@ -101,6 +101,11 @@ vite.config.ts.timestamp-*
 # Production
 /dist
 
+# Claude Code
+.claude/
+*.claude.md
+claude-*.md
+
 # Misc
 .cache
 .parcel-cache
