@@ -363,7 +363,14 @@ export default function History() {
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
-                              onClick={() => navigate(`/${item.type === 'prescription' ? 'prescription' : item.type === 'report' ? 'reports' : 'otc'}/${item.id}`)}
+                              onClick={() => {
+                                const routeMap = {
+                                  'prescription': `/prescription/${item.id}`,
+                                  'report': `/reports/${item.id}`,
+                                  'otc': `/otc/${item.id}`
+                                };
+                                navigate(routeMap[item.type] || '/');
+                              }}
                               className="text-indigo-600 dark:text-cyan-400 hover:text-indigo-700 dark:hover:text-cyan-300 font-medium text-sm"
                             >
                               View Details →
