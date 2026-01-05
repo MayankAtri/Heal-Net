@@ -8,6 +8,7 @@ import OTCResult from '../components/otc/OTCResult';
 import ErrorAlert from '../components/common/ErrorAlert';
 import GlassCard from '../components/ui/GlassCard';
 import Button from '../components/common/Button';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 const OTCConsultationPage = () => {
   const { consult, loading, error, result, reset } = useOTC();
@@ -95,37 +96,8 @@ const OTCConsultationPage = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950"></div>
-
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-600/10 dark:to-cyan-600/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-3xl"
-        />
-      </div>
+      {/* Optimized Animated Background */}
+      <AnimatedBackground variant="default" />
 
       <div className="relative z-10 max-w-5xl mx-auto">
         {/* Page Header */}
@@ -264,13 +236,9 @@ const OTCConsultationPage = () => {
                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                         className="w-8 h-8 border-3 border-blue-500 border-t-emerald-500 rounded-full"
                       />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-                        className="text-3xl"
-                      >
+                      <div className="text-3xl animate-pulse">
                         💊
-                      </motion.div>
+                      </div>
                     </div>
                     <p className="text-sm font-bold bg-gradient-to-r from-blue-700 to-emerald-700 dark:from-blue-300 dark:to-emerald-300 bg-clip-text text-transparent text-center">
                       Analyzing your symptoms...

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import GlassCard from '../components/ui/GlassCard';
 import AppleButton from '../components/ui/AppleButton';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 const Home = () => {
   const features = [
@@ -56,102 +57,8 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Animated Background Gradients */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950"></div>
-
-        {/* Animated gradient blobs */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 dark:from-blue-600/20 dark:to-cyan-600/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/30 to-teal-400/30 dark:from-emerald-600/20 dark:to-teal-600/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            x: [0, 30, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-0 left-1/3 w-96 h-96 bg-gradient-to-br from-teal-400/30 to-green-400/30 dark:from-teal-600/20 dark:to-green-600/20 rounded-full blur-3xl"
-        />
-
-        {/* Floating decorative elements */}
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/4 left-1/4 w-20 h-20 opacity-10 dark:opacity-5"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="text-blue-600">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
-          </svg>
-        </motion.div>
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -5, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/2 right-1/4 w-16 h-16 opacity-10 dark:opacity-5"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="text-teal-600">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
-        </motion.div>
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-1/4 left-1/3 w-24 h-24 opacity-10 dark:opacity-5"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="text-emerald-600">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-        </motion.div>
-      </div>
+      {/* Optimized Animated Background */}
+      <AnimatedBackground variant="default" />
 
       <div className="relative z-10 space-y-12 pb-16">
         {/* Hero Section */}
@@ -159,9 +66,9 @@ const Home = () => {
           {/* Hero Content */}
           <div className="relative text-center max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="inline-block mb-6"
           >
             <span className="px-6 py-2 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 dark:from-blue-500/30 dark:to-emerald-500/30 border border-blue-500/30 dark:border-emerald-500/30 rounded-full text-sm font-semibold text-blue-700 dark:text-emerald-300 backdrop-blur-sm">
@@ -170,9 +77,9 @@ const Home = () => {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-7xl font-extrabold mb-5 leading-tight"
           >
             <span className="text-gray-900 dark:text-white">Your Personal</span>
@@ -183,18 +90,18 @@ const Home = () => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
             Instantly understand prescriptions, analyze medical reports, and get expert guidance on common health concerns—all powered by cutting-edge AI.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-wrap gap-4 justify-center mb-8"
           >
             <Link to="/prescription">
@@ -209,55 +116,61 @@ const Home = () => {
             </a>
           </motion.div>
 
-          {/* Disclaimer Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="inline-block bg-gradient-to-r from-yellow-50 via-orange-50 to-red-50 dark:from-yellow-900/20 dark:via-orange-900/20 dark:to-red-900/20 border-2 border-yellow-300 dark:border-yellow-700 rounded-2xl p-4 shadow-lg backdrop-blur-sm"
-          >
-            <p className="text-sm text-yellow-900 dark:text-yellow-200 flex items-center gap-2">
-              <span className="text-xl">⚠️</span>
-              <strong>Medical Disclaimer:</strong> For informational purposes only. Always consult healthcare professionals for medical decisions.
-            </p>
-          </motion.div>
+          {/* Disclaimer Badges */}
+          <div className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.25 }}
+              className="inline-block bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border-2 border-blue-400 dark:border-blue-600 rounded-2xl p-4 shadow-lg backdrop-blur-sm"
+            >
+              <p className="text-sm text-blue-900 dark:text-blue-200 flex items-center gap-2">
+                <span className="text-xl">🎓</span>
+                <strong>Educational Project:</strong> This is a college project for demonstration purposes only. Do not use this for actual medical decisions or advice.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="inline-block bg-gradient-to-r from-yellow-50 via-orange-50 to-red-50 dark:from-yellow-900/20 dark:via-orange-900/20 dark:to-red-900/20 border-2 border-yellow-300 dark:border-yellow-700 rounded-2xl p-4 shadow-lg backdrop-blur-sm"
+            >
+              <p className="text-sm text-yellow-900 dark:text-yellow-200 flex items-center gap-2">
+                <span className="text-xl">⚠️</span>
+                <strong>Medical Disclaimer:</strong> For informational purposes only. Always consult healthcare professionals for medical decisions.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Stats Section */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2, margin: "100px" }}
+        transition={{ duration: 0.5 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 px-6"
       >
         {stats.map((stat, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <GlassCard padding="md" className="text-center hover:scale-105">
-              <div className="text-4xl mb-3">{stat.icon}</div>
-              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent mb-2">
-                {stat.number}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
-            </GlassCard>
-          </motion.div>
+          <GlassCard key={index} padding="md" className="text-center transition-transform hover:scale-105">
+            <div className="text-4xl mb-3">{stat.icon}</div>
+            <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#007AFF] to-blue-600 dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent mb-2">
+              {stat.number}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
+          </GlassCard>
         ))}
       </motion.div>
 
       {/* Features Section - Creative Asymmetric Layout */}
       <div id="features" className="px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.3, margin: "100px" }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
           <h2 className="text-4xl font-extrabold mb-3">
@@ -271,51 +184,49 @@ const Home = () => {
         </motion.div>
 
         {/* All Feature Cards - Equal Size 2x2 Grid */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <motion.div
+          className="grid md:grid-cols-2 gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2, margin: "100px" }}
+          transition={{ duration: 0.5 }}
+        >
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <Link to={feature.path} className="block group h-full">
-                <GlassCard padding="lg" className={`hover:scale-[1.02] h-full hover:shadow-2xl ${feature.borderGlow} transition-all duration-300`}>
-                  <div className="flex flex-col items-center text-center gap-4">
-                    <div className={`p-6 rounded-3xl bg-gradient-to-br ${feature.gradient} bg-opacity-10 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                      <div className="text-6xl">
-                        {feature.icon}
-                      </div>
-                    </div>
-                    <div className="flex-1 flex flex-col">
-                      <h3 className={`text-2xl font-extrabold mb-3 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent`}>
-                        {feature.title}
-                      </h3>
-                      <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 flex-1 leading-relaxed">
-                        {feature.description}
-                      </p>
-                      <div className={`inline-flex items-center justify-center gap-2 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent font-bold text-sm group-hover:gap-4 transition-all duration-300`}>
-                        Get Started
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </div>
+            <Link key={index} to={feature.path} className="block group h-full">
+              <GlassCard padding="lg" className={`h-full hover:shadow-2xl ${feature.borderGlow} transition-all duration-300 hover:scale-[1.02]`}>
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className={`p-6 rounded-3xl bg-gradient-to-br ${feature.gradient} bg-opacity-10 transition-transform duration-300 group-hover:scale-110`}>
+                    <div className="text-6xl">
+                      {feature.icon}
                     </div>
                   </div>
-                </GlassCard>
-              </Link>
-            </motion.div>
+                  <div className="flex-1 flex flex-col">
+                    <h3 className={`text-2xl font-extrabold mb-3 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent`}>
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 flex-1 leading-relaxed">
+                      {feature.description}
+                    </p>
+                    <div className={`inline-flex items-center justify-center gap-2 bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent font-bold text-sm transition-all duration-300 group-hover:gap-4`}>
+                      Get Started
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+            </Link>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Benefits Grid */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2, margin: "100px" }}
+        transition={{ duration: 0.5 }}
         className="px-6"
       >
         <h2 className="text-3xl font-extrabold text-center mb-8">
@@ -325,29 +236,21 @@ const Home = () => {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <GlassCard padding="md" className="hover:scale-105 h-full">
-                <div className="text-5xl mb-4">{benefit.icon}</div>
-                <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{benefit.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{benefit.description}</p>
-              </GlassCard>
-            </motion.div>
+            <GlassCard key={index} padding="md" className="transition-transform hover:scale-105 h-full">
+              <div className="text-5xl mb-4">{benefit.icon}</div>
+              <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{benefit.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">{benefit.description}</p>
+            </GlassCard>
           ))}
         </div>
       </motion.div>
 
       {/* How It Works - Enhanced with Connecting Lines */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2, margin: "100px" }}
+        transition={{ duration: 0.5 }}
         className="mx-6"
       >
         <GlassCard padding="lg" hover={false}>
@@ -387,21 +290,17 @@ const Home = () => {
               icon: '✨'
             }
           ].map((item, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative text-center group"
             >
-              <div className={`bg-gradient-to-br ${item.gradient} text-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 text-3xl font-extrabold shadow-2xl group-hover:shadow-teal-500/50 group-hover:scale-110 transition-all duration-500 relative z-10`}>
+              <div className={`bg-gradient-to-br ${item.gradient} text-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 text-3xl font-extrabold shadow-2xl relative z-10 transition-all duration-300 group-hover:shadow-teal-500/50 group-hover:scale-110`}>
                 {item.step}
               </div>
               <div className="text-5xl mb-4">{item.icon}</div>
               <h3 className="font-bold text-2xl mb-3 text-gray-900 dark:text-white">{item.title}</h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{item.description}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
         </GlassCard>
@@ -409,22 +308,15 @@ const Home = () => {
 
       {/* CTA Section */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3, margin: "100px" }}
+        transition={{ duration: 0.5 }}
         className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 rounded-3xl shadow-2xl p-12 mx-6 text-center text-white"
       >
-        {/* Animated background effect */}
+        {/* Static background effect */}
         <div className="absolute inset-0 bg-grid-white/10 bg-[size:20px_20px]"></div>
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"
-        />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl opacity-40"></div>
 
         <div className="relative z-10">
           <h2 className="text-5xl font-extrabold mb-4">Ready to Get Started?</h2>

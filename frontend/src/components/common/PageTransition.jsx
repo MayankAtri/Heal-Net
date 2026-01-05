@@ -1,29 +1,27 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 
-const PageTransition = ({ children }) => {
+// Optimized page transition with reduced animations for better performance
+const PageTransition = memo(({ children }) => {
   const pageVariants = {
     initial: {
       opacity: 0,
-      y: 20,
-      scale: 0.95
+      y: 10,
     },
     in: {
       opacity: 1,
       y: 0,
-      scale: 1
     },
     out: {
       opacity: 0,
-      y: -20,
-      scale: 0.95
+      y: -10,
     }
   };
 
   const pageTransition = {
-    type: 'spring',
-    stiffness: 100,
-    damping: 20,
-    duration: 0.5
+    type: 'tween',
+    ease: 'easeOut',
+    duration: 0.3,
   };
 
   return (
@@ -38,6 +36,8 @@ const PageTransition = ({ children }) => {
       {children}
     </motion.div>
   );
-};
+});
+
+PageTransition.displayName = 'PageTransition';
 
 export default PageTransition;

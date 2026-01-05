@@ -111,3 +111,4 @@ claude-*.md
 .parcel-cache
 .next
 out
+PROJECT_INFO.md

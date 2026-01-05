@@ -23,7 +23,24 @@ export default {
         success: '#10b981',
         warning: '#f59e0b',
         danger: '#ef4444',
-      }
+      },
+      animation: {
+        'blob-slow': 'blob 20s ease-in-out infinite',
+        'blob-slower': 'blob 25s ease-in-out infinite',
+      },
+      keyframes: {
+        blob: {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)',
+          },
+          '33%': {
+            transform: 'translate(30px, -30px) scale(1.1)',
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+          },
+        },
+      },
     },
   },
   plugins: [],

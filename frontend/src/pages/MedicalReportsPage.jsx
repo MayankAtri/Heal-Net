@@ -5,6 +5,7 @@ import ReportUpload from '../components/reports/ReportUpload';
 import ReportResult from '../components/reports/ReportResult';
 import ErrorAlert from '../components/common/ErrorAlert';
 import GlassCard from '../components/ui/GlassCard';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 const MedicalReportsPage = () => {
   const { analyze, loading, error, result, reset } = useMedicalReport();
@@ -24,37 +25,8 @@ const MedicalReportsPage = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950"></div>
-
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-600/10 dark:to-cyan-600/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-3xl"
-        />
-      </div>
+      {/* Optimized Animated Background */}
+      <AnimatedBackground variant="default" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Page Header */}
