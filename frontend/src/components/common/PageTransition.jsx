@@ -1,37 +1,19 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
 
-// Optimized page transition with reduced animations for better performance
 const PageTransition = memo(({ children }) => {
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      y: 10,
-    },
-    in: {
-      opacity: 1,
-      y: 0,
-    },
-    out: {
-      opacity: 0,
-      y: -10,
-    }
-  };
-
-  const pageTransition = {
-    type: 'tween',
-    ease: 'easeOut',
-    duration: 0.3,
-  };
-
   return (
     <motion.div
-      initial="initial"
-      animate="in"
-      exit="out"
-      variants={pageVariants}
-      transition={pageTransition}
-      className="w-full"
+      initial={{ opacity: 0, y: 15, scale: 0.99 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.99 }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        mass: 0.8
+      }}
+      className="w-full flex-1 flex flex-col"
     >
       {children}
     </motion.div>

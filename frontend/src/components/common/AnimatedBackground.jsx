@@ -1,21 +1,26 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
-// Optimized animated background using CSS animations instead of Framer Motion
-// This reduces JavaScript overhead and improves performance
+// Optimized animated background using CSS keyframes for better performance
+// This reduces main thread blocking caused by JS-driven animations
 const AnimatedBackground = memo(({ variant = 'default' }) => {
-  const gradients = {
-    default: 'from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-teal-950',
-    emerald: 'from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-900 dark:to-emerald-950',
-  };
-
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Base gradient */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradients[variant]}`}></div>
+      {/* Deep Base Layer */}
+      <div className="absolute inset-0 bg-[#f8fafc] dark:bg-[#0B1120] transition-colors duration-500" />
 
-      {/* Animated gradient blobs using CSS animations - much more performant */}
-      <div className="animate-blob-slow absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-600/10 dark:to-cyan-600/10 rounded-full blur-2xl"></div>
-      <div className="animate-blob-slower absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-2xl animation-delay-2000"></div>
+      {/* Grid Pattern with greatly reduced opacity for performance */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)]" />
+
+      {/* CSS-animated orbs (smoother & less CPU intensive) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-500/20 dark:bg-primary-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slow" />
+
+      <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slower animation-delay-2000" />
+
+      <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-500/20 dark:bg-emerald-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slow animation-delay-4000" />
+
+      {/* Noise Texture */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </div>
   );
 });
