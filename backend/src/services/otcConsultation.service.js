@@ -6,9 +6,11 @@ const OTCConsultation = require('../models/OTCConsultation.model');
  * @param {string} symptomType - Predefined symptom type or 'custom'
  * @param {string} customSymptoms - Custom symptom description (if symptomType is 'custom')
  * @param {String} userId - User ID (optional, null for guest users)
+ * @param {string} ageGroup - Age group (infant, child, teen, adult, senior)
+ * @param {string} ageLabel - Human readable age label
  * @returns {Promise<Object>} Processed consultation data
  */
-const processConsultation = async (symptomType, customSymptoms = '', userId = null) => {
+const processConsultation = async (symptomType, customSymptoms = '', userId = null, ageGroup = 'adult', ageLabel = 'Adult (18-59 years)') => {
   let consultation = null;
 
   try {
@@ -19,6 +21,8 @@ const processConsultation = async (symptomType, customSymptoms = '', userId = nu
       userId, // Attach user ID if logged in, null for guests
       symptomType: symptomType,
       customSymptoms: customSymptoms,
+      ageGroup: ageGroup,
+      ageLabel: ageLabel,
       suggestions: {
         summary: '',
         medicines: [],
@@ -32,7 +36,7 @@ const processConsultation = async (symptomType, customSymptoms = '', userId = nu
 
     // Step 2: Get OTC suggestions from Gemini AI
     console.log('Step 1/2: Getting OTC medicine suggestions from Gemini AI...');
-    const suggestions = await getOTCSuggestions(symptomType, customSymptoms);
+    const suggestions = await getOTCSuggestions(symptomType, customSymptoms, ageGroup, ageLabel);
 
     // Step 3: Update consultation with suggestions
     console.log('Step 2/2: Saving suggestions to database...');
@@ -46,6 +50,8 @@ const processConsultation = async (symptomType, customSymptoms = '', userId = nu
       id: consultation._id,
       symptomType: consultation.symptomType,
       customSymptoms: consultation.customSymptoms,
+      ageGroup: consultation.ageGroup,
+      ageLabel: consultation.ageLabel,
       suggestions: consultation.suggestions,
       createdAt: consultation.createdAt
     };

@@ -10,13 +10,13 @@ export const useOTC = () => {
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
 
-  const consult = async (symptomType, customSymptoms = '') => {
+  const consult = async (symptomType, customSymptoms = '', ageGroup = 'adult', ageLabel = 'Adult (18-59 years)') => {
     setLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      const response = await consultOTC(symptomType, customSymptoms);
+      const response = await consultOTC(symptomType, customSymptoms, ageGroup, ageLabel);
       // API client interceptor extracts response.data
       // Backend returns {success: true, data: {...}}, so extract the data property
       const data = response.data || response;

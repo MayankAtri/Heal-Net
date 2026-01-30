@@ -24,10 +24,11 @@ const analyzePrescriptionImage = async (imagePath) => {
 
 TASK: Carefully read this prescription image and extract:
 1. ALL medicine names (brand names and generic names)
-2. Dosages (strength like 500mg, 10ml, etc.)
-3. Frequency (how often to take: twice daily, BID, TID, morning, night, etc.)
-4. Duration (how long: 7 days, 2 weeks, etc.)
-5. Any warnings, instructions, or contraindications mentioned
+2. Dosage form and strength (tablet, capsule, syrup with strength)
+3. How many to take at a time (1 tablet, 2 capsules, 5ml, etc.)
+4. Frequency (how often to take: twice daily, BID, TID, morning, night, etc.)
+5. Duration (how long: 7 days, 2 weeks, etc.)
+6. Any warnings, instructions, or contraindications mentioned
 
 IMPORTANT:
 - Read the ENTIRE prescription carefully - don't miss any medicines
@@ -36,6 +37,7 @@ IMPORTANT:
 - Extract common abbreviations: Tab (tablet), Cap (capsule), Syr (syrup), Inj (injection), OD (once daily), BD/BID (twice daily), TDS/TID (thrice daily)
 - If you see partial or unclear medicine names, use your medical knowledge to infer the complete name
 - Look for Rx symbols, prescription pads, doctor signatures - these indicate prescription sections
+- DOSAGE MUST BE PRACTICAL: Instead of just "500mg", write "1 tablet (500mg)" or "2 capsules" or "5ml syrup"
 
 Extract and return ONLY a JSON object with this exact structure:
 {
@@ -43,19 +45,25 @@ Extract and return ONLY a JSON object with this exact structure:
     {
       "name": "Medicine name (with correct spelling)",
       "genericName": "Generic/chemical name if identifiable",
-      "dosage": "Strength (e.g., 500mg, 10ml)",
-      "frequency": "How often (e.g., twice daily, BD, morning)",
-      "duration": "How long (e.g., 7 days, 2 weeks)"
+      "form": "Form of medicine (tablet, capsule, syrup, injection, cream, drops)",
+      "strength": "Strength per unit (e.g., 500mg, 250mg/5ml)",
+      "dosage": "PRACTICAL dosage - how many to take at once (e.g., '1 tablet', '2 capsules', '5ml', '10 drops')",
+      "frequency": "How often (e.g., 'twice daily', 'every 8 hours', 'morning and night')",
+      "duration": "How long (e.g., '7 days', '2 weeks', 'until finished')",
+      "timing": "When to take (e.g., 'after meals', 'before bed', 'empty stomach', 'with food')"
     }
   ],
   "warnings": ["Important warnings or side effects if visible"],
-  "instructions": "General instructions (with food, timing, etc.) if visible",
+  "instructions": "General instructions if visible",
   "contraindications": ["What to avoid if mentioned"]
 }
 
 Rules:
 - Extract ALL medicines you can see in the image
 - Use your medical knowledge to correct unclear handwriting
+- ALWAYS provide practical dosage like "1 tablet" or "2 capsules" NOT just "500mg"
+- If strength is visible, include it in parentheses: "1 tablet (500mg)"
+- For syrups, always specify ml: "5ml" or "10ml (1 teaspoon)"
 - Use "Not specified" for missing information
 - If the image is completely unreadable or not a prescription, explain in the instructions field
 - Return valid JSON only, no markdown formatting
@@ -139,9 +147,12 @@ const parseGeminiResponse = (text) => {
       medicines: [{
         name: 'Unable to parse prescription',
         genericName: 'Not specified',
+        form: 'Not specified',
+        strength: 'Not specified',
         dosage: 'Not specified',
         frequency: 'Not specified',
-        duration: 'Not specified'
+        duration: 'Not specified',
+        timing: 'Not specified'
       }],
       warnings: ['Failed to analyze prescription properly. Please consult a pharmacist.'],
       instructions: 'Original text: ' + text.substring(0, 200),

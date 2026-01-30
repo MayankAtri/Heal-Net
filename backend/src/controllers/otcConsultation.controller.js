@@ -13,7 +13,7 @@ const {
  * @body    { symptomType: 'headache'|'fever'|...|'custom', customSymptoms?: 'description' }
  */
 const getOTCSuggestions = asyncHandler(async (req, res) => {
-  const { symptomType, customSymptoms } = req.body;
+  const { symptomType, customSymptoms, ageGroup = 'adult', ageLabel = 'Adult (18-59 years)' } = req.body;
 
   // Validate symptomType
   const validSymptomTypes = [
@@ -59,8 +59,12 @@ const getOTCSuggestions = asyncHandler(async (req, res) => {
   // Get userId from optionalAuth middleware
   const userId = req.userId || null;
 
+  // Validate ageGroup
+  const validAgeGroups = ['infant', 'child', 'teen', 'adult', 'senior'];
+  const validatedAgeGroup = validAgeGroups.includes(ageGroup) ? ageGroup : 'adult';
+
   // Process consultation
-  const result = await processConsultation(symptomType, customSymptoms || '', userId);
+  const result = await processConsultation(symptomType, customSymptoms || '', userId, validatedAgeGroup, ageLabel);
 
   res.status(201).json({
     success: true,

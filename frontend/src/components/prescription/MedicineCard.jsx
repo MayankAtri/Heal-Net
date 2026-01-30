@@ -6,7 +6,16 @@ const MedicineCard = ({ medicine }) => {
     ? medicine.genericName
     : medicine.name;
 
-  const showGenericName = medicine.genericName && medicine.name !== 'Not specified';
+  const showGenericName = medicine.genericName && medicine.name !== 'Not specified' && medicine.genericName !== 'Not specified';
+
+  // Helper to check if a value should be displayed
+  const shouldShow = (value) => value && value !== 'Not specified';
+
+  // Format the form and strength together if both exist
+  const formStrength = [
+    shouldShow(medicine.form) ? medicine.form : null,
+    shouldShow(medicine.strength) ? `(${medicine.strength})` : null
+  ].filter(Boolean).join(' ');
 
   return (
     <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 hover:border-primary-300 dark:hover:border-primary-600">
@@ -19,14 +28,19 @@ const MedicineCard = ({ medicine }) => {
               Generic: {medicine.genericName}
             </p>
           )}
+          {formStrength && (
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 capitalize">
+              {formStrength}
+            </p>
+          )}
         </div>
 
-        {/* Dosage */}
-        {medicine.dosage && (
+        {/* Dosage - Now shows practical dosage like "1 tablet" */}
+        {shouldShow(medicine.dosage) && (
           <div className="flex items-center space-x-2">
             <span className="text-2xl">💊</span>
             <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Dosage</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Take</p>
               <p className="text-base font-semibold text-primary-600 dark:text-primary-400">
                 {medicine.dosage}
               </p>
@@ -35,7 +49,7 @@ const MedicineCard = ({ medicine }) => {
         )}
 
         {/* Frequency */}
-        {medicine.frequency && (
+        {shouldShow(medicine.frequency) && (
           <div className="flex items-center space-x-2">
             <span className="text-2xl">⏰</span>
             <div>
@@ -47,8 +61,21 @@ const MedicineCard = ({ medicine }) => {
           </div>
         )}
 
+        {/* Timing - When to take the medicine */}
+        {shouldShow(medicine.timing) && (
+          <div className="flex items-center space-x-2">
+            <span className="text-2xl">🍽️</span>
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">When</p>
+              <p className="text-base font-medium text-gray-900 dark:text-white capitalize">
+                {medicine.timing}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Duration */}
-        {medicine.duration && (
+        {shouldShow(medicine.duration) && (
           <div className="flex items-center space-x-2">
             <span className="text-2xl">📅</span>
             <div>

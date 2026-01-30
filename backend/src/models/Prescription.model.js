@@ -14,9 +14,12 @@ const prescriptionSchema = new mongoose.Schema({
     medicines: [{
       name: { type: String, required: true },
       genericName: String,
-      dosage: String,
-      frequency: String,
-      duration: String
+      form: String,           // tablet, capsule, syrup, injection, cream, drops
+      strength: String,       // 500mg, 250mg/5ml, etc.
+      dosage: String,         // Practical: "1 tablet", "2 capsules", "5ml"
+      frequency: String,      // twice daily, every 8 hours
+      duration: String,       // 7 days, 2 weeks
+      timing: String          // after meals, before bed, with food
     }],
     warnings: [String],
     instructions: String,

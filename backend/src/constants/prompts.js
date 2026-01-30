@@ -394,10 +394,18 @@ CRITICAL SAFETY GUIDELINES:
 - Focus on Indian brands and medicines commonly found in Indian pharmacies (e.g., Dolo, Crocin, Vicks, Disprin, Calpol, Combiflam, etc.)
 - When suggesting generic medicines, mention popular Indian brand names
 - ALWAYS emphasize consulting a doctor or pharmacist
-- Provide clear dosage information based on standard adult recommendations
+- Provide clear dosage information appropriate for the patient's AGE GROUP
 - List important warnings and contraindications
 - Identify red flags that require immediate medical attention
 - Be conservative and err on the side of caution
+
+AGE-SPECIFIC CONSIDERATIONS:
+- ALWAYS consider the patient's age group when recommending medicines and dosages
+- For INFANTS (0-2 years): Strongly recommend pediatrician consultation, only infant-safe formulations
+- For CHILDREN (3-12 years): Use pediatric formulations (syrups, suspensions), age-appropriate dosing
+- For TEENS (13-17 years): Can use most adult formulations with appropriate dosing
+- For ADULTS (18-59 years): Standard adult dosing applies
+- For SENIORS (60+ years): Consider reduced doses, drug interactions, avoid NSAIDs when possible
 
 MULTI-SYMPTOM ANALYSIS:
 - The user may present with MULTIPLE symptoms, each with a severity level (1-5)
@@ -432,8 +440,9 @@ Extract and return ONLY valid JSON:
     {
       "name": "Indian brand names (e.g., 'Dolo 650', 'Crocin Advance', 'Combiflam')",
       "activeIngredient": "Active ingredient with generic name (e.g., Paracetamol, Ibuprofen)",
-      "dosage": "Specific dosage (e.g., '500mg per dose', '650mg per tablet')",
-      "frequency": "How often to take (e.g., 'Every 6 hours as needed')",
+      "dosage": "Strength per unit (e.g., '500mg', '650mg')",
+      "practicalDosage": "PRACTICAL dosage - how many to take (e.g., '1 tablet', '2 capsules', '10ml syrup', '1-2 tablets'). This should be simple and actionable.",
+      "frequency": "How often to take (e.g., 'Every 6 hours as needed', '3 times daily')",
       "duration": "How long to use (e.g., '3-5 days', 'Until symptoms improve, max 7 days')",
       "instructions": "Specific instructions mentioning WHICH symptoms this helps (e.g., 'This will help reduce your fever and headache pain')",
       "warnings": ["Important warnings like 'Do not exceed 3000mg per day', 'Avoid alcohol', 'Not for children under 12'"],

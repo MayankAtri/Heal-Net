@@ -10,11 +10,20 @@ import GlassCard from '../components/ui/GlassCard';
 import Button from '../components/common/Button';
 import AnimatedBackground from '../components/common/AnimatedBackground';
 
+const ageGroups = [
+  { value: 'infant', label: 'Infant (0-2 years)', icon: '👶', description: 'Newborn to toddler' },
+  { value: 'child', label: 'Child (3-12 years)', icon: '🧒', description: 'Young children' },
+  { value: 'teen', label: 'Teen (13-17 years)', icon: '🧑', description: 'Adolescents' },
+  { value: 'adult', label: 'Adult (18-59 years)', icon: '👨', description: 'Adults' },
+  { value: 'senior', label: 'Senior (60+ years)', icon: '👴', description: 'Elderly' },
+];
+
 const OTCConsultationPage = () => {
   const { consult, loading, error, result, reset } = useOTC();
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [severities, setSeverities] = useState({});
   const [customSymptoms, setCustomSymptoms] = useState('');
+  const [selectedAge, setSelectedAge] = useState('');
 
   const handleSymptomToggle = (symptomValue) => {
     setSelectedSymptoms(prev => {
@@ -53,17 +62,25 @@ const OTCConsultationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate
+    // Validate age group
+    if (!selectedAge) {
+      return;
+    }
+
+    // Validate symptoms
     if (selectedSymptoms.length === 0) {
       return;
     }
+
+    // Get selected age group label
+    const ageLabel = ageGroups.find(a => a.value === selectedAge)?.label || selectedAge;
 
     // Check if custom symptoms
     if (selectedSymptoms.includes('custom')) {
       if (!customSymptoms.trim()) {
         return;
       }
-      await consult('custom', customSymptoms);
+      await consult('custom', customSymptoms, selectedAge, ageLabel);
       return;
     }
 
@@ -80,7 +97,7 @@ const OTCConsultationPage = () => {
       }).join(', ');
 
       // Use the first symptom as the primary symptom type
-      await consult(selectedSymptoms[0], symptomsWithSeverity);
+      await consult(selectedSymptoms[0], symptomsWithSeverity, selectedAge, ageLabel);
     } catch (err) {
       // Error is already handled by the hook
       console.error('Consultation failed:', err);
@@ -92,6 +109,7 @@ const OTCConsultationPage = () => {
     setSelectedSymptoms([]);
     setSeverities({});
     setCustomSymptoms('');
+    setSelectedAge('');
   };
 
   return (
@@ -143,12 +161,56 @@ const OTCConsultationPage = () => {
             <form onSubmit={handleSubmit}>
               <GlassCard padding="lg">
             <div className="space-y-8">
+              {/* Age Group Selector */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                  <span>👤</span> Select Age Group
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  Age-appropriate medicine recommendations will be provided based on your selection
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                  {ageGroups.map((age) => (
+                    <button
+                      key={age.value}
+                      type="button"
+                      onClick={() => setSelectedAge(age.value)}
+                      disabled={loading}
+                      className={`p-3 rounded-xl border-2 transition-all duration-200 text-center ${
+                        selectedAge === age.value
+                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 shadow-lg scale-105'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      <span className="text-2xl mb-1 block">{age.icon}</span>
+                      <span className={`text-xs font-medium block ${
+                        selectedAge === age.value
+                          ? 'text-primary-700 dark:text-primary-300'
+                          : 'text-gray-700 dark:text-gray-300'
+                      }`}>
+                        {age.label.split(' ')[0]}
+                      </span>
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400 block">
+                        {age.label.match(/\(([^)]+)\)/)?.[1]}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {!selectedAge && (
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+                    Please select an age group for accurate recommendations
+                  </p>
+                )}
+              </div>
+
               {/* Symptom Selector */}
-              <SymptomSelector
-                selectedSymptoms={selectedSymptoms}
-                onSymptomToggle={handleSymptomToggle}
-                disabled={loading}
-              />
+              <div className={`pt-6 border-t border-gray-200/50 dark:border-gray-700/50 ${!selectedAge ? 'opacity-50 pointer-events-none' : ''}`}>
+                <SymptomSelector
+                  selectedSymptoms={selectedSymptoms}
+                  onSymptomToggle={handleSymptomToggle}
+                  disabled={loading || !selectedAge}
+                />
+              </div>
 
               {/* Severity List - Show for predefined symptoms */}
               <AnimatePresence mode="wait">
@@ -189,12 +251,13 @@ const OTCConsultationPage = () => {
               </AnimatePresence>
 
               {/* Submit Button */}
-              {selectedSymptoms.length > 0 && (
+              {selectedSymptoms.length > 0 && selectedAge && (
                 <div className="pt-6 border-t border-gray-200">
                   <Button
                     type="submit"
                     loading={loading}
                     disabled={
+                      !selectedAge ||
                       selectedSymptoms.length === 0 ||
                       (selectedSymptoms.includes('custom') && !customSymptoms.trim()) ||
                       (!selectedSymptoms.includes('custom') && !selectedSymptoms.every(s => severities[s])) ||
@@ -203,7 +266,7 @@ const OTCConsultationPage = () => {
                     className="w-full"
                     size="lg"
                   >
-                    {loading ? 'Getting Recommendations...' : 'Get OTC Recommendations'}
+                    {loading ? 'Getting Recommendations...' : `Get OTC Recommendations for ${ageGroups.find(a => a.value === selectedAge)?.label.split(' ')[0]}`}
                   </Button>
 
                   {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') &&

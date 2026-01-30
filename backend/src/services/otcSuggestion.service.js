@@ -5,12 +5,15 @@ const { OTC_MEDICINE_PROMPT } = require('../constants/prompts');
  * Get OTC medicine suggestions from Gemini AI based on symptoms
  * @param {string} symptomType - Predefined symptom type or 'custom'
  * @param {string} customSymptoms - Custom symptom description (if symptomType is 'custom')
+ * @param {string} ageGroup - Age group (infant, child, teen, adult, senior)
+ * @param {string} ageLabel - Human readable age label
  * @returns {Promise<Object>} OTC medicine suggestions
  */
-const getOTCSuggestions = async (symptomType, customSymptoms = '') => {
+const getOTCSuggestions = async (symptomType, customSymptoms = '', ageGroup = 'adult', ageLabel = 'Adult (18-59 years)') => {
   try {
     console.log(`Getting OTC suggestions for: ${symptomType}`);
     console.log(`Custom symptoms data: "${customSymptoms}"`);
+    console.log(`Age group: ${ageGroup} (${ageLabel})`);
 
     const model = getModel();
 
@@ -18,13 +21,19 @@ const getOTCSuggestions = async (symptomType, customSymptoms = '') => {
     const symptomDescription = buildSymptomDescription(symptomType, customSymptoms);
     console.log(`Built symptom description:\n${symptomDescription}`);
 
-    // Combine prompt with symptom description
+    // Build age-specific instructions
+    const ageInstructions = buildAgeInstructions(ageGroup, ageLabel);
+
+    // Combine prompt with symptom description and age info
     const fullPrompt = `${OTC_MEDICINE_PROMPT}
+
+PATIENT AGE GROUP: ${ageLabel}
+${ageInstructions}
 
 USER SYMPTOMS:
 ${symptomDescription}
 
-Provide OTC medicine suggestions for these symptoms.`;
+Provide OTC medicine suggestions for these symptoms, with dosages and medicines appropriate for the patient's age group (${ageLabel}).`;
 
     console.log('Requesting OTC suggestions from Gemini AI...');
 
@@ -57,6 +66,57 @@ Provide OTC medicine suggestions for these symptoms.`;
 
     throw new Error(`Failed to get OTC suggestions: ${error.message}`);
   }
+};
+
+/**
+ * Build age-specific instructions for the AI prompt
+ * @param {string} ageGroup - Age group (infant, child, teen, adult, senior)
+ * @param {string} ageLabel - Human readable age label
+ * @returns {string} Age-specific instructions
+ */
+const buildAgeInstructions = (ageGroup, ageLabel) => {
+  const ageInstructions = {
+    infant: `CRITICAL - INFANT PATIENT (0-2 years):
+- STRONGLY recommend consulting a pediatrician BEFORE giving any medicine
+- Many OTC medicines are NOT safe for infants
+- Only suggest infant-specific formulations (e.g., Calpol Infant Drops, Nasivion Mini)
+- Use weight-based dosing when possible
+- Emphasize when to seek immediate medical care
+- Home remedies and non-medicine approaches are preferred
+- NEVER suggest adult medications`,
+
+    child: `CHILD PATIENT (3-12 years):
+- Recommend child-specific formulations (syrups, suspensions, chewables)
+- Use age and weight-appropriate dosing
+- Suggest brands like Calpol, Meftal-P, Crocin Pediatric
+- Avoid adult-strength medications
+- Consider taste/palatability for better compliance
+- Recommend consulting a doctor for children under 6 for most medications`,
+
+    teen: `TEEN PATIENT (13-17 years):
+- Can use most adult formulations at appropriate doses
+- Adjust dosing based on weight if needed
+- Be aware of adolescent-specific concerns
+- Standard adult OTC medicines are generally appropriate
+- Consider school/activity schedules for dosing timing`,
+
+    adult: `ADULT PATIENT (18-59 years):
+- Standard adult dosing applies
+- Consider common adult conditions (pregnancy, work schedules)
+- Full range of OTC medicines available
+- Standard warnings about drug interactions apply`,
+
+    senior: `SENIOR PATIENT (60+ years):
+- Consider reduced kidney/liver function - may need lower doses
+- Watch for drug interactions with common senior medications
+- Suggest gentler formulations when available
+- Be extra cautious with sedating medications
+- Consider fall risk with drowsiness-causing medicines
+- Recommend consulting pharmacist about interactions with existing medications
+- Avoid NSAIDs if possible due to kidney/heart concerns in elderly`
+  };
+
+  return ageInstructions[ageGroup] || ageInstructions.adult;
 };
 
 /**

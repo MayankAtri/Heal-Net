@@ -24,19 +24,19 @@ const MedicineRecommendation = ({ medicine, index }) => {
         </div>
 
         {/* Dosage Information */}
-        <div className="ml-10 space-y-2">
+        <div className="ml-10 grid grid-cols-1 sm:grid-cols-3 gap-3">
           {medicine.dosage && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/20 rounded-lg p-2">
               <span className="text-xl">💊</span>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Dosage</p>
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">{medicine.dosage}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Take</p>
+                <p className="text-sm font-semibold text-primary-600 dark:text-primary-400">{medicine.practicalDosage || medicine.dosage}</p>
               </div>
             </div>
           )}
 
           {medicine.frequency && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2">
               <span className="text-xl">⏰</span>
               <div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Frequency</p>
@@ -46,7 +46,7 @@ const MedicineRecommendation = ({ medicine, index }) => {
           )}
 
           {medicine.duration && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-2">
               <span className="text-xl">📅</span>
               <div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Duration</p>

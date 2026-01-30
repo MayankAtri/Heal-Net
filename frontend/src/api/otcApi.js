@@ -4,12 +4,16 @@ import apiClient from './client';
  * Get OTC medicine suggestions for symptoms
  * @param {string} symptomType - Symptom type (predefined or 'custom')
  * @param {string} customSymptoms - Custom symptom description (required if symptomType is 'custom')
+ * @param {string} ageGroup - Age group (infant, child, teen, adult, senior)
+ * @param {string} ageLabel - Human readable age label
  * @returns {Promise} OTC suggestions
  */
-export const consultOTC = async (symptomType, customSymptoms = '') => {
+export const consultOTC = async (symptomType, customSymptoms = '', ageGroup = 'adult', ageLabel = 'Adult (18-59 years)') => {
   return apiClient.post('/otc/consult', {
     symptomType,
-    customSymptoms
+    customSymptoms,
+    ageGroup,
+    ageLabel
   });
 };
 

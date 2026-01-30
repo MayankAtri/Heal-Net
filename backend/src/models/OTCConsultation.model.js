@@ -29,6 +29,18 @@ const otcConsultationSchema = new mongoose.Schema({
     default: ''
   },
 
+  // Age Information
+  ageGroup: {
+    type: String,
+    enum: ['infant', 'child', 'teen', 'adult', 'senior'],
+    default: 'adult'
+  },
+
+  ageLabel: {
+    type: String,
+    default: 'Adult (18-59 years)'
+  },
+
   // AI-Generated Suggestions
   suggestions: {
     summary: String,  // Brief overview of the condition
@@ -37,7 +49,8 @@ const otcConsultationSchema = new mongoose.Schema({
     medicines: [{
       name: String,              // Medicine name (generic or brand)
       activeIngredient: String,  // e.g., "Acetaminophen", "Ibuprofen"
-      dosage: String,            // e.g., "500mg every 6 hours"
+      dosage: String,            // Strength: e.g., "500mg", "650mg"
+      practicalDosage: String,   // Practical: e.g., "1 tablet", "2 capsules", "10ml"
       frequency: String,         // e.g., "3 times daily"
       duration: String,          // e.g., "3-5 days", "Until symptoms improve"
       instructions: String,      // Which symptoms this medicine helps
