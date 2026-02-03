@@ -4,6 +4,7 @@ import GlassCard from '../ui/GlassCard';
 import Button from '../common/Button';
 import MedicineRecommendation from './MedicineRecommendation';
 import Badge from '../common/Badge';
+import Markdown from '../common/Markdown';
 import { formatDate, formatSymptomType } from '../../utils/formatters';
 
 const OTCResult = ({ result, onConsultAnother }) => {
@@ -94,7 +95,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                   <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-3">
                     Summary
                   </h3>
-                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">{summary}</p>
+                  <Markdown>{summary}</Markdown>
                 </div>
               </div>
             </GlassCard>
@@ -178,7 +179,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                     >
                       🌿
                     </motion.span>
-                    <span className="text-gray-800 dark:text-gray-200 flex-1">{remedy}</span>
+                    <div className="flex-1"><Markdown>{remedy}</Markdown></div>
                   </motion.li>
                 ))}
               </ul>
@@ -208,7 +209,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                   <h3 className="text-lg font-bold bg-gradient-to-r from-amber-600 to-yellow-600 dark:from-amber-400 dark:to-yellow-400 bg-clip-text text-transparent mb-3">
                     General Advice
                   </h3>
-                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">{generalAdvice}</p>
+                  <Markdown>{generalAdvice}</Markdown>
                 </div>
               </div>
             </GlassCard>
@@ -248,7 +249,7 @@ const OTCResult = ({ result, onConsultAnother }) => {
                         className="flex items-start space-x-2"
                       >
                         <span className="text-red-600 dark:text-red-400 mt-1 font-bold">•</span>
-                        <span className="text-red-900 dark:text-red-100 font-medium">{condition}</span>
+                        <div className="flex-1 text-red-900 dark:text-red-100 font-medium"><Markdown>{condition}</Markdown></div>
                       </motion.li>
                     ))}
                   </ul>

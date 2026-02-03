@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import Button from '../common/Button';
 import MedicineCard from './MedicineCard';
+import Markdown from '../common/Markdown';
 import { formatDate } from '../../utils/formatters';
 
 const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
@@ -121,7 +122,7 @@ const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
                         className="flex items-start space-x-2"
                       >
                         <span className="text-amber-600 dark:text-amber-400 mt-1 font-bold">•</span>
-                        <span className="text-amber-900 dark:text-amber-100">{warning}</span>
+                        <div className="flex-1 text-amber-900 dark:text-amber-100"><Markdown>{warning}</Markdown></div>
                       </motion.li>
                     ))}
                   </ul>
@@ -153,9 +154,7 @@ const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
                   <h3 className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent mb-3">
                     Instructions
                   </h3>
-                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">
-                    {simplifiedAnalysis.instructions}
-                  </p>
+                  <Markdown>{simplifiedAnalysis.instructions}</Markdown>
                 </div>
               </div>
             </GlassCard>
@@ -195,7 +194,7 @@ const PrescriptionResult = ({ result, onAnalyzeAnother }) => {
                         className="flex items-start space-x-2"
                       >
                         <span className="text-red-600 dark:text-red-400 mt-1 font-bold">•</span>
-                        <span className="text-red-900 dark:text-red-100">{item}</span>
+                        <div className="flex-1 text-red-900 dark:text-red-100"><Markdown>{item}</Markdown></div>
                       </motion.li>
                     ))}
                   </ul>

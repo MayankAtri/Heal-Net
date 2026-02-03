@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../common/Card';
+import Markdown from '../common/Markdown';
 
 const RadiologyResults = ({ data }) => {
   if (!data) return null;
@@ -20,7 +21,7 @@ const RadiologyResults = ({ data }) => {
             {data.findings.map((finding, index) => (
               <li key={index} className="flex items-start space-x-2">
                 <span className="text-primary-500 dark:text-primary-400 mt-1">•</span>
-                <span className="text-gray-800 dark:text-gray-200">{finding}</span>
+                <div className="flex-1"><Markdown>{finding}</Markdown></div>
               </li>
             ))}
           </ul>
@@ -30,9 +31,7 @@ const RadiologyResults = ({ data }) => {
       {/* Impressions */}
       {data.impressions && (
         <Card title="Impressions" className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700">
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line font-medium">{data.impressions}</p>
-          </div>
+          <Markdown>{data.impressions}</Markdown>
         </Card>
       )}
 
@@ -43,7 +42,7 @@ const RadiologyResults = ({ data }) => {
             {data.recommendations.map((recommendation, index) => (
               <li key={index} className="flex items-start space-x-2">
                 <span className="text-green-600 dark:text-green-400 mt-1">•</span>
-                <span className="text-gray-800 dark:text-gray-200">{recommendation}</span>
+                <div className="flex-1"><Markdown>{recommendation}</Markdown></div>
               </li>
             ))}
           </ul>

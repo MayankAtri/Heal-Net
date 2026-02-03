@@ -7,6 +7,7 @@ import RadiologyResults from './RadiologyResults';
 import PathologyResults from './PathologyResults';
 import ConditionCard from './ConditionCard';
 import Badge from '../common/Badge';
+import Markdown from '../common/Markdown';
 import { formatDate } from '../../utils/formatters';
 
 const ReportResult = ({ result, onAnalyzeAnother }) => {
@@ -104,7 +105,7 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
                   <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-3">
                     Summary
                   </h3>
-                  <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">{summary}</p>
+                  <Markdown>{summary}</Markdown>
                 </div>
               </div>
             </GlassCard>
@@ -211,7 +212,7 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
                         className="flex items-start space-x-2"
                       >
                         <span className="text-amber-600 dark:text-amber-400 mt-1 font-bold">•</span>
-                        <span className="text-amber-900 dark:text-amber-100">{warning}</span>
+                        <div className="flex-1 text-amber-900 dark:text-amber-100"><Markdown>{warning}</Markdown></div>
                       </motion.li>
                     ))}
                   </ul>
@@ -260,7 +261,7 @@ const ReportResult = ({ result, onAnalyzeAnother }) => {
                     >
                       ✓
                     </motion.span>
-                    <span className="text-gray-800 dark:text-gray-200 flex-1">{recommendation}</span>
+                    <div className="flex-1"><Markdown>{recommendation}</Markdown></div>
                   </motion.li>
                 ))}
               </ul>

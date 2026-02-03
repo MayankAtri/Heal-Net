@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../common/Card';
+import Markdown from '../common/Markdown';
 
 const PathologyResults = ({ data }) => {
   if (!data) return null;
@@ -21,36 +22,28 @@ const PathologyResults = ({ data }) => {
       {/* Macroscopic Description */}
       {data.macroscopicDescription && (
         <Card title="Macroscopic Description" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{data.macroscopicDescription}</p>
-          </div>
+          <Markdown>{data.macroscopicDescription}</Markdown>
         </Card>
       )}
 
       {/* Microscopic Description */}
       {data.microscopicDescription && (
         <Card title="Microscopic Description" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{data.microscopicDescription}</p>
-          </div>
+          <Markdown>{data.microscopicDescription}</Markdown>
         </Card>
       )}
 
       {/* Diagnosis */}
       {data.diagnosis && (
         <Card title="Diagnosis" className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700">
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line font-medium">{data.diagnosis}</p>
-          </div>
+          <Markdown>{data.diagnosis}</Markdown>
         </Card>
       )}
 
       {/* Comments */}
       {data.comments && (
         <Card title="Pathologist Comments" className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line">{data.comments}</p>
-          </div>
+          <Markdown>{data.comments}</Markdown>
         </Card>
       )}
 
@@ -61,7 +54,7 @@ const PathologyResults = ({ data }) => {
             {data.recommendations.map((recommendation, index) => (
               <li key={index} className="flex items-start space-x-2">
                 <span className="text-green-600 dark:text-green-400 mt-1">•</span>
-                <span className="text-gray-800 dark:text-gray-200">{recommendation}</span>
+                <div className="flex-1"><Markdown>{recommendation}</Markdown></div>
               </li>
             ))}
           </ul>
