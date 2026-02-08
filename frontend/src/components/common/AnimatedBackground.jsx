@@ -1,26 +1,26 @@
-import React, { memo, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { memo } from 'react';
 
-// Optimized animated background using CSS keyframes for better performance
-// This reduces main thread blocking caused by JS-driven animations
 const AnimatedBackground = memo(({ variant = 'default' }) => {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Deep Base Layer */}
-      <div className="absolute inset-0 bg-[#f8fafc] dark:bg-[#0B1120] transition-colors duration-500" />
+      {/* Deep Base */}
+      <div className="absolute inset-0 bg-stone-50 dark:bg-[#0a0a0f] transition-colors duration-500" />
 
-      {/* Grid Pattern with greatly reduced opacity for performance */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)]" />
+      {/* Subtle warm grain texture */}
+      <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
 
-      {/* CSS-animated orbs (smoother & less CPU intensive) */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-500/20 dark:bg-primary-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slow" />
+      {/* Warm ambient glow - top right */}
+      <div className="absolute -top-[20%] -right-[10%] w-[700px] h-[700px] bg-emerald-400/[0.07] dark:bg-emerald-500/[0.04] rounded-full blur-[120px] animate-blob-slow" />
 
-      <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slower animation-delay-2000" />
+      {/* Soft accent glow - bottom left */}
+      <div className="absolute -bottom-[15%] -left-[10%] w-[600px] h-[600px] bg-amber-300/[0.06] dark:bg-amber-500/[0.03] rounded-full blur-[120px] animate-blob-slower animation-delay-2000" />
 
-      <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-500/20 dark:bg-emerald-500/10 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob-slow animation-delay-4000" />
-
-      {/* Noise Texture */}
-      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* Very subtle center glow */}
+      <div className="absolute top-[40%] left-[30%] w-[500px] h-[500px] bg-stone-300/[0.08] dark:bg-stone-500/[0.02] rounded-full blur-[100px] animate-breathe" />
     </div>
   );
 });

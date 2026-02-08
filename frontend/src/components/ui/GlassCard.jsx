@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -37,9 +37,9 @@ export default function GlassCard({
   };
 
   const baseClasses = cn(
-    'relative overflow-hidden bg-white/70 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-white/5 shadow-xl transition-all duration-300 group',
+    'relative overflow-hidden bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 shadow-sm transition-all duration-300 group',
     paddingClasses[padding],
-    hover && 'hover:shadow-2xl hover:-translate-y-1',
+    hover && 'hover:shadow-lg hover:shadow-stone-900/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:border-stone-300/80 dark:hover:border-stone-700/80',
     onClick && 'cursor-pointer',
     className
   );
@@ -51,8 +51,8 @@ export default function GlassCard({
           style={{
             background: useMotionTemplate`
               radial-gradient(
-                650px circle at ${mouseX}px ${mouseY}px,
-                rgba(14, 165, 233, 0.15),
+                500px circle at ${mouseX}px ${mouseY}px,
+                rgba(16, 185, 129, 0.08),
                 transparent 80%
               )
             `,

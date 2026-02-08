@@ -19,23 +19,23 @@ export default function AppleButton({
   type = 'button'
 }) {
   const sizeClasses = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
+    sm: 'px-5 py-2 text-sm',
+    md: 'px-6 py-3 text-sm',
+    lg: 'px-8 py-3.5 text-base'
   };
 
   const variantClasses = {
-    primary: 'bg-primary-500 hover:bg-primary-600 text-white shadow-lg shadow-primary-500/20',
-    secondary: 'bg-white/80 dark:bg-slate-800/80 backdrop-blur-md text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700',
-    glass: 'bg-white/10 hover:bg-white/20 text-slate-900 dark:text-white border border-white/20 backdrop-blur-lg',
-    ghost: 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
+    primary: 'bg-stone-900 hover:bg-stone-800 dark:bg-white dark:hover:bg-stone-100 text-white dark:text-stone-900 shadow-md shadow-stone-900/10',
+    secondary: 'bg-white/90 dark:bg-dark-card/90 backdrop-blur-md text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-dark-surface',
+    glass: 'bg-stone-100/50 hover:bg-stone-100 dark:bg-white/5 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-stone-200/50 dark:border-stone-700/50 backdrop-blur-lg',
+    ghost: 'hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-400'
   };
 
   return (
     <motion.button
       type={type}
       className={cn(
-        'relative inline-flex items-center justify-center rounded-full font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+        'relative inline-flex items-center justify-center rounded-full font-medium tracking-tight transition-colors outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2',
         sizeClasses[size],
         variantClasses[variant],
         fullWidth && 'w-full',
@@ -45,8 +45,8 @@ export default function AppleButton({
       onClick={onClick}
       disabled={disabled || loading}
       whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
     >
       {loading ? (
         <div className="flex items-center gap-2">

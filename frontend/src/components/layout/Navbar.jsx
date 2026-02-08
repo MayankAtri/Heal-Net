@@ -35,7 +35,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Reset hovered path when location changes
   useEffect(() => {
     setHoveredPath(location.pathname);
   }, [location.pathname]);
@@ -57,26 +56,28 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'py-4 backdrop-blur-xl bg-white/60 dark:bg-dark/60 border-b border-white/20 dark:border-white/5 supports-[backdrop-filter]:bg-white/40'
-          : 'py-6 bg-transparent'
+          ? 'py-3 backdrop-blur-xl bg-stone-50/70 dark:bg-[#0a0a0f]/70 border-b border-stone-200/50 dark:border-stone-800/50'
+          : 'py-5 bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="group flex-shrink-0 relative z-50">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary-500 to-blue-600 rounded-xl blur-lg opacity-40 group-hover:opacity-75 transition-opacity duration-300" />
-                <div className="relative w-full h-full bg-gradient-to-br from-white to-primary-50 dark:from-dark-card dark:to-slate-800 rounded-xl flex items-center justify-center border border-white/50 dark:border-white/10 shadow-xl overflow-hidden">
-                  <span className="text-xl transform group-hover:scale-110 transition-transform duration-300">🩺</span>
+            <div className="flex items-center gap-2.5">
+              <div className="relative w-9 h-9">
+                <div className="absolute inset-0 bg-emerald-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative w-full h-full bg-stone-900 dark:bg-white rounded-xl flex items-center justify-center overflow-hidden">
+                  <svg className="w-5 h-5 text-white dark:text-stone-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-bold text-xl text-slate-900 dark:text-white leading-none tracking-tight">
+                <span className="font-display font-bold text-lg text-stone-900 dark:text-white leading-none tracking-tight">
                   HealNet
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400">
+                <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
                   AI Medical
                 </span>
               </div>
@@ -84,22 +85,22 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center bg-white/50 dark:bg-slate-900/50 backdrop-blur-2xl px-2 py-1.5 rounded-full border border-white/20 dark:border-white/5 shadow-sm">
+          <div className="hidden md:flex items-center bg-white/60 dark:bg-dark-card/60 backdrop-blur-2xl px-1.5 py-1 rounded-full border border-stone-200/40 dark:border-stone-800/40">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onMouseEnter={() => setHoveredPath(link.path)}
                 onMouseLeave={() => setHoveredPath(location.pathname)}
-                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${location.pathname === link.path
-                    ? 'text-primary-700 dark:text-primary-300'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                className={`relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors duration-200 ${location.pathname === link.path
+                    ? 'text-stone-900 dark:text-white'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
                   }`}
               >
                 {hoveredPath === link.path && (
                   <motion.div
                     layoutId="navbar-highlight"
-                    className="absolute inset-0 bg-white dark:bg-slate-800 rounded-full shadow-sm"
+                    className="absolute inset-0 bg-stone-100 dark:bg-stone-800 rounded-full"
                     initial={false}
                     transition={{
                       type: "spring",
@@ -115,28 +116,28 @@ const Navbar = () => {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2.5 rounded-full bg-white/50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 transition-all border border-white/20 dark:border-white/5 backdrop-blur-sm"
+              className="p-2 rounded-full text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-stone-800 transition-all"
               aria-label="Toggle theme"
             >
               <AnimatePresence mode='wait' initial={false}>
                 <motion.div
                   key={darkMode ? 'dark' : 'light'}
-                  initial={{ y: -20, opacity: 0 }}
+                  initial={{ y: -16, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 20, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  exit={{ y: 16, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                 >
                   {darkMode ? (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                   )}
                 </motion.div>
@@ -148,12 +149,12 @@ const Navbar = () => {
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center gap-2 p-1 pl-2 rounded-full bg-white/50 dark:bg-slate-800/50 border border-white/20 dark:border-white/5 hover:bg-white dark:hover:bg-slate-700 transition-all backdrop-blur-sm group"
+                  className="flex items-center gap-2 p-1 pl-3 rounded-full bg-white/60 dark:bg-dark-card/60 border border-stone-200/40 dark:border-stone-800/40 hover:bg-stone-100 dark:hover:bg-dark-surface transition-all backdrop-blur-sm group"
                 >
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200 hidden sm:block max-w-[100px] truncate">
+                  <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300 hidden sm:block max-w-[100px] truncate">
                     {user?.name?.split(' ')[0]}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-blue-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white dark:ring-slate-900 group-hover:ring-primary-400 transition-all">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-semibold text-xs">
                     {user?.profilePicture ? (
                       <img src={user.profilePicture} alt="" className="w-full h-full rounded-full object-cover" />
                     ) : (
@@ -165,28 +166,31 @@ const Navbar = () => {
                 <AnimatePresence>
                   {showUserMenu && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                      initial={{ opacity: 0, scale: 0.95, y: 8 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-slate-800 rounded-2xl shadow-xl ring-1 ring-black/5 focus:outline-none overflow-hidden"
+                      exit={{ opacity: 0, scale: 0.95, y: 8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 w-52 origin-top-right bg-white dark:bg-dark-card rounded-xl shadow-xl shadow-stone-900/10 dark:shadow-black/30 ring-1 ring-stone-200/50 dark:ring-stone-800/50 overflow-hidden"
                     >
-                      <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700">
-                        <p className="text-sm text-slate-500 dark:text-slate-400">Signed in as</p>
-                        <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{user?.email}</p>
+                      <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-800">
+                        <p className="text-[11px] text-stone-400 dark:text-stone-500 uppercase tracking-wider font-medium">Signed in as</p>
+                        <p className="text-sm font-medium text-stone-900 dark:text-white truncate mt-0.5">{user?.email}</p>
                       </div>
                       <div className="p-1">
-                        <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-xl" onClick={() => setShowUserMenu(false)}>
-                          👤 Profile
+                        <Link to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-dark-surface rounded-lg transition-colors" onClick={() => setShowUserMenu(false)}>
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" /></svg>
+                          Profile
                         </Link>
-                        <Link to="/history" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-xl" onClick={() => setShowUserMenu(false)}>
-                          📋 History
+                        <Link to="/history" className="flex items-center gap-2.5 px-3 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-dark-surface rounded-lg transition-colors" onClick={() => setShowUserMenu(false)}>
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                          History
                         </Link>
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
                         >
-                          🚪 Sign out
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+                          Sign out
                         </button>
                       </div>
                     </motion.div>
@@ -194,49 +198,49 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Link to="/login" className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <div className="flex items-center gap-1.5">
+                <Link to="/login" className="px-4 py-1.5 text-[13px] font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white transition-colors rounded-full">
                   Log in
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-slate-900 dark:bg-white dark:text-slate-900 rounded-full hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-lg shadow-slate-900/20"
+                  className="px-4 py-1.5 text-[13px] font-medium text-white bg-stone-900 dark:bg-white dark:text-stone-900 rounded-full hover:bg-stone-800 dark:hover:bg-stone-100 transition-colors"
                 >
                   Sign up
                 </Link>
               </div>
             )}
 
-            {/* Mobile Menu Button - visible on small screens */}
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="p-2 rounded-full text-stone-500 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation Menu - Expandable */}
+        {/* Mobile Navigation Menu */}
         <AnimatePresence>
           {showUserMenu && !isAuthenticated && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden overflow-hidden bg-white dark:bg-slate-800 rounded-2xl mt-2 shadow-xl border border-slate-100 dark:border-slate-700"
+              className="md:hidden overflow-hidden bg-white dark:bg-dark-card rounded-xl mt-2 shadow-lg border border-stone-200/50 dark:border-stone-800/50"
             >
-              <div className="p-4 space-y-2">
+              <div className="p-3 space-y-1">
                 {navLinks.map(link => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setShowUserMenu(false)}
-                    className="block px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-medium"
+                    className="block px-4 py-2.5 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-dark-surface font-medium text-sm"
                   >
                     {link.label}
                   </Link>
