@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { useDarkMode } from '../contexts/DarkModeContext';
 import { useNavigate } from 'react-router-dom';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 export default function Profile() {
   const { user, updateProfile, changePassword, logout } = useAuth();
-  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const [editing, setEditing] = useState(false);
@@ -73,7 +72,6 @@ export default function Profile() {
         setChangingPassword(false);
         setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
 
-        // Redirect to login after password change
         setTimeout(() => {
           navigate('/login');
         }, 2000);
@@ -92,40 +90,56 @@ export default function Profile() {
     navigate('/');
   };
 
-  return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
-      darkMode ? 'bg-gray-900' : 'bg-gray-50'
-    }`}>
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className={`text-3xl font-bold mb-8 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Profile Settings
-          </h1>
+  const inputClass = "w-full px-4 py-2.5 bg-stone-50/50 dark:bg-dark-surface/50 border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-white rounded-xl text-sm transition-all duration-200 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50";
 
+  return (
+    <div className="relative min-h-screen">
+      <AnimatedBackground variant="default" />
+
+      <div className="relative z-10 max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          {/* Header */}
+          <div className="mb-8">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-stone-400 dark:text-stone-500 mb-3 block">Account</span>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-stone-900 dark:text-white">
+              Profile Settings
+            </h1>
+          </div>
+
+          {/* Message */}
           {message.text && (
-            <div className={`mb-6 p-4 rounded-md ${
-              message.type === 'success'
-                ? 'bg-green-50 text-green-700 border border-green-200'
-                : 'bg-red-50 text-red-700 border border-red-200'
-            }`}>
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`mb-6 px-4 py-3 rounded-xl text-sm border ${
+                message.type === 'success'
+                  ? 'bg-emerald-50/80 dark:bg-emerald-900/10 text-emerald-700 dark:text-emerald-300 border-emerald-200/50 dark:border-emerald-800/30'
+                  : 'bg-red-50/80 dark:bg-red-900/10 text-red-700 dark:text-red-300 border-red-200/50 dark:border-red-800/30'
+              }`}
+            >
               {message.text}
-            </div>
+            </motion.div>
           )}
 
           {/* Profile Information */}
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow rounded-lg p-6 mb-6`}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-6 shadow-sm mb-6"
+          >
             <div className="flex items-center justify-between mb-6">
-              <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <h2 className="text-sm font-semibold text-stone-900 dark:text-white">
                 Profile Information
               </h2>
               {!editing && (
                 <button
                   onClick={() => setEditing(true)}
-                  className="text-blue-600 hover:text-blue-500 font-medium"
+                  className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
                   Edit
                 </button>
@@ -135,48 +149,36 @@ export default function Profile() {
             {editing ? (
               <form onSubmit={handleProfileUpdate} className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    darkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">
                     Name
                   </label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`w-full px-3 py-2 border rounded-md ${
-                      darkMode
-                        ? 'bg-gray-700 border-gray-600 text-white'
-                        : 'border-gray-300 text-gray-900'
-                    }`}
+                    className={inputClass}
                     required
                   />
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    darkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">
                     Profile Picture URL
                   </label>
                   <input
                     type="url"
                     value={formData.profilePicture}
                     onChange={(e) => setFormData({ ...formData, profilePicture: e.target.value })}
-                    className={`w-full px-3 py-2 border rounded-md ${
-                      darkMode
-                        ? 'bg-gray-700 border-gray-600 text-white'
-                        : 'border-gray-300 text-gray-900'
-                    }`}
+                    className={inputClass}
                     placeholder="https://example.com/avatar.jpg"
                   />
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-3 pt-2">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                    className="px-4 py-2 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-xl text-sm font-medium hover:bg-stone-800 dark:hover:bg-stone-100 disabled:opacity-50 transition-colors"
                   >
                     {loading ? 'Saving...' : 'Save Changes'}
                   </button>
@@ -186,11 +188,7 @@ export default function Profile() {
                       setEditing(false);
                       setFormData({ name: user.name, profilePicture: user.profilePicture || '' });
                     }}
-                    className={`px-4 py-2 border rounded-md ${
-                      darkMode
-                        ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
-                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className="px-4 py-2 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 rounded-xl text-sm font-medium hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
                   >
                     Cancel
                   </button>
@@ -203,44 +201,49 @@ export default function Profile() {
                     <img
                       src={user.profilePicture}
                       alt={user.name}
-                      className="w-16 h-16 rounded-full"
+                      className="w-14 h-14 rounded-2xl object-cover"
                     />
                   ) : (
-                    <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                    <div className="w-14 h-14 rounded-2xl bg-stone-900 dark:bg-white flex items-center justify-center text-white dark:text-stone-900 text-xl font-bold">
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                   )}
                   <div>
-                    <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <p className="font-medium text-stone-900 dark:text-white">
                       {user.name}
                     </p>
-                    <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <p className="text-sm text-stone-500 dark:text-stone-400">
                       {user.email}
                     </p>
                   </div>
                 </div>
-                <div>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                    Auth Provider: <span className="font-medium capitalize">{user.authProvider}</span>
+                <div className="pt-4 border-t border-stone-200/50 dark:border-stone-700/50">
+                  <p className="text-xs text-stone-500 dark:text-stone-400">
+                    Auth Provider: <span className="font-medium text-stone-700 dark:text-stone-300 capitalize">{user.authProvider}</span>
                   </p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                    Member since: {new Date(user.createdAt).toLocaleDateString()}
+                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+                    Member since: <span className="font-medium text-stone-700 dark:text-stone-300">{new Date(user.createdAt).toLocaleDateString()}</span>
                   </p>
                 </div>
               </div>
             )}
-          </div>
+          </motion.div>
 
           {/* Change Password */}
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow rounded-lg p-6 mb-6`}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-6 shadow-sm mb-6"
+          >
             <div className="flex items-center justify-between mb-6">
-              <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <h2 className="text-sm font-semibold text-stone-900 dark:text-white">
                 Change Password
               </h2>
               {!changingPassword && (
                 <button
                   onClick={() => setChangingPassword(true)}
-                  className="text-blue-600 hover:text-blue-500 font-medium"
+                  className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
                   Change
                 </button>
@@ -251,67 +254,49 @@ export default function Profile() {
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 {user.authProvider !== 'google' && (
                   <div>
-                    <label className={`block text-sm font-medium mb-1 ${
-                      darkMode ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">
                       Current Password
                     </label>
                     <input
                       type="password"
                       value={passwordData.currentPassword}
                       onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                      className={`w-full px-3 py-2 border rounded-md ${
-                        darkMode
-                          ? 'bg-gray-700 border-gray-600 text-white'
-                          : 'border-gray-300 text-gray-900'
-                      }`}
+                      className={inputClass}
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    darkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">
                     New Password
                   </label>
                   <input
                     type="password"
                     value={passwordData.newPassword}
                     onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                    className={`w-full px-3 py-2 border rounded-md ${
-                      darkMode
-                        ? 'bg-gray-700 border-gray-600 text-white'
-                        : 'border-gray-300 text-gray-900'
-                    }`}
+                    className={inputClass}
                     required
                   />
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    darkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">
                     Confirm New Password
                   </label>
                   <input
                     type="password"
                     value={passwordData.confirmPassword}
                     onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                    className={`w-full px-3 py-2 border rounded-md ${
-                      darkMode
-                        ? 'bg-gray-700 border-gray-600 text-white'
-                        : 'border-gray-300 text-gray-900'
-                    }`}
+                    className={inputClass}
                     required
                   />
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-3 pt-2">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                    className="px-4 py-2 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-xl text-sm font-medium hover:bg-stone-800 dark:hover:bg-stone-100 disabled:opacity-50 transition-colors"
                   >
                     {loading ? 'Changing...' : 'Change Password'}
                   </button>
@@ -321,37 +306,38 @@ export default function Profile() {
                       setChangingPassword(false);
                       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
                     }}
-                    className={`px-4 py-2 border rounded-md ${
-                      darkMode
-                        ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
-                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className="px-4 py-2 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 rounded-xl text-sm font-medium hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
             ) : (
-              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm text-stone-500 dark:text-stone-400">
                 {user.authProvider === 'google'
                   ? 'Set a password to enable email/password login alongside Google.'
                   : 'Keep your account secure by regularly updating your password.'}
               </p>
             )}
-          </div>
+          </motion.div>
 
-          {/* Danger Zone */}
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow rounded-lg p-6`}>
-            <h2 className={`text-xl font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          {/* Account Actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-6 shadow-sm"
+          >
+            <h2 className="text-sm font-semibold text-stone-900 dark:text-white mb-4">
               Account Actions
             </h2>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              className="px-4 py-2 bg-red-50 dark:bg-red-900/20 border border-red-200/50 dark:border-red-800/30 text-red-700 dark:text-red-300 rounded-xl text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
             >
               Log Out
             </button>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>

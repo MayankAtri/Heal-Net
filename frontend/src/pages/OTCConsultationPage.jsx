@@ -11,11 +11,11 @@ import Button from '../components/common/Button';
 import AnimatedBackground from '../components/common/AnimatedBackground';
 
 const ageGroups = [
-  { value: 'infant', label: 'Infant (0-2 years)', icon: '👶', description: 'Newborn to toddler' },
-  { value: 'child', label: 'Child (3-12 years)', icon: '🧒', description: 'Young children' },
-  { value: 'teen', label: 'Teen (13-17 years)', icon: '🧑', description: 'Adolescents' },
-  { value: 'adult', label: 'Adult (18-59 years)', icon: '👨', description: 'Adults' },
-  { value: 'senior', label: 'Senior (60+ years)', icon: '👴', description: 'Elderly' },
+  { value: 'infant', label: 'Infant (0-2 years)', short: 'Infant', range: '0-2 yrs' },
+  { value: 'child', label: 'Child (3-12 years)', short: 'Child', range: '3-12 yrs' },
+  { value: 'teen', label: 'Teen (13-17 years)', short: 'Teen', range: '13-17 yrs' },
+  { value: 'adult', label: 'Adult (18-59 years)', short: 'Adult', range: '18-59 yrs' },
+  { value: 'senior', label: 'Senior (60+ years)', short: 'Senior', range: '60+ yrs' },
 ];
 
 const OTCConsultationPage = () => {
@@ -28,20 +28,16 @@ const OTCConsultationPage = () => {
   const handleSymptomToggle = (symptomValue) => {
     setSelectedSymptoms(prev => {
       if (prev.includes(symptomValue)) {
-        // Remove symptom and its severity
         const newSymptoms = prev.filter(s => s !== symptomValue);
         const newSeverities = { ...severities };
         delete newSeverities[symptomValue];
         setSeverities(newSeverities);
         return newSymptoms;
       } else {
-        // Add symptom
-        // If custom is selected, clear other symptoms
         if (symptomValue === 'custom') {
           setSeverities({});
           return ['custom'];
         }
-        // If other symptoms exist and custom is being added, clear custom
         const filteredSymptoms = prev.filter(s => s !== 'custom');
         return [...filteredSymptoms, symptomValue];
       }
@@ -49,10 +45,7 @@ const OTCConsultationPage = () => {
   };
 
   const handleSeverityChange = (symptomValue, level) => {
-    setSeverities(prev => ({
-      ...prev,
-      [symptomValue]: level
-    }));
+    setSeverities(prev => ({ ...prev, [symptomValue]: level }));
   };
 
   const handleCustomSymptomChange = (text) => {
@@ -61,45 +54,25 @@ const OTCConsultationPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedAge || selectedSymptoms.length === 0) return;
 
-    // Validate age group
-    if (!selectedAge) {
-      return;
-    }
-
-    // Validate symptoms
-    if (selectedSymptoms.length === 0) {
-      return;
-    }
-
-    // Get selected age group label
     const ageLabel = ageGroups.find(a => a.value === selectedAge)?.label || selectedAge;
 
-    // Check if custom symptoms
     if (selectedSymptoms.includes('custom')) {
-      if (!customSymptoms.trim()) {
-        return;
-      }
+      if (!customSymptoms.trim()) return;
       await consult('custom', customSymptoms, selectedAge, ageLabel);
       return;
     }
 
-    // Check all symptoms have severity
     const hasAllSeverities = selectedSymptoms.every(symptom => severities[symptom]);
-    if (!hasAllSeverities) {
-      return;
-    }
+    if (!hasAllSeverities) return;
 
     try {
-      // Build symptoms description with severities
       const symptomsWithSeverity = selectedSymptoms.map(symptom => {
         return `${symptom} (severity: ${severities[symptom]}/5)`;
       }).join(', ');
-
-      // Use the first symptom as the primary symptom type
       await consult(selectedSymptoms[0], symptomsWithSeverity, selectedAge, ageLabel);
     } catch (err) {
-      // Error is already handled by the hook
       console.error('Consultation failed:', err);
     }
   };
@@ -114,288 +87,227 @@ const OTCConsultationPage = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Optimized Animated Background */}
       <AnimatedBackground variant="default" />
 
       <div className="relative z-10 max-w-5xl mx-auto">
         {/* Page Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold mb-3">
-            <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
-              OTC Medicine Consultation
-            </span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-stone-400 dark:text-stone-500 mb-3 block">Consultation</span>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-stone-900 dark:text-white mb-3">
+            OTC Medicine Consultation
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Get AI-powered recommendations for over-the-counter medicines based on your symptoms,
-            along with home remedies and guidance on when to seek professional care.
+          <p className="text-base text-stone-500 dark:text-stone-400 max-w-lg">
+            Get AI-powered recommendations for over-the-counter medicines based on your symptoms.
           </p>
         </motion.div>
 
         {/* Error Alert */}
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ErrorAlert
-              message={error}
-              onDismiss={reset}
-              className="mb-6"
-            />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
+            <ErrorAlert message={error} onDismiss={reset} className="mb-6" />
           </motion.div>
         )}
 
         {/* Main Content */}
         {!result ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             <form onSubmit={handleSubmit}>
               <GlassCard padding="lg">
-            <div className="space-y-8">
-              {/* Age Group Selector */}
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                  <span>👤</span> Select Age Group
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  Age-appropriate medicine recommendations will be provided based on your selection
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                  {ageGroups.map((age) => (
-                    <button
-                      key={age.value}
-                      type="button"
-                      onClick={() => setSelectedAge(age.value)}
-                      disabled={loading}
-                      className={`p-3 rounded-xl border-2 transition-all duration-200 text-center ${
-                        selectedAge === age.value
-                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 shadow-lg scale-105'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-gray-50 dark:hover:bg-gray-800'
-                      } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                    >
-                      <span className="text-2xl mb-1 block">{age.icon}</span>
-                      <span className={`text-xs font-medium block ${
-                        selectedAge === age.value
-                          ? 'text-primary-700 dark:text-primary-300'
-                          : 'text-gray-700 dark:text-gray-300'
-                      }`}>
-                        {age.label.split(' ')[0]}
-                      </span>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400 block">
-                        {age.label.match(/\(([^)]+)\)/)?.[1]}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-                {!selectedAge && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
-                    Please select an age group for accurate recommendations
-                  </p>
-                )}
-              </div>
-
-              {/* Symptom Selector */}
-              <div className={`pt-6 border-t border-gray-200/50 dark:border-gray-700/50 ${!selectedAge ? 'opacity-50 pointer-events-none' : ''}`}>
-                <SymptomSelector
-                  selectedSymptoms={selectedSymptoms}
-                  onSymptomToggle={handleSymptomToggle}
-                  disabled={loading || !selectedAge}
-                />
-              </div>
-
-              {/* Severity List - Show for predefined symptoms */}
-              <AnimatePresence mode="wait">
-                {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') && (
-                  <motion.div
-                    key="severity-list"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
-                  >
-                    <SymptomSeverityList
-                      selectedSymptoms={selectedSymptoms}
-                      severities={severities}
-                      onSeverityChange={handleSeverityChange}
-                      disabled={loading}
-                    />
-                  </motion.div>
-                )}
-
-                {/* Custom Symptom Form */}
-                {selectedSymptoms.includes('custom') && (
-                  <motion.div
-                    key="custom-form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
-                  >
-                    <CustomSymptomForm
-                      onSymptomChange={handleCustomSymptomChange}
-                      disabled={loading}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Submit Button */}
-              {selectedSymptoms.length > 0 && selectedAge && (
-                <div className="pt-6 border-t border-gray-200">
-                  <Button
-                    type="submit"
-                    loading={loading}
-                    disabled={
-                      !selectedAge ||
-                      selectedSymptoms.length === 0 ||
-                      (selectedSymptoms.includes('custom') && !customSymptoms.trim()) ||
-                      (!selectedSymptoms.includes('custom') && !selectedSymptoms.every(s => severities[s])) ||
-                      loading
-                    }
-                    className="w-full"
-                    size="lg"
-                  >
-                    {loading ? 'Getting Recommendations...' : `Get OTC Recommendations for ${ageGroups.find(a => a.value === selectedAge)?.label.split(' ')[0]}`}
-                  </Button>
-
-                  {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') &&
-                   !selectedSymptoms.every(s => severities[s]) && (
-                    <p className="text-sm text-yellow-700 dark:text-yellow-400 text-center mt-3">
-                      Please rate the severity for all selected symptoms
+                <div className="space-y-8">
+                  {/* Age Group Selector */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-stone-900 dark:text-white mb-1">Select Age Group</h3>
+                    <p className="text-xs text-stone-500 dark:text-stone-400 mb-4">
+                      Age-appropriate medicine recommendations will be provided
                     </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                      {ageGroups.map((age) => (
+                        <button
+                          key={age.value}
+                          type="button"
+                          onClick={() => setSelectedAge(age.value)}
+                          disabled={loading}
+                          className={`p-3 rounded-xl border transition-all duration-200 text-center ${
+                            selectedAge === age.value
+                              ? 'border-emerald-500 bg-emerald-50/80 dark:bg-emerald-900/20'
+                              : 'border-stone-200 dark:border-stone-700 hover:border-stone-300 dark:hover:border-stone-600 hover:bg-stone-50 dark:hover:bg-dark-surface'
+                          } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                        >
+                          <span className={`text-sm font-medium block ${
+                            selectedAge === age.value
+                              ? 'text-emerald-700 dark:text-emerald-300'
+                              : 'text-stone-700 dark:text-stone-300'
+                          }`}>
+                            {age.short}
+                          </span>
+                          <span className="text-[10px] text-stone-400 dark:text-stone-500 block mt-0.5">
+                            {age.range}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                    {!selectedAge && (
+                      <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+                        Please select an age group for accurate recommendations
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Symptom Selector */}
+                  <div className={`pt-6 border-t border-stone-200/50 dark:border-stone-700/50 ${!selectedAge ? 'opacity-50 pointer-events-none' : ''}`}>
+                    <SymptomSelector
+                      selectedSymptoms={selectedSymptoms}
+                      onSymptomToggle={handleSymptomToggle}
+                      disabled={loading || !selectedAge}
+                    />
+                  </div>
+
+                  {/* Severity List */}
+                  <AnimatePresence mode="wait">
+                    {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') && (
+                      <motion.div
+                        key="severity-list"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="pt-6 border-t border-stone-200/50 dark:border-stone-700/50"
+                      >
+                        <SymptomSeverityList
+                          selectedSymptoms={selectedSymptoms}
+                          severities={severities}
+                          onSeverityChange={handleSeverityChange}
+                          disabled={loading}
+                        />
+                      </motion.div>
+                    )}
+
+                    {selectedSymptoms.includes('custom') && (
+                      <motion.div
+                        key="custom-form"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="pt-6 border-t border-stone-200/50 dark:border-stone-700/50"
+                      >
+                        <CustomSymptomForm
+                          onSymptomChange={handleCustomSymptomChange}
+                          disabled={loading}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Submit Button */}
+                  {selectedSymptoms.length > 0 && selectedAge && (
+                    <div className="pt-6 border-t border-stone-200/50 dark:border-stone-700/50">
+                      <Button
+                        type="submit"
+                        loading={loading}
+                        disabled={
+                          !selectedAge ||
+                          selectedSymptoms.length === 0 ||
+                          (selectedSymptoms.includes('custom') && !customSymptoms.trim()) ||
+                          (!selectedSymptoms.includes('custom') && !selectedSymptoms.every(s => severities[s])) ||
+                          loading
+                        }
+                        className="w-full"
+                        size="lg"
+                      >
+                        {loading ? 'Getting Recommendations...' : `Get OTC Recommendations for ${ageGroups.find(a => a.value === selectedAge)?.short}`}
+                      </Button>
+
+                      {selectedSymptoms.length > 0 && !selectedSymptoms.includes('custom') &&
+                       !selectedSymptoms.every(s => severities[s]) && (
+                        <p className="text-xs text-amber-600 dark:text-amber-400 text-center mt-3">
+                          Please rate the severity for all selected symptoms
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {loading && (
+                    <div className="p-6 rounded-xl bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-200/30 dark:border-emerald-800/20">
+                      <div className="flex items-center justify-center gap-3 mb-2">
+                        <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                      </div>
+                      <p className="text-sm font-medium text-stone-900 dark:text-white text-center">
+                        Analyzing your symptoms...
+                      </p>
+                      <p className="text-xs text-stone-500 dark:text-stone-400 text-center mt-1">
+                        This may take 15-30 seconds
+                      </p>
+                    </div>
                   )}
                 </div>
-              )}
-
-              {loading && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/20 dark:to-emerald-900/20 border-2 border-blue-200 dark:border-emerald-700 rounded-2xl p-6 shadow-2xl overflow-hidden relative"
-                >
-                  <motion.div
-                    animate={{
-                      opacity: [0.5, 1, 0.5],
-                      scale: [1, 1.01, 1]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative z-10"
-                  >
-                    <div className="flex items-center justify-center gap-3 mb-3">
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                        className="w-8 h-8 border-3 border-blue-500 border-t-emerald-500 rounded-full"
-                      />
-                      <div className="text-3xl animate-pulse">
-                        💊
-                      </div>
-                    </div>
-                    <p className="text-sm font-bold bg-gradient-to-r from-blue-700 to-emerald-700 dark:from-blue-300 dark:to-emerald-300 bg-clip-text text-transparent text-center">
-                      Analyzing your symptoms...
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-2">
-                      This may take 15-30 seconds while our AI prepares personalized recommendations
-                    </p>
-                  </motion.div>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/30 dark:via-emerald-500/20 to-transparent"
-                    animate={{
-                      x: ['-100%', '200%']
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                </motion.div>
-              )}
-            </div>
-          </GlassCard>
-        </form>
+              </GlassCard>
+            </form>
           </motion.div>
         ) : (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <OTCResult result={result} onConsultAnother={handleConsultAnother} />
           </motion.div>
         )}
 
-        {/* Information Card */}
+        {/* Info Card */}
         {!result && !loading && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className="mt-8"
           >
-            <GlassCard padding="lg" className="bg-gradient-to-br from-blue-50/50 to-emerald-50/50 dark:from-blue-900/10 dark:to-emerald-900/10">
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-blue-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
-                  How it works
-                </h3>
-                <ol className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                  <li className="flex items-start space-x-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
-                      1
+            <div className="p-7 rounded-2xl bg-emerald-50/40 dark:bg-emerald-900/10 border border-emerald-200/30 dark:border-emerald-800/20">
+              <h3 className="text-sm font-semibold text-stone-900 dark:text-white mb-4">How it works</h3>
+              <ol className="space-y-3 text-sm text-stone-600 dark:text-stone-400 mb-6">
+                {[
+                  { num: '01', title: 'Select Symptoms', desc: 'Choose symptoms or describe custom ones' },
+                  { num: '02', title: 'Rate Severity', desc: 'Rate 1-5 for each selected symptom' },
+                  { num: '03', title: 'Get Recommendations', desc: 'AI suggests OTC medicines, home remedies, and guidance' },
+                ].map((step) => (
+                  <li key={step.num} className="flex items-start gap-3">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400 mt-0.5 w-6 flex-shrink-0">
+                      {step.num}
                     </span>
                     <span>
-                      <strong>Select Symptoms:</strong> Choose one or more symptoms from common options, or describe custom symptoms in detail
+                      <strong className="text-stone-900 dark:text-white">{step.title}:</strong> {step.desc}
                     </span>
                   </li>
-                  <li className="flex items-start space-x-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
-                      2
-                    </span>
-                    <span>
-                      <strong>Rate Severity:</strong> Rate the severity (1-5) for each selected symptom
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 text-white flex items-center justify-center text-xs font-bold shadow-md">
-                      3
-                    </span>
-                    <span>
-                      <strong>Get Recommendations:</strong> AI analyzes all your symptoms and suggests appropriate OTC medicines, home remedies, and guidance
-                    </span>
-                  </li>
-                </ol>
+                ))}
+              </ol>
 
-                <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
-                  <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Remember:</h4>
-                  <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                    <li className="flex items-start space-x-2">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
-                      <span>This is not a replacement for professional medical advice</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
-                      <span>Always read medicine labels and follow dosage instructions</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
-                      <span>Consult a doctor if symptoms persist or worsen</span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="pt-5 border-t border-emerald-200/30 dark:border-emerald-800/20">
+                <h4 className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-3">Remember</h4>
+                <ul className="space-y-1.5 text-sm text-stone-500 dark:text-stone-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-emerald-500"></span>
+                    This is not a replacement for professional medical advice
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-emerald-500"></span>
+                    Always read medicine labels and follow dosage instructions
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-emerald-500"></span>
+                    Consult a doctor if symptoms persist or worsen
+                  </li>
+                </ul>
               </div>
-            </GlassCard>
+            </div>
           </motion.div>
         )}
       </div>

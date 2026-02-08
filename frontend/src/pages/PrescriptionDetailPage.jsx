@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useDarkMode } from '../contexts/DarkModeContext';
 import PrescriptionResult from '../components/prescription/PrescriptionResult';
 import Button from '../components/common/Button';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 export default function PrescriptionDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { darkMode } = useDarkMode();
   const [prescription, setPrescription] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -54,12 +53,10 @@ export default function PrescriptionDetailPage() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${
-        darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 to-indigo-100'
-      }`}>
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className={`mt-4 text-lg ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+          <div className="w-10 h-10 border-2 border-stone-200 dark:border-stone-700 border-t-emerald-500 rounded-full animate-spin mx-auto" />
+          <p className="mt-4 text-sm text-stone-500 dark:text-stone-400">
             Loading prescription...
           </p>
         </div>
@@ -69,15 +66,15 @@ export default function PrescriptionDetailPage() {
 
   if (error) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${
-        darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 to-indigo-100'
-      }`}>
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className={`text-2xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <svg className="w-10 h-10 text-red-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+          </svg>
+          <h2 className="text-xl font-display font-bold text-stone-900 dark:text-white mb-2">
             Error Loading Prescription
           </h2>
-          <p className={`mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+          <p className="text-sm text-stone-500 dark:text-stone-400 mb-6">
             {error}
           </p>
           <Button onClick={() => navigate('/history')}>
@@ -89,53 +86,25 @@ export default function PrescriptionDetailPage() {
   }
 
   return (
-    <div className="relative min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-950"></div>
+    <div className="relative min-h-screen">
+      <AnimatedBackground variant="default" />
 
+      <div className="relative z-10 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 60, 0],
-            y: [0, 40, 0],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-600/10 dark:to-cyan-600/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -60, 0],
-            y: [0, 60, 0],
-          }}
-          transition={{
-            duration: 28,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-0 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-3xl"
-        />
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className="mb-6"
         >
-          <Button
+          <button
             onClick={() => navigate('/history')}
-            variant="secondary"
-            className="mb-4"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white transition-colors mb-4"
           >
-            ← Back to History
-          </Button>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back to History
+          </button>
         </motion.div>
 
         {prescription && (

@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { useDarkMode } from '../contexts/DarkModeContext';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/ui/GlassCard';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 
 export default function History() {
   const { user, isAuthenticated } = useAuth();
-  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const [history, setHistory] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState('all'); // 'all', 'prescription', 'report', 'otc'
+  const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
@@ -100,7 +99,7 @@ export default function History() {
 
       if (response.ok) {
         setHistory(history.filter(item => item.id !== itemId));
-        fetchStats(); // Refresh stats
+        fetchStats();
       } else {
         alert('Failed to delete item');
       }
@@ -116,10 +115,10 @@ export default function History() {
 
   const getTypeColor = (type) => {
     switch (type) {
-      case 'prescription': return 'bg-blue-100 text-blue-800';
-      case 'report': return 'bg-green-100 text-green-800';
-      case 'otc': return 'bg-teal-100 text-teal-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'prescription': return 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/30';
+      case 'report': return 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/30';
+      case 'otc': return 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/30';
+      default: return 'bg-stone-50 dark:bg-stone-900/20 text-stone-700 dark:text-stone-300 border border-stone-200/50 dark:border-stone-800/30';
     }
   };
 
@@ -136,152 +135,79 @@ export default function History() {
     return null;
   }
 
+  const filters = [
+    { value: 'all', label: 'All' },
+    { value: 'prescription', label: 'Prescriptions' },
+    { value: 'report', label: 'Reports' },
+    { value: 'otc', label: 'OTC' },
+  ];
+
   return (
-    <div className="relative min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-indigo-950"></div>
+    <div className="relative min-h-screen">
+      <AnimatedBackground variant="default" />
 
+      <div className="relative z-10 max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 60, 0],
-            y: [0, 40, 0],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 dark:from-indigo-600/10 dark:to-blue-600/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -60, 0],
-            y: [0, 60, 0],
-          }}
-          transition={{
-            duration: 28,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/3 -right-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-teal-400/20 dark:from-cyan-600/10 dark:to-teal-600/10 rounded-full blur-3xl"
-        />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         >
-          <h1 className="text-4xl font-bold mb-8">
-            <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 dark:from-indigo-400 dark:via-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
-              Your Analysis History
-            </span>
-          </h1>
+          {/* Header */}
+          <div className="mb-8">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-stone-400 dark:text-stone-500 mb-3 block">Dashboard</span>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-stone-900 dark:text-white">
+              Analysis History
+            </h1>
+          </div>
 
           {/* Stats Cards */}
           {stats && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8"
             >
-              <motion.div whileHover={{ scale: 1.05, y: -4 }} transition={{ duration: 0.3 }}>
-                <GlassCard padding="md" className="bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-indigo-900/10 dark:to-blue-900/10">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Total Analyses</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
-                    {stats.totalAnalyses}
-                  </p>
-                </GlassCard>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, y: -4 }} transition={{ duration: 0.3 }}>
-                <GlassCard padding="md" className="bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-900/10 dark:to-cyan-900/10">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Prescriptions</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
-                    {stats.prescriptions}
-                  </p>
-                </GlassCard>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, y: -4 }} transition={{ duration: 0.3 }}>
-                <GlassCard padding="md" className="bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/10 dark:to-teal-900/10">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Reports</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
-                    {stats.reports}
-                  </p>
-                </GlassCard>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, y: -4 }} transition={{ duration: 0.3 }}>
-                <GlassCard padding="md" className="bg-gradient-to-br from-teal-50/50 to-cyan-50/50 dark:from-teal-900/10 dark:to-cyan-900/10">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">OTC Consultations</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400 bg-clip-text text-transparent">
-                    {stats.otcConsultations}
-                  </p>
-                </GlassCard>
-              </motion.div>
+              {[
+                { label: 'Total', value: stats.totalAnalyses, color: 'text-stone-900 dark:text-white' },
+                { label: 'Prescriptions', value: stats.prescriptions, color: 'text-blue-600 dark:text-blue-400' },
+                { label: 'Reports', value: stats.reports, color: 'text-emerald-600 dark:text-emerald-400' },
+                { label: 'OTC', value: stats.otcConsultations, color: 'text-amber-600 dark:text-amber-400' },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-5 shadow-sm"
+                >
+                  <p className="text-xs font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1">{stat.label}</p>
+                  <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                </div>
+              ))}
             </motion.div>
           )}
 
           {/* Filters and Search */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="mb-6"
           >
-            <GlassCard padding="lg" className="mb-6">
+            <div className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-4 shadow-sm">
               <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className="flex gap-2 flex-wrap">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilter('all')}
-                    className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-                      filter === 'all'
-                        ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg'
-                        : 'bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-gray-600/50'
-                    }`}
-                  >
-                    All
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilter('prescription')}
-                    className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-                      filter === 'prescription'
-                        ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg'
-                        : 'bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-gray-600/50'
-                    }`}
-                  >
-                    Prescriptions
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilter('report')}
-                    className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-                      filter === 'report'
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                        : 'bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-gray-600/50'
-                    }`}
-                  >
-                    Reports
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilter('otc')}
-                    className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-                      filter === 'otc'
-                        ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg'
-                        : 'bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-gray-600/50'
-                    }`}
-                  >
-                    OTC
-                  </motion.button>
+                <div className="flex gap-1.5 flex-wrap">
+                  {filters.map((f) => (
+                    <button
+                      key={f.value}
+                      onClick={() => setFilter(f.value)}
+                      className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        filter === f.value
+                          ? 'bg-stone-900 dark:bg-white text-white dark:text-stone-900'
+                          : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
                 </div>
 
                 <form onSubmit={handleSearch} className="flex gap-2 w-full md:w-auto">
@@ -290,19 +216,17 @@ export default function History() {
                     placeholder="Search history..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-indigo-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-cyan-900/50 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white w-full md:w-64 transition-all duration-300"
+                    className="px-4 py-2 border border-stone-200 dark:border-stone-700 rounded-xl bg-stone-50/50 dark:bg-dark-surface/50 text-stone-900 dark:text-white text-sm w-full md:w-56 transition-all duration-200 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50"
                   />
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <button
                     type="submit"
-                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl hover:from-indigo-700 hover:to-blue-700 shadow-lg transition-all duration-300"
+                    className="px-4 py-2 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-xl text-sm font-medium hover:bg-stone-800 dark:hover:bg-stone-100 transition-colors"
                   >
                     Search
-                  </motion.button>
+                  </button>
                 </form>
               </div>
-            </GlassCard>
+            </div>
           </motion.div>
 
           {/* History Items */}
@@ -312,78 +236,66 @@ export default function History() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center py-12"
+                className="text-center py-16"
               >
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="mx-auto w-12 h-12 border-4 border-indigo-600 border-t-cyan-600 rounded-full"
-                />
-                <p className="mt-4 text-gray-600 dark:text-gray-400">Loading history...</p>
+                <div className="mx-auto w-10 h-10 border-2 border-stone-200 dark:border-stone-700 border-t-emerald-500 rounded-full animate-spin" />
+                <p className="mt-4 text-sm text-stone-500 dark:text-stone-400">Loading history...</p>
               </motion.div>
             ) : error ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
-                <GlassCard padding="lg" className="bg-gradient-to-br from-red-50/50 to-rose-50/50 dark:from-red-900/10 dark:to-rose-900/10 border-red-200/50 dark:border-red-700/50">
-                  <p className="text-red-700 dark:text-red-300">{error}</p>
-                </GlassCard>
+                <div className="bg-red-50/80 dark:bg-red-900/10 border border-red-200/50 dark:border-red-800/30 rounded-2xl p-6">
+                  <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+                </div>
               </motion.div>
             ) : history.length === 0 ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
-                <GlassCard padding="xl" className="text-center">
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-lg text-gray-600 dark:text-gray-400"
-                  >
-                    No analysis history yet. Start using HealNet to build your medical history!
-                  </motion.p>
-                </GlassCard>
+                <div className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-12 shadow-sm text-center">
+                  <svg className="w-10 h-10 text-stone-300 dark:text-stone-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    No analysis history yet. Start using HealNet to build your medical history.
+                  </p>
+                </div>
               </motion.div>
             ) : (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="space-y-4"
+                className="space-y-3"
               >
                 {history.map((item, index) => (
                   <motion.div
                     key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.02, y: -4 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.03 }}
                   >
-                    <GlassCard padding="lg" className="hover:shadow-xl transition-shadow duration-300">
+                    <div className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <motion.span
-                              whileHover={{ scale: 1.1 }}
-                              className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(item.type)}`}
-                            >
+                          <div className="flex items-center gap-2.5 mb-2">
+                            <span className={`px-2.5 py-0.5 rounded-lg text-xs font-medium ${getTypeColor(item.type)}`}>
                               {getTypeLabel(item.type)}
-                            </motion.span>
-                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                            </span>
+                            <span className="text-xs text-stone-400 dark:text-stone-500">
                               {new Date(item.createdAt).toLocaleDateString()}
                             </span>
                           </div>
-                          <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+                          <h3 className="text-sm font-semibold text-stone-900 dark:text-white mb-3">
                             {item.title}
                           </h3>
-                          <div className="flex gap-3">
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
+                          <div className="flex gap-4">
+                            <button
                               onClick={() => {
                                 const routeMap = {
                                   'prescription': `/prescription/${item.id}`,
@@ -392,30 +304,27 @@ export default function History() {
                                 };
                                 navigate(routeMap[item.type] || '/');
                               }}
-                              className="text-indigo-600 dark:text-cyan-400 hover:text-indigo-700 dark:hover:text-cyan-300 font-medium text-sm"
+                              className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium text-xs"
                             >
-                              View Details →
-                            </motion.button>
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
+                              View Details
+                            </button>
+                            <button
                               onClick={() => handleDelete(item.id, item.type)}
-                              className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium text-sm"
+                              className="text-red-500 dark:text-red-400 hover:underline font-medium text-xs"
                             >
                               Delete
-                            </motion.button>
+                            </button>
                           </div>
                         </div>
                         {item.imageUrl && (
-                          <motion.img
-                            whileHover={{ scale: 1.1, rotate: 2 }}
+                          <img
                             src={item.imageUrl}
                             alt={item.title}
-                            className="w-20 h-20 object-cover rounded-xl ml-4 shadow-md"
+                            className="w-16 h-16 object-cover rounded-xl ml-4 border border-stone-200/60 dark:border-stone-800/60"
                           />
                         )}
                       </div>
-                    </GlassCard>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
