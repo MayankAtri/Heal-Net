@@ -6,21 +6,19 @@ const RadiologyResults = ({ data }) => {
   if (!data) return null;
 
   return (
-    <div className="space-y-6">
-      {/* Technique */}
+    <div className="space-y-4">
       {data.technique && (
-        <Card title="Technique" className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-          <p className="text-sm text-gray-800 dark:text-gray-200">{data.technique}</p>
+        <Card title="Technique" className="bg-blue-50/30 dark:bg-blue-900/10 border-blue-200/40 dark:border-blue-800/30">
+          <p className="text-sm text-stone-700 dark:text-stone-300">{data.technique}</p>
         </Card>
       )}
 
-      {/* Findings */}
       {data.findings && data.findings.length > 0 && (
-        <Card title="Findings" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card title="Findings">
           <ul className="space-y-2">
             {data.findings.map((finding, index) => (
               <li key={index} className="flex items-start space-x-2">
-                <span className="text-primary-500 dark:text-primary-400 mt-1">•</span>
+                <span className="text-emerald-500 mt-1 text-xs">&#9679;</span>
                 <div className="flex-1"><Markdown>{finding}</Markdown></div>
               </li>
             ))}
@@ -28,20 +26,18 @@ const RadiologyResults = ({ data }) => {
         </Card>
       )}
 
-      {/* Impressions */}
       {data.impressions && (
-        <Card title="Impressions" className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700">
+        <Card title="Impressions" className="bg-amber-50/30 dark:bg-amber-900/10 border-amber-200/40 dark:border-amber-800/30">
           <Markdown>{data.impressions}</Markdown>
         </Card>
       )}
 
-      {/* Recommendations */}
       {data.recommendations && data.recommendations.length > 0 && (
-        <Card title="Recommendations" className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700">
+        <Card title="Recommendations" className="bg-emerald-50/30 dark:bg-emerald-900/10 border-emerald-200/40 dark:border-emerald-800/30">
           <ul className="space-y-2">
             {data.recommendations.map((recommendation, index) => (
               <li key={index} className="flex items-start space-x-2">
-                <span className="text-green-600 dark:text-green-400 mt-1">•</span>
+                <span className="text-emerald-500 mt-1 text-xs">&#9679;</span>
                 <div className="flex-1"><Markdown>{recommendation}</Markdown></div>
               </li>
             ))}

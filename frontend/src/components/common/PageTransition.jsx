@@ -4,7 +4,7 @@ import { memo } from 'react';
 const PageTransition = memo(({ children }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, scale: 0.99 }}
+      initial={{ opacity: 1, y: 0, scale: 1 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -10, scale: 0.99 }}
       transition={{

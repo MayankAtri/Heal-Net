@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-stone-100/50 dark:bg-dark-card/50 border-t border-stone-200/50 dark:border-stone-800/50 mt-auto transition-colors">
+    <footer className="bg-emerald-50/30 dark:bg-dark-card/50 border-t border-emerald-200/30 dark:border-stone-800/50 mt-auto transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Educational Project Notice */}
         <div className="mb-8 p-5 bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-200/50 dark:border-emerald-800/30 rounded-xl">

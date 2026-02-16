@@ -26,7 +26,6 @@ const ReportUpload = ({ onUpload, loading }) => {
 
     setSelectedFile(file);
 
-    // Create preview for images (not PDFs)
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => setPreview(e.target.result);
@@ -69,7 +68,7 @@ const ReportUpload = ({ onUpload, loading }) => {
     <div className="space-y-6">
       {/* Analysis Depth Selector */}
       <div>
-        <label className="block text-sm font-bold text-gray-900 dark:text-white mb-3">
+        <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-3 uppercase tracking-wider">
           Analysis Depth
         </label>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -90,8 +89,8 @@ const ReportUpload = ({ onUpload, loading }) => {
               whileTap={!loading ? { scale: 0.98 } : {}}
               className={`relative p-5 rounded-2xl border-2 text-left transition-all duration-300 ${
                 analysisDepth === depth.value
-                  ? 'border-blue-500 dark:border-emerald-400 bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/30 dark:to-emerald-900/30 shadow-xl'
-                  : 'border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm hover:border-blue-300 dark:hover:border-emerald-600 hover:shadow-lg'
+                  ? 'border-emerald-500 dark:border-emerald-400 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 shadow-xl'
+                  : 'border-stone-200 dark:border-stone-700 bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-lg'
               } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <div className="flex items-center space-x-3 mb-2">
@@ -110,17 +109,16 @@ const ReportUpload = ({ onUpload, loading }) => {
                 </motion.span>
                 <h3 className={`font-bold text-base ${
                   analysisDepth === depth.value
-                    ? 'bg-gradient-to-r from-blue-600 to-emerald-600 dark:from-blue-400 dark:to-emerald-400 bg-clip-text text-transparent'
-                    : 'text-gray-900 dark:text-white'
+                    ? 'text-emerald-700 dark:text-emerald-300'
+                    : 'text-stone-900 dark:text-white'
                 }`}>
                   {depth.label}
                 </h3>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
                 {depth.description}
               </p>
 
-              {/* Checkmark for selected state */}
               {analysisDepth === depth.value && (
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
@@ -128,7 +126,7 @@ const ReportUpload = ({ onUpload, loading }) => {
                   transition={{ duration: 0.4, type: "spring" }}
                   className="absolute top-3 right-3"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center shadow-lg">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg">
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
@@ -142,7 +140,7 @@ const ReportUpload = ({ onUpload, loading }) => {
 
       {/* File Upload Area */}
       <div>
-        <label className="block text-sm font-bold text-gray-900 dark:text-white mb-3">
+        <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-3 uppercase tracking-wider">
           Upload Medical Report
         </label>
 
@@ -156,16 +154,15 @@ const ReportUpload = ({ onUpload, loading }) => {
             whileTap={!loading ? { scale: 0.98 } : {}}
             className={`relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300 overflow-hidden ${
               isDragActive
-                ? 'border-blue-500 dark:border-emerald-400 bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/30 dark:to-emerald-900/30 shadow-2xl'
-                : 'border-gray-300 dark:border-gray-700 hover:border-blue-400 dark:hover:border-emerald-500 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm hover:shadow-xl'
+                ? 'border-emerald-500 dark:border-emerald-400 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 shadow-2xl'
+                : 'border-stone-300 dark:border-stone-700 hover:border-emerald-400 dark:hover:border-emerald-500 bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm hover:shadow-xl'
             } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <input {...getInputProps()} />
 
-            {/* Animated gradient overlay */}
             {isDragActive && (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-teal-500/20 to-emerald-500/20"
+                className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-emerald-500/20"
                 animate={{
                   x: ['-100%', '100%']
                 }}
@@ -179,7 +176,7 @@ const ReportUpload = ({ onUpload, loading }) => {
 
             <div className="relative z-10 space-y-4">
               <motion.div
-                className="text-6xl"
+                className="w-16 h-16 mx-auto rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center"
                 animate={isDragActive ? {
                   scale: [1, 1.2, 1],
                   rotate: [0, 5, -5, 0]
@@ -190,18 +187,20 @@ const ReportUpload = ({ onUpload, loading }) => {
                   ease: "easeInOut"
                 }}
               >
-                📄
+                <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
               </motion.div>
               <div>
-                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                <p className="text-lg font-semibold text-stone-700 dark:text-stone-300">
                   {isDragActive ? 'Drop your report here' : 'Drag & drop your medical report'}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">
                   or click to browse files
                 </p>
               </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
-                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-100 dark:bg-dark-surface border border-stone-200/60 dark:border-stone-700/60">
+                <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
                   Supports: JPG, PNG, PDF (max 5MB)
                 </span>
               </div>
@@ -212,7 +211,7 @@ const ReportUpload = ({ onUpload, loading }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="border-2 border-blue-200 dark:border-emerald-700 rounded-2xl p-6 bg-gradient-to-br from-blue-50/50 to-emerald-50/50 dark:from-blue-900/20 dark:to-emerald-900/20 backdrop-blur-sm shadow-lg"
+            className="border-2 border-emerald-200 dark:border-emerald-700 rounded-2xl p-6 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/10 dark:to-teal-900/10 backdrop-blur-sm shadow-lg"
           >
             <div className="flex items-start space-x-4">
               {preview ? (
@@ -222,16 +221,18 @@ const ReportUpload = ({ onUpload, loading }) => {
                   transition={{ duration: 0.4 }}
                   src={preview}
                   alt="Report preview"
-                  className="w-24 h-24 object-cover rounded-xl border-2 border-blue-200 dark:border-emerald-600 bg-gray-50 dark:bg-gray-900 shadow-md"
+                  className="w-24 h-24 object-cover rounded-xl border-2 border-emerald-200 dark:border-emerald-600 bg-stone-50 dark:bg-dark-surface shadow-md"
                 />
               ) : (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="w-24 h-24 flex items-center justify-center bg-gradient-to-br from-blue-100 to-emerald-100 dark:from-blue-800 dark:to-emerald-800 rounded-xl border-2 border-blue-200 dark:border-emerald-600 shadow-md"
+                  className="w-24 h-24 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-800/30 dark:to-teal-800/30 rounded-xl border-2 border-emerald-200 dark:border-emerald-600 shadow-md"
                 >
-                  <span className="text-4xl">📄</span>
+                  <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
                 </motion.div>
               )}
               <div className="flex-1 min-w-0">
@@ -239,7 +240,7 @@ const ReportUpload = ({ onUpload, loading }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className="text-sm font-bold text-gray-900 dark:text-white truncate"
+                  className="text-sm font-bold text-stone-900 dark:text-white truncate"
                 >
                   {selectedFile.name}
                 </motion.p>
@@ -247,7 +248,7 @@ const ReportUpload = ({ onUpload, loading }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.15 }}
-                  className="text-xs text-gray-500 dark:text-gray-400 mt-1"
+                  className="text-xs text-stone-500 dark:text-stone-400 mt-1"
                 >
                   {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                 </motion.p>
@@ -255,7 +256,7 @@ const ReportUpload = ({ onUpload, loading }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
-                  className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 shadow-md"
+                  className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full bg-emerald-500 shadow-md"
                 >
                   <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -271,7 +272,7 @@ const ReportUpload = ({ onUpload, loading }) => {
                 disabled={loading}
                 whileHover={!loading ? { scale: 1.1 } : {}}
                 whileTap={!loading ? { scale: 0.9 } : {}}
-                className="px-4 py-2 rounded-xl bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 font-medium text-sm disabled:opacity-50 border border-red-200 dark:border-red-700 shadow-sm transition-colors"
+                className="px-4 py-2 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 font-medium text-sm disabled:opacity-50 border border-red-200/50 dark:border-red-700/50 shadow-sm transition-colors"
               >
                 Remove
               </motion.button>
@@ -284,7 +285,7 @@ const ReportUpload = ({ onUpload, loading }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-3 p-3 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700"
+            className="mt-3 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200/50 dark:border-red-700/50"
           >
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -311,7 +312,7 @@ const ReportUpload = ({ onUpload, loading }) => {
               onClick={handleSubmit}
               loading={loading}
               disabled={!selectedFile || loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 shadow-lg hover:shadow-xl"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-xl"
               size="lg"
             >
               {loading ? 'Analyzing Report...' : 'Analyze Report'}
@@ -325,7 +326,7 @@ const ReportUpload = ({ onUpload, loading }) => {
           initial={{ opacity: 0, scale: 0.9, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/20 dark:to-emerald-900/20 border-2 border-blue-200 dark:border-emerald-700 rounded-2xl p-6 shadow-2xl overflow-hidden relative"
+          className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 border-2 border-emerald-200 dark:border-emerald-700 rounded-2xl p-6 shadow-2xl overflow-hidden relative"
         >
           <motion.div
             animate={{
@@ -339,25 +340,23 @@ const ReportUpload = ({ onUpload, loading }) => {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="w-8 h-8 border-3 border-blue-500 border-t-emerald-500 rounded-full"
+                className="w-8 h-8 border-3 border-emerald-300 border-t-emerald-600 rounded-full"
               />
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-                className="text-3xl"
-              >
-                🔬
-              </motion.div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center">
+                <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </div>
             </div>
-            <p className="text-sm font-bold bg-gradient-to-r from-blue-700 to-emerald-700 dark:from-blue-300 dark:to-emerald-300 bg-clip-text text-transparent text-center">
+            <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300 text-center">
               Analyzing your medical report...
             </p>
-            <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-2">
+            <p className="text-xs text-stone-500 dark:text-stone-400 text-center mt-2">
               This may take 20-40 seconds depending on the analysis depth
             </p>
           </motion.div>
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/30 dark:via-emerald-500/20 to-transparent"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/20 dark:via-emerald-500/10 to-transparent"
             animate={{
               x: ['-100%', '200%']
             }}

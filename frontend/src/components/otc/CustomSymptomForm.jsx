@@ -18,51 +18,34 @@ const CustomSymptomForm = ({ onSymptomChange, disabled }) => {
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
       exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
     >
-      <motion.label
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-        className="block text-sm font-bold text-gray-900 dark:text-white mb-3"
-      >
+      <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-2 uppercase tracking-wider">
         Describe Your Symptoms
-      </motion.label>
-      <motion.textarea
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: 0.3 }}
+      </label>
+      <textarea
         value={text}
         onChange={handleChange}
         disabled={disabled}
         placeholder="Please describe your symptoms in detail. For example: 'I have a headache with sensitivity to light, nausea, and it started 2 hours ago...'"
-        className={`w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-2xl focus:outline-none focus:border-blue-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-blue-200 dark:focus:ring-emerald-900/50 resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-300 ${
-          disabled ? 'bg-gray-100 dark:bg-gray-700 cursor-not-allowed' : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm'
+        className={`w-full px-4 py-3 border border-stone-200 dark:border-stone-700 rounded-xl text-sm text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-stone-500 transition-all duration-200 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 ${
+          disabled ? 'bg-stone-100 dark:bg-dark-surface cursor-not-allowed' : 'bg-stone-50/50 dark:bg-dark-surface/50 backdrop-blur-sm'
         }`}
-        rows={6}
+        rows={5}
       />
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.4 }}
-        className="flex items-center justify-between mt-3"
-      >
-        <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1">
-          <svg className="w-4 h-4 text-blue-500 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <div className="flex items-center justify-between mt-2">
+        <p className="text-xs text-stone-400 dark:text-stone-500 flex items-center gap-1">
+          <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
           </svg>
           Be as specific as possible for better recommendations
         </p>
-        <motion.p
-          animate={text.length >= maxLength ? { scale: [1, 1.1, 1] } : {}}
-          transition={{ duration: 0.3 }}
-          className={`text-xs font-bold ${
-            text.length >= maxLength ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-          }`}
-        >
+        <p className={`text-xs font-medium ${
+          text.length >= maxLength ? 'text-red-500' : 'text-stone-400 dark:text-stone-500'
+        }`}>
           {text.length}/{maxLength}
-        </motion.p>
-      </motion.div>
+        </p>
+      </div>
     </motion.div>
   );
 };

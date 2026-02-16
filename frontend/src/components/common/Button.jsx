@@ -13,8 +13,8 @@ const Button = ({
   const baseStyles = 'font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
 
   const variants = {
-    primary: 'bg-stone-900 dark:bg-white text-white dark:text-stone-900 hover:bg-stone-800 dark:hover:bg-stone-100 focus:ring-emerald-500 shadow-sm',
-    secondary: 'bg-stone-100 dark:bg-dark-surface text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 focus:ring-stone-400 border border-stone-200 dark:border-stone-700',
+    primary: 'bg-emerald-600 dark:bg-white text-white dark:text-stone-900 hover:bg-emerald-700 dark:hover:bg-stone-100 focus:ring-emerald-500 shadow-sm shadow-emerald-600/20',
+    secondary: 'bg-emerald-50/50 dark:bg-dark-surface text-stone-700 dark:text-stone-300 hover:bg-emerald-100/50 dark:hover:bg-stone-700 focus:ring-emerald-400 border border-emerald-200/40 dark:border-stone-700',
     danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
     medical: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500',
   };

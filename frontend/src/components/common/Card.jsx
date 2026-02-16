@@ -16,15 +16,15 @@ const Card = ({
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${paddingStyles[padding]} ${className}`}>
+    <div className={`bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl shadow-sm hover:shadow-md border border-stone-200/60 dark:border-stone-800/60 transition-all duration-200 ${paddingStyles[padding]} ${className}`}>
       {(title || actions) && (
         <div className="flex items-center justify-between mb-4">
           <div>
             {title && (
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+              <h3 className="text-base font-semibold text-stone-900 dark:text-white">{title}</h3>
             )}
             {subtitle && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{subtitle}</p>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">{subtitle}</p>
             )}
           </div>
           {actions && (

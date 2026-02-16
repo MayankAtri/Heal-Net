@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-stone-50 text-stone-900 dark:bg-[#0a0a0f] dark:text-stone-100;
+    @apply bg-[#f8faf8] text-stone-900 dark:bg-[#0a0a0f] dark:text-stone-100;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

@@ -2,46 +2,47 @@ import React from 'react';
 
 const SeveritySelector = ({ severity, onSeveritySelect, disabled }) => {
   const severityLevels = [
-    { value: 1, label: 'Mild', color: 'bg-green-100 border-green-300 text-green-800 hover:bg-green-200', description: 'Barely noticeable' },
-    { value: 2, label: 'Minor', color: 'bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200', description: 'Noticeable but manageable' },
-    { value: 3, label: 'Moderate', color: 'bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200', description: 'Uncomfortable' },
-    { value: 4, label: 'Severe', color: 'bg-orange-100 border-orange-300 text-orange-800 hover:bg-orange-200', description: 'Very uncomfortable' },
-    { value: 5, label: 'Extreme', color: 'bg-red-100 border-red-300 text-red-800 hover:bg-red-200', description: 'Unbearable' }
+    { value: 1, label: 'Mild', description: 'Barely noticeable' },
+    { value: 2, label: 'Minor', description: 'Noticeable but manageable' },
+    { value: 3, label: 'Moderate', description: 'Uncomfortable' },
+    { value: 4, label: 'Severe', description: 'Very uncomfortable' },
+    { value: 5, label: 'Extreme', description: 'Unbearable' }
   ];
 
   return (
     <div>
-      <label className="block text-sm font-bold text-gray-900 mb-3">
-        How severe is your symptom? (1-5)
+      <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-3 uppercase tracking-wider">
+        Severity (1-5)
       </label>
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-5 gap-2">
         {severityLevels.map((level) => (
           <button
             key={level.value}
             type="button"
             onClick={() => onSeveritySelect(level.value)}
             disabled={disabled}
-            className={`p-4 rounded-lg border-2 text-center transition-all ${
+            className={`p-3 rounded-xl border text-center transition-all duration-200 ${
               severity === level.value
-                ? 'border-primary-500 bg-primary-50 shadow-md ring-2 ring-primary-300'
-                : level.color
+                ? 'border-emerald-500/50 dark:border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-900/10'
+                : 'border-stone-200/60 dark:border-stone-800/60 bg-white/50 dark:bg-dark-card/50 hover:border-stone-300 dark:hover:border-stone-700'
             } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            <div className="text-3xl font-bold mb-1">{level.value}</div>
-            <div className="text-xs font-bold uppercase">{level.label}</div>
-            <div className="text-xs mt-1 opacity-80">{level.description}</div>
+            <div className={`text-xl font-bold mb-0.5 ${
+              severity === level.value ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-900 dark:text-white'
+            }`}>{level.value}</div>
+            <div className="text-[10px] font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wider">{level.label}</div>
+            <div className="text-[10px] text-stone-400 dark:text-stone-500 mt-0.5">{level.description}</div>
           </button>
         ))}
       </div>
 
-      {/* Visual Scale Bar */}
-      <div className="mt-4 relative">
-        <div className="h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-400 rounded-full"></div>
+      <div className="mt-3 relative">
+        <div className="h-1.5 bg-gradient-to-r from-emerald-300 via-amber-300 to-red-400 rounded-full opacity-60"></div>
         {severity && (
           <div
-            className="absolute top-0 w-4 h-4 bg-primary-600 rounded-full border-2 border-white shadow-lg transform -translate-y-1 -translate-x-2 transition-all"
+            className="absolute top-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-dark-card shadow-sm transform -translate-y-1 -translate-x-1.5 transition-all duration-200"
             style={{ left: `${((severity - 1) / 4) * 100}%` }}
-          ></div>
+          />
         )}
       </div>
     </div>

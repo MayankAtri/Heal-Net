@@ -25,9 +25,9 @@ export default function AppleButton({
   };
 
   const variantClasses = {
-    primary: 'bg-stone-900 hover:bg-stone-800 dark:bg-white dark:hover:bg-stone-100 text-white dark:text-stone-900 shadow-md shadow-stone-900/10',
-    secondary: 'bg-white/90 dark:bg-dark-card/90 backdrop-blur-md text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-dark-surface',
-    glass: 'bg-stone-100/50 hover:bg-stone-100 dark:bg-white/5 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-stone-200/50 dark:border-stone-700/50 backdrop-blur-lg',
+    primary: 'bg-emerald-600 hover:bg-emerald-700 dark:bg-white dark:hover:bg-stone-100 text-white dark:text-stone-900 shadow-md shadow-emerald-600/20 dark:shadow-stone-900/10',
+    secondary: 'bg-white/90 dark:bg-dark-card/90 backdrop-blur-md text-stone-900 dark:text-stone-100 border border-emerald-200/40 dark:border-stone-700 hover:bg-emerald-50/50 dark:hover:bg-dark-surface',
+    glass: 'bg-emerald-50/50 hover:bg-emerald-50 dark:bg-white/5 dark:hover:bg-white/10 text-emerald-700 dark:text-stone-300 border border-emerald-200/40 dark:border-stone-700/50 backdrop-blur-lg',
     ghost: 'hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-400'
   };
 

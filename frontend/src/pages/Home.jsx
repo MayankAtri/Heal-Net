@@ -240,7 +240,7 @@ const Home = () => {
                     transition={{ delay: idx * 0.08, duration: 0.4 }}
                   >
                     <Link to={feature.path} className="block group h-full">
-                      <div className={`h-full p-7 rounded-2xl bg-white/80 dark:bg-dark-card/80 backdrop-blur-sm border border-stone-200/60 dark:border-stone-800/60 transition-all duration-300 hover:shadow-lg hover:shadow-stone-900/5 dark:hover:shadow-black/20 hover:-translate-y-1 ${colors.border}`}>
+                      <div className={`h-full p-7 rounded-2xl bg-white/90 dark:bg-dark-card/80 backdrop-blur-sm border border-emerald-200/25 dark:border-stone-800/60 shadow-sm shadow-emerald-900/[0.02] transition-all duration-300 hover:shadow-lg hover:shadow-emerald-600/[0.08] dark:hover:shadow-black/20 hover:-translate-y-1 hover:border-emerald-300/40 ${colors.border}`}>
                         <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center ${colors.text} mb-5`}>
                           {feature.icon}
                         </div>
@@ -266,7 +266,7 @@ const Home = () => {
         </section>
 
         {/* How It Works */}
-        <section className="py-28 px-6 bg-stone-100/30 dark:bg-dark-card/30">
+        <section className="py-28 px-6 bg-emerald-50/30 dark:bg-dark-card/30">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -323,7 +323,7 @@ const Home = () => {
                   transition={{ delay: i * 0.15, duration: 0.4 }}
                   className="relative z-10 text-center"
                 >
-                  <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-white dark:bg-dark-card border border-stone-200 dark:border-stone-800 flex items-center justify-center text-stone-400 dark:text-stone-500 shadow-sm">
+                  <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-white dark:bg-dark-card border border-emerald-200/40 dark:border-stone-800 flex items-center justify-center text-emerald-600 dark:text-stone-500 shadow-sm shadow-emerald-900/[0.03]">
                     {step.icon}
                   </div>
                   <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 mb-2">{step.step}</div>
@@ -333,7 +333,7 @@ const Home = () => {
               ))}
 
               {/* Connecting Line */}
-              <div className="hidden md:block absolute top-7 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-stone-200 dark:via-stone-800 to-transparent z-0" />
+              <div className="hidden md:block absolute top-7 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-emerald-300/50 dark:via-stone-800 to-transparent z-0" />
             </div>
           </div>
         </section>

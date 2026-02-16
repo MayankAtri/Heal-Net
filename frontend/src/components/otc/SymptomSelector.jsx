@@ -7,10 +7,10 @@ const SymptomSelector = ({ selectedSymptoms, onSymptomToggle, disabled }) => {
 
   return (
     <div>
-      <label className="block text-sm font-bold text-gray-900 dark:text-white mb-4">
+      <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-3 uppercase tracking-wider">
         Select Your Symptoms (you can select multiple)
       </label>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
         {SYMPTOM_TYPES.map((symptom, index) => {
           const selected = isSelected(symptom.value);
           return (
@@ -19,43 +19,33 @@ const SymptomSelector = ({ selectedSymptoms, onSymptomToggle, disabled }) => {
               type="button"
               onClick={() => onSymptomToggle(symptom.value)}
               disabled={disabled}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              whileHover={!disabled ? { scale: 1.05, y: -4 } : {}}
-              whileTap={!disabled ? { scale: 0.95 } : {}}
-              className={`relative p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+              transition={{ duration: 0.2, delay: index * 0.03 }}
+              className={`relative p-3.5 rounded-xl border text-center transition-all duration-200 ${
                 selected
-                  ? 'border-blue-500 dark:border-emerald-400 bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-blue-900/30 dark:to-emerald-900/30 shadow-xl'
-                  : 'border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm hover:border-blue-300 dark:hover:border-emerald-600 hover:shadow-lg'
+                  ? 'border-emerald-500/50 dark:border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-900/10'
+                  : 'border-stone-200/60 dark:border-stone-800/60 bg-white/50 dark:bg-dark-card/50 hover:border-stone-300 dark:hover:border-stone-700 hover:bg-stone-50/50 dark:hover:bg-dark-surface/50'
               } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <AnimatePresence>
                 {selected && (
                   <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 180 }}
-                    transition={{ duration: 0.3, type: "spring" }}
-                    className="absolute top-2 right-2 w-6 h-6 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-full flex items-center justify-center shadow-md"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-1.5 right-1.5 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"
                   >
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </motion.div>
                 )}
               </AnimatePresence>
-              <motion.div
-                animate={selected ? { scale: [1, 1.2, 1] } : {}}
-                transition={{ duration: 0.4 }}
-                className="text-3xl mb-2"
-              >
-                {symptom.icon}
-              </motion.div>
-              <div className={`text-sm font-semibold ${
-                selected
-                  ? 'bg-gradient-to-r from-blue-600 to-emerald-600 dark:from-blue-400 dark:to-emerald-400 bg-clip-text text-transparent'
-                  : 'text-gray-900 dark:text-white'
+              <div className="text-2xl mb-1.5">{symptom.icon}</div>
+              <div className={`text-xs font-medium ${
+                selected ? 'text-emerald-700 dark:text-emerald-300' : 'text-stone-700 dark:text-stone-300'
               }`}>
                 {symptom.label}
               </div>
@@ -66,10 +56,10 @@ const SymptomSelector = ({ selectedSymptoms, onSymptomToggle, disabled }) => {
       <AnimatePresence>
         {selectedSymptoms.length > 0 && (
           <motion.p
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="text-sm text-gray-600 dark:text-gray-300 mt-4 font-medium"
+            exit={{ opacity: 0, y: -8 }}
+            className="text-xs text-stone-500 dark:text-stone-400 mt-3 font-medium"
           >
             Selected: {selectedSymptoms.length} symptom{selectedSymptoms.length !== 1 ? 's' : ''}
           </motion.p>

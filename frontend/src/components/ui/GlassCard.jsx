@@ -37,9 +37,9 @@ export default function GlassCard({
   };
 
   const baseClasses = cn(
-    'relative overflow-hidden bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-stone-200/60 dark:border-stone-800/60 shadow-sm transition-all duration-300 group',
+    'relative overflow-hidden bg-white/90 dark:bg-dark-card/80 backdrop-blur-xl rounded-2xl border border-emerald-200/30 dark:border-stone-800/60 shadow-sm shadow-emerald-900/[0.03] dark:shadow-none transition-all duration-300 group',
     paddingClasses[padding],
-    hover && 'hover:shadow-lg hover:shadow-stone-900/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:border-stone-300/80 dark:hover:border-stone-700/80',
+    hover && 'hover:shadow-lg hover:shadow-emerald-600/[0.06] dark:hover:shadow-black/20 hover:-translate-y-1 hover:border-emerald-300/50 dark:hover:border-stone-700/80',
     onClick && 'cursor-pointer',
     className
   );
@@ -52,7 +52,7 @@ export default function GlassCard({
             background: useMotionTemplate`
               radial-gradient(
                 500px circle at ${mouseX}px ${mouseY}px,
-                rgba(16, 185, 129, 0.08),
+                rgba(16, 185, 129, 0.1),
                 transparent 80%
               )
             `,

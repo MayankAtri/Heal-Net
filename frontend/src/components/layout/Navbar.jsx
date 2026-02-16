@@ -56,7 +56,7 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'py-3 backdrop-blur-xl bg-stone-50/70 dark:bg-[#0a0a0f]/70 border-b border-stone-200/50 dark:border-stone-800/50'
+          ? 'py-3 backdrop-blur-xl bg-white/70 dark:bg-[#0a0a0f]/70 border-b border-emerald-200/30 dark:border-stone-800/50 shadow-sm shadow-emerald-900/[0.02]'
           : 'py-5 bg-transparent'
         }`}
     >
@@ -65,10 +65,10 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="group flex-shrink-0 relative z-50">
             <div className="flex items-center gap-2.5">
-              <div className="relative w-9 h-9">
+              <div style={{ width: '36px', height: '36px' }} className="relative w-9 h-9">
                 <div className="absolute inset-0 bg-emerald-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative w-full h-full bg-stone-900 dark:bg-white rounded-xl flex items-center justify-center overflow-hidden">
-                  <svg className="w-5 h-5 text-white dark:text-stone-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                <div style={{ width: '36px', height: '36px', overflow: 'hidden' }} className="relative w-full h-full bg-stone-900 dark:bg-white rounded-xl flex items-center justify-center overflow-hidden">
+                  <svg width="20" height="20" className="w-5 h-5 text-white dark:text-stone-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
                     <path d="M12 5v14M5 12h14" />
                   </svg>
                 </div>
@@ -85,7 +85,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center bg-white/60 dark:bg-dark-card/60 backdrop-blur-2xl px-1.5 py-1 rounded-full border border-stone-200/40 dark:border-stone-800/40">
+          <div className="hidden md:flex items-center bg-white/70 dark:bg-dark-card/60 backdrop-blur-2xl px-1.5 py-1 rounded-full border border-emerald-200/25 dark:border-stone-800/40 shadow-sm shadow-emerald-900/[0.02]">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -93,14 +93,14 @@ const Navbar = () => {
                 onMouseEnter={() => setHoveredPath(link.path)}
                 onMouseLeave={() => setHoveredPath(location.pathname)}
                 className={`relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors duration-200 ${location.pathname === link.path
-                    ? 'text-stone-900 dark:text-white'
-                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
+                    ? 'text-emerald-700 dark:text-white'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-stone-200'
                   }`}
               >
                 {hoveredPath === link.path && (
                   <motion.div
                     layoutId="navbar-highlight"
-                    className="absolute inset-0 bg-stone-100 dark:bg-stone-800 rounded-full"
+                    className="absolute inset-0 bg-emerald-50 dark:bg-stone-800 rounded-full"
                     initial={false}
                     transition={{
                       type: "spring",
@@ -204,7 +204,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-1.5 text-[13px] font-medium text-white bg-stone-900 dark:bg-white dark:text-stone-900 rounded-full hover:bg-stone-800 dark:hover:bg-stone-100 transition-colors"
+                  className="px-4 py-1.5 text-[13px] font-medium text-white bg-emerald-600 dark:bg-white dark:text-stone-900 rounded-full hover:bg-emerald-700 dark:hover:bg-stone-100 transition-colors shadow-sm shadow-emerald-600/20 dark:shadow-none"
                 >
                   Sign up
                 </Link>

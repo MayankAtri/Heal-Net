@@ -48,18 +48,19 @@ export const STATUS_LABELS = {
 
 // Status badge colors
 export const STATUS_COLORS = {
-  processing: 'bg-yellow-100 text-yellow-800',
-  completed: 'bg-green-100 text-green-800',
-  failed: 'bg-red-100 text-red-800'
+  processing: 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300',
+  completed: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300',
+  failed: 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
 };
 
 // Blood test status colors
 export const TEST_STATUS_COLORS = {
-  normal: 'text-green-600',
-  high: 'text-orange-600',
-  low: 'text-orange-600',
-  critical: 'text-red-600',
-  abnormal: 'text-red-600'
+  normal: 'text-emerald-600 dark:text-emerald-400',
+  high: 'text-amber-600 dark:text-amber-400',
+  low: 'text-amber-600 dark:text-amber-400',
+  critical: 'text-red-600 dark:text-red-400',
+  abnormal: 'text-red-600 dark:text-red-400',
+  unknown: 'text-stone-500 dark:text-stone-400'
 };
 
 // Report type labels
