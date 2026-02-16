@@ -67,11 +67,7 @@ const Navbar = () => {
             <div className="flex items-center gap-2.5">
               <div style={{ width: '36px', height: '36px' }} className="relative w-9 h-9">
                 <div className="absolute inset-0 bg-emerald-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div style={{ width: '36px', height: '36px', overflow: 'hidden' }} className="relative w-full h-full bg-stone-900 dark:bg-white rounded-xl flex items-center justify-center overflow-hidden">
-                  <svg width="20" height="20" className="w-5 h-5 text-white dark:text-stone-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                </div>
+                <img src={darkMode ? "/healnet-logo-dark.png" : "/healnet-logo.png"} alt="HealNet" width="36" height="36" style={{ width: '36px', height: '36px' }} className="relative w-full h-full object-contain rounded-xl" />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-bold text-lg text-stone-900 dark:text-white leading-none tracking-tight">
