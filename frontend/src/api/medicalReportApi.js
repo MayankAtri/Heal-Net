@@ -13,7 +13,8 @@ export const analyzeReport = async (file, depth = 'simple') => {
   return apiClient.post(`/reports/analyze?analysisDepth=${depth}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-    }
+    },
+    timeout: 300000, // 5 min — AI analysis on Render can take 2-3 min
   });
 };
 

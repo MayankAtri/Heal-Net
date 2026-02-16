@@ -14,6 +14,8 @@ export const consultOTC = async (symptomType, customSymptoms = '', ageGroup = 'a
     customSymptoms,
     ageGroup,
     ageLabel
+  }, {
+    timeout: 300000, // 5 min — AI processing on Render can be slow
   });
 };
 

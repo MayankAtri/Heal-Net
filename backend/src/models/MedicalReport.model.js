@@ -32,7 +32,7 @@ const medicalReportSchema = new mongoose.Schema({
       value: String,
       unit: String,
       referenceRange: String,
-      status: { type: String, enum: ['normal', 'high', 'low', 'critical', 'abnormal'] },
+      status: { type: String, enum: ['normal', 'high', 'low', 'critical', 'abnormal', 'borderline'] },
       interpretation: String
     }],
 

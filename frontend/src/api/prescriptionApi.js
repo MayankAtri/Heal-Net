@@ -12,7 +12,8 @@ export const analyzePrescription = async (file) => {
   return apiClient.post('/prescriptions/analyze', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-    }
+    },
+    timeout: 300000, // 5 min — AI analysis on Render can take 2-3 min
   });
 };
 
