@@ -6,9 +6,11 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const passport = require('./src/config/passport');
+const mongoose = require('mongoose');
 const connectDB = require('./src/config/database');
 const routes = require('./src/routes');
 const errorHandler = require('./src/middleware/errorHandler');
+const { initializeFlags, closeFlags } = require('./src/services/flagpilot.cjs');
 
 // Initialize Express app
 const app = express();
@@ -131,11 +133,42 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`\n🚀 HealNet Backend Server Running`);
-  console.log(`📍 Port: ${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`📡 API URL: http://localhost:${PORT}`);
-  console.log(`💊 Ready to analyze prescriptions!\n`);
+let server;
+let shuttingDown = false;
+
+const startServer = async () => {
+  await initializeFlags();
+
+  server = app.listen(PORT, () => {
+    console.log(`\n🚀 HealNet Backend Server Running`);
+    console.log(`📍 Port: ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📡 API URL: http://localhost:${PORT}`);
+    console.log(`💊 Ready to analyze prescriptions!\n`);
+  });
+};
+
+const shutdown = async (signal) => {
+  if (shuttingDown) return;
+  shuttingDown = true;
+
+  console.log(`${signal} received, closing HealNet services...`);
+  closeFlags();
+
+  if (server) {
+    await new Promise((resolve) => server.close(resolve));
+  }
+
+  await mongoose.connection.close(false);
+  console.log('HealNet services closed');
+  process.exit(0);
+};
+
+process.once('SIGTERM', () => shutdown('SIGTERM'));
+process.once('SIGINT', () => shutdown('SIGINT'));
+
+startServer().catch((error) => {
+  console.error('Failed to start HealNet Backend Server:', error);
+  closeFlags();
+  process.exit(1);
 });
-2
