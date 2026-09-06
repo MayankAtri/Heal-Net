@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { optionalAuth } = require('../middleware/auth');
-const { otcAvailable } = require('../services/flagpilot.cjs');
 const {
   getOTCSuggestions,
   getConsultation,
@@ -16,7 +15,7 @@ const {
 
 // POST /api/otc/consult
 // Get OTC medicine suggestions for symptoms
-router.post('/consult', optionalAuth, otcAvailable, getOTCSuggestions);
+router.post('/consult', optionalAuth, getOTCSuggestions);
 
 // GET /api/otc/stats/overview
 // Get statistics (must be before /:id to avoid route conflicts)
